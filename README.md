@@ -1,6 +1,7 @@
 # FFC SFI Agreement Calculator
 
 Validate and calculate SFI agreements
+
 ## Licence
 
 THIS INFORMATION IS LICENSED UNDER THE CONDITIONS OF THE OPEN GOVERNMENT LICENCE found at:
