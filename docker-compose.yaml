@@ -1,10 +1,25 @@
 version: '3.8'
 
 services:
-  ffc-template-node:
+  ffc-sfi-agreement-calculator:
     build:
       context: .
       target: production
-    image: ffc-template-node
-    container_name: ffc-template-node
-    environment: {}
+    image: ffc-sfi-agreement-calculator
+    container_name: ffc-sfi-agreement-calculator
+    environment:
+      APPINSIGHTS_CLOUDROLE: ffc-sfi-agreement-calculator-local
+      APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY}
+      MESSAGE_QUEUE_HOST: ${MESSAGE_QUEUE_HOST:-notset}
+      MESSAGE_QUEUE_PASSWORD: ${MESSAGE_QUEUE_PASSWORD:-notset}
+      MESSAGE_QUEUE_USER: ${MESSAGE_QUEUE_USER:-notset}
+      ELIGIBILITY_TOPIC_ADDRESS: ${ELIGIBILITY_TOPIC_ADDRESS:-notset}
+      ELIGIBILITY_SUBSCRIPTION_ADDRESS: ${ELIGIBILITY_SUBSCRIPTION_ADDRESS:-notset}
+      STANDARDS_SUBSCRIPTION_ADDRESS: ${STANDARDS_SUBSCRIPTION_ADDRESS:-notset}
+      STANDARDS_TOPIC_ADDRESS: ${STANDARDS_TOPIC_ADDRESS:-notset}
+      VALIDATE_SUBSCRIPTION_ADDRESS: ${VALIDATE_SUBSCRIPTION_ADDRESS:-notset}
+      VALIDATE_TOPIC_ADDRESS: ${VALIDATE_TOPIC_ADDRESS:-notset}
+      CALCULATE_SUBSCRIPTION_ADDRESS: ${CALCULATE_SUBSCRIPTION_ADDRESS:-notset}
+      CALCULATE_TOPIC_ADDRESS: ${CALCULATE_TOPIC_ADDRESS:-notset}
+      SUBMIT_SUBSCRIPTION_ADDRESS: ${SUBMIT_SUBSCRIPTION_ADDRESS:-notset}
+      SUBMIT_TOPIC_ADDRESS: ${SUBMIT_TOPIC_ADDRESS:-notset}

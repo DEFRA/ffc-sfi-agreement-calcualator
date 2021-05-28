@@ -1,0 +1,7 @@
+resources:
+  topics:
+    - name: eligibility
+    - name: standards
+    - name: validate
+    - name: calculate
+    - name: submit
