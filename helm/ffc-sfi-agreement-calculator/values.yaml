@@ -29,6 +29,7 @@ container:
   limitMemory: 40Mi
   limitCpu: 40m
   port: 3003
+  messageQueueHost: namespace.servicebus.windows.net
   eligibilitySubscriptionAddress: ffc-sfi-eligibility-check-calculator
   standardsSubscriptionAddress: ffc-sfi-standards-request-calculator
   validateSubscriptionAddress: ffc-sfi-agreement-validate-calculator
