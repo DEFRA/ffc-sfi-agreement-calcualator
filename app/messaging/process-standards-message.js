@@ -1,6 +1,6 @@
 async function processStandardsMessage (message, receiver) {
   try {
-    console.info('received request for available standards')
+    console.info(`Received request for available standards, correlation Id: ${message.correlationId}`)
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

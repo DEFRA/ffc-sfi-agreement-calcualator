@@ -1,6 +1,6 @@
 async function processEligibilityMessage (message, receiver) {
   try {
-    console.info('received request for eligibility check')
+    console.info(`Received request for eligibility check, correlation Id: ${message.correlationId}`)
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

@@ -1,6 +1,6 @@
 async function processValidateMessage (message, receiver) {
   try {
-    console.info('received request for validation')
+    console.info(`Received request for validation, correlation Id: ${message.correlationId}`)
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
