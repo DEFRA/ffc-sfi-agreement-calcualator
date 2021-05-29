@@ -4,7 +4,6 @@ data:
   NODE_ENV: {{ quote .Values.environment }}
   PORT: {{ quote .Values.container.port }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
-  {{- if .Values.container.googleTagManagerKey }}
   MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
   ELIGIBILITY_TOPIC_ADDRESS: {{ quote .Values.container.eligibilityTopicAddress }}
   STANDARDS_TOPIC_ADDRESS: {{ quote .Values.container.standardsTopicAddress }}
