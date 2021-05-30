@@ -1,13 +1,13 @@
 const standards = [{
   id: 1,
-  name: 'soil protection'
+  name: 'soilProtection'
 },
 {
   id: 2,
-  name: 'permanent grassland protection'
+  name: 'permanentGrasslandProtection'
 }, {
   id: 3,
-  name: 'livestock welfare'
+  name: 'livestockWelfare'
 }]
 
 module.exports = standards
