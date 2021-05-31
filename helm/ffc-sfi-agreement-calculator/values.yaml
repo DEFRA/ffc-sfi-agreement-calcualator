@@ -26,8 +26,8 @@ container:
   imagePullPolicy: IfNotPresent
   requestMemory: 10Mi
   requestCpu: 10m
-  limitMemory: 40Mi
-  limitCpu: 40m
+  limitMemory: 120Mi
+  limitCpu: 120m
   port: 3003
   messageQueueHost: namespace.servicebus.windows.net
   eligibilitySubscriptionAddress: ffc-sfi-eligibility-check-calculator
