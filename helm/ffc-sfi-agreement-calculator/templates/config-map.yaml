@@ -1,0 +1,18 @@
+{{- include "ffc-helm-library.container-config-map" (list . "ffc-sfi-agreement-calculator.config-map") -}}
+{{- define "ffc-sfi-agreement-calculator.config-map" -}}
+data:
+  NODE_ENV: {{ quote .Values.environment }}
+  PORT: {{ quote .Values.container.port }}
+  APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
+  MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
+  ELIGIBILITY_TOPIC_ADDRESS: {{ quote .Values.container.eligibilityTopicAddress }}
+  STANDARDS_TOPIC_ADDRESS: {{ quote .Values.container.standardsTopicAddress }}
+  VALIDATE_TOPIC_ADDRESS: {{ quote .Values.container.validateTopicAddress }}
+  CALCULATE_TOPIC_ADDRESS: {{ quote .Values.container.calculateTopicAddress }}
+  SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
+  ELIGIBILITY_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.eligibilitySubscriptionAddress }}
+  STANDARDS_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.standardsSubscriptionAddress }}
+  VALIDATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.validateSubscriptionAddress }}
+  CALCULATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.calculateSubscriptionAddress }}
+  SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
+{{- end -}}

@@ -4,14 +4,14 @@ version: '3.8'
 # to provide dependencies and expose ports for local testing
 
 services:
-  ffc-template-node:
+  ffc-sfi-agreement-calculator:
     build:
       target: development
-    image: ffc-template-node-development
-    container_name: ffc-template-node-development
+    image: ffc-sfi-agreement-calculator-development
+    container_name: ffc-sfi-agreement-calculator-development
     ports:
-      - "3000:3000"
-      - "9229:9229"
+      - "3003:3003"
+      - "9232:9229"
     volumes:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json

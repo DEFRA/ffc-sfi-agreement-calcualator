@@ -1,0 +1,62 @@
+environment: development
+name: ffc-sfi-agreement-calculator
+namespace: ffc-sfi
+workstream: ffc-sfi
+image: ffc-sfi-agreement-calculator
+
+labels: {}
+
+appInsights:
+  key:
+
+containerConfigMap:
+  name: ffc-sfi-agreement-calculator-config-map
+
+containerSecret:
+  name: ffc-sfi-agreement-calculator-container-secret
+  type: Opaque
+
+deployment:
+  restartPolicy: Always
+  priorityClassName: default
+  replicas: 1
+  minReadySeconds: 0
+
+container:
+  imagePullPolicy: IfNotPresent
+  requestMemory: 10Mi
+  requestCpu: 10m
+  limitMemory: 120Mi
+  limitCpu: 120m
+  port: 3003
+  messageQueueHost: namespace.servicebus.windows.net
+  eligibilitySubscriptionAddress: ffc-sfi-eligibility-check-calculator
+  standardsSubscriptionAddress: ffc-sfi-standards-request-calculator
+  validateSubscriptionAddress: ffc-sfi-agreement-validate-calculator
+  submitSubscriptionAddress: ffc-sfi-agreement-submit-calculator
+  calculateSubscriptionAddress: ffc-sfi-agreement-calculate-calculator
+  eligibilityTopicAddress: ffc-sfi-eligibility-check
+  standardsTopicAddress: ffc-sfi-standards-request
+  validateTopicAddress: ffc-sfi-agreement-validate
+  submitTopicAddress: ffc-sfi-agreement-submit
+  calculateTopicAddress: ffc-sfi-agreement-calculate
+
+livenessProbe:
+  path: /healthz
+  port: 3003
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+
+readinessProbe:
+  path: /healthy
+  port: 3003
+  initialDelaySeconds: 10
+  periodSeconds: 10
+  failureThreshold: 3
+
+aadPodIdentity: true
+
+azureIdentity:
+  clientID: not-a-real-clientID
+  resourceID: not-a-real-resourceID

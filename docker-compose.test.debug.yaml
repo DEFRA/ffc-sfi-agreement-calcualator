@@ -1,0 +1,8 @@
+version: '3.8'
+services:
+  ffc-sfi-agreement-calculator:
+    command: npm run test:debug
+    ports:
+      - "9232:9229"
+    volumes:
+      - ./app/:/home/node/app/
