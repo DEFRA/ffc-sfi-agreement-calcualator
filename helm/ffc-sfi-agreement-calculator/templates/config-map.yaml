@@ -9,10 +9,12 @@ data:
   STANDARDS_TOPIC_ADDRESS: {{ quote .Values.container.standardsTopicAddress }}
   VALIDATE_TOPIC_ADDRESS: {{ quote .Values.container.validateTopicAddress }}
   CALCULATE_TOPIC_ADDRESS: {{ quote .Values.container.calculateTopicAddress }}
-  SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
+  SUBMIT_TOPIC_ADDRESS: {{ quote .Values.container.submitTopicAddress }}
+  WITHDRAW_TOPIC_ADDRESS: {{ quote .Values.container.withdrawTopicAddress }}
   ELIGIBILITY_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.eligibilitySubscriptionAddress }}
   STANDARDS_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.standardsSubscriptionAddress }}
   VALIDATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.validateSubscriptionAddress }}
   CALCULATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.calculateSubscriptionAddress }}
   SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
+  WITHDRAW_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.withdrawSubscriptionAddress }}
 {{- end -}}

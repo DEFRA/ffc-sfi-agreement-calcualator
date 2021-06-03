@@ -4,12 +4,14 @@ const processStandardsMessage = require('./process-standards-message')
 const processValidateMessage = require('./process-validate-message')
 const processCalculateMessage = require('./process-calculate-message')
 const processSubmitMessage = require('./process-submit-message')
+const processWithdrawMessage = require('./process-withdraw-message')
 const { MessageReceiver } = require('ffc-messaging')
 let eligibilityReceiver
 let standardsReceiver
 let validateReceiver
 let calculateReceiver
 let submitReceiver
+let withdrawReceiver
 
 async function start () {
   const eligibilityAction = message => processEligibilityMessage(message, eligibilityReceiver)
@@ -32,6 +34,10 @@ async function start () {
   submitReceiver = new MessageReceiver(config.submitSubscription, submitAction)
   await submitReceiver.subscribe()
 
+  const withdrawAction = message => processWithdrawMessage(message, withdrawReceiver)
+  withdrawReceiver = new MessageReceiver(config.withdrawSubscription, withdrawAction)
+  await withdrawReceiver.subscribe()
+
   console.info('Ready to receive messages')
 }
 
@@ -41,6 +47,7 @@ async function stop () {
   await validateReceiver.closeConnection()
   await calculateReceiver.closeConnection()
   await submitReceiver.closeConnection()
+  await withdrawReceiver.closeConnection()
 }
 
 module.exports = { start, stop }
