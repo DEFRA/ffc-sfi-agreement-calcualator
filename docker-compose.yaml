@@ -7,6 +7,8 @@ services:
       target: production
     image: ffc-sfi-agreement-calculator
     container_name: ffc-sfi-agreement-calculator
+    depends_on:
+      - ffc-sfi-agreement-calculator-postgres
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-sfi-agreement-calculator-local
       APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY}
@@ -23,3 +25,16 @@ services:
       CALCULATE_TOPIC_ADDRESS: ${CALCULATE_TOPIC_ADDRESS:-notset}
       SUBMIT_SUBSCRIPTION_ADDRESS: ${SUBMIT_SUBSCRIPTION_ADDRESS:-notset}
       SUBMIT_TOPIC_ADDRESS: ${SUBMIT_TOPIC_ADDRESS:-notset}
+      POSTGRES_DB: ffc_sfi_agreement_calculator
+      POSTGRES_HOST: ${POSTGRES_HOST:-ffc-sfi-agreement-calculator-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
+      POSTGRES_PORT: 5432
+      POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
+      POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
+  
+  ffc-sfi-agreement-calculator-postgres:
+    image: postgres:11.4-alpine
+    environment:
+      POSTGRES_DB: ffc_sfi_agreement_calculator
+      POSTGRES_PASSWORD: ppp
+      POSTGRES_USERNAME: postgres
