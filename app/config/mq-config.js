@@ -113,7 +113,7 @@ const mqConfig = {
   },
   paymentTopic: {
     name: process.env.PAYMENT_CALCULATOR_TOPIC_NAME,
-    address: process.env.PAYMENT_CALCULATOR_ADDRESS,
+    address: process.env.PAYMENT_CALCULATOR_TOPIC_ADDRESS,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD
   },
