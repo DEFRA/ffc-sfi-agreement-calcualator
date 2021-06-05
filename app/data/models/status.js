@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING
   },
   {
-    tableName: 'agreements',
+    tableName: 'status',
     freezeTableName: true
   })
   status.associate = function (models) {
