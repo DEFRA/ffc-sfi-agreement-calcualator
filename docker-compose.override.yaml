@@ -15,3 +15,12 @@ services:
     volumes:
       - ./app/:/home/node/app/
       - ./package.json:/home/node/package.json
+  
+  ffc-sfi-agreement-calculator-postgres:
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data: {}

@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const mqConfig = require('./mq-config')
+const dbConfig = require('./db-config')
 const { development, production, test } = require('./constants').environments
 
 // Define config schema
@@ -37,5 +38,7 @@ value.validateSubscription = mqConfig.validateSubscription
 value.calculateSubscription = mqConfig.calculateSubscription
 value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
+
+value.dbConfig = dbConfig
 
 module.exports = value
