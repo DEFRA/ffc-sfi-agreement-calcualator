@@ -1,6 +1,7 @@
 const Joi = require('joi')
 const mqConfig = require('./mq-config')
 const dbConfig = require('./db-config')
+const cacheConfig = require('./cache')
 const { development, production, test } = require('./constants').environments
 
 // Define config schema
@@ -30,6 +31,7 @@ const value = result.value
 
 // Add some helper props
 value.isDev = value.env === development
+value.isTest = value.env === test
 value.isProd = value.env === production
 
 value.eligibilitySubscription = mqConfig.eligibilitySubscription
@@ -38,6 +40,14 @@ value.validateSubscription = mqConfig.validateSubscription
 value.calculateSubscription = mqConfig.calculateSubscription
 value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
+
+value.cacheConfig = cacheConfig
+// Don't try to connect to Redis for testing or if Redis not available
+value.useRedis = !value.isTest && value.cacheConfig.redisCatboxOptions.host !== undefined
+
+if (!value.useRedis) {
+  console.info('Redis disabled, using in memory cache')
+}
 
 value.dbConfig = dbConfig
 
