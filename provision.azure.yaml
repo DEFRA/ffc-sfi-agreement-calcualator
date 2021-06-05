@@ -6,3 +6,5 @@ resources:
     - name: calculate
     - name: submit
     - name: withdraw
+    - name: payment-calculator
+    - name: withdraw-calculator
