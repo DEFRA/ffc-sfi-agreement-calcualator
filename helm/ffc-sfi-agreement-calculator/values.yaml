@@ -46,8 +46,7 @@ container:
   submitTopicAddress: ffc-sfi-agreement-submit
   calculateTopicAddress: ffc-sfi-agreement-calculate
   withdrawTopicAddress: ffc-sfi-agreement-withdraw
-  paymentCalculatorTopicAddress: ffc-sfi-payment-request-calculator
-  withdrawCalculatorTopicAddress: ffc-sfi-payment-withdraw-calculator
+  paymentTopicAddress: ffc-sfi-payment-request
   redisHostname: redis-redis-ha.default
   redisPassword: redis
   redisPort: 6379
