@@ -41,6 +41,13 @@ const mqSchema = joi.object({
     username: joi.string(),
     password: joi.string(),
     topic: joi.string()
+  },
+  withdrawSubscription: {
+    name: joi.string().default('ffc-sfi-agreement-withdraw'),
+    address: joi.string().default('withdraw'),
+    username: joi.string(),
+    password: joi.string(),
+    topic: joi.string()
   }
 })
 const mqConfig = {
@@ -84,6 +91,13 @@ const mqConfig = {
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD,
     topic: process.env.SUBMIT_TOPIC_ADDRESS
+  },
+  withdrawSubscription: {
+    name: process.env.WITHDRAW_SUBSCRIPTION_NAME,
+    address: process.env.WITHDRAW_SUBSCRIPTION_ADDRESS,
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    topic: process.env.WITHDRAW_TOPIC_ADDRESS
   }
 }
 
@@ -101,11 +115,13 @@ const standardsSubscription = { ...mqResult.value.messageQueue, ...mqResult.valu
 const validateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.validateSubscription }
 const calculateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.calculateSubscription }
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
+const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
 
 module.exports = {
   eligibilitySubscription,
   standardsSubscription,
   validateSubscription,
   calculateSubscription,
-  submitSubscription
+  submitSubscription,
+  withdrawSubscription
 }

@@ -37,6 +37,7 @@ value.standardsSubscription = mqConfig.standardsSubscription
 value.validateSubscription = mqConfig.validateSubscription
 value.calculateSubscription = mqConfig.calculateSubscription
 value.submitSubscription = mqConfig.submitSubscription
+value.withdrawSubscription = mqConfig.withdrawSubscription
 
 value.dbConfig = dbConfig
 

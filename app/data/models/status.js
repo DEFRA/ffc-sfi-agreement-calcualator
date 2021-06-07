@@ -4,8 +4,9 @@ module.exports = (sequelize, DataTypes) => {
     status: DataTypes.STRING
   },
   {
-    tableName: 'agreements',
-    freezeTableName: true
+    tableName: 'status',
+    freezeTableName: true,
+    timestamps: false
   })
   status.associate = function (models) {
     status.hasMany(models.agreement, {

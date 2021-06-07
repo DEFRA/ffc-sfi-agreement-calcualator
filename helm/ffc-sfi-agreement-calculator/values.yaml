@@ -39,11 +39,13 @@ container:
   validateSubscriptionAddress: ffc-sfi-agreement-validate-calculator
   submitSubscriptionAddress: ffc-sfi-agreement-submit-calculator
   calculateSubscriptionAddress: ffc-sfi-agreement-calculate-calculator
+  withdrawSubscriptionAddress: ffc-sfi-agreement-withdraw-calculator
   eligibilityTopicAddress: ffc-sfi-eligibility-check
   standardsTopicAddress: ffc-sfi-standards-request
   validateTopicAddress: ffc-sfi-agreement-validate
   submitTopicAddress: ffc-sfi-agreement-submit
   calculateTopicAddress: ffc-sfi-agreement-calculate
+  withdrawTopicAddress: ffc-sfi-agreement-withdraw
 
 postgresService:
   postgresDb: ffc_sfi_agreement_calculator
