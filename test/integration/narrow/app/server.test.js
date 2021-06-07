@@ -1,5 +1,6 @@
 describe('Server tests', () => {
   jest.mock('ffc-messaging')
+  jest.mock('../../../../app/cache')
   let createServer
   let server
 
