@@ -46,6 +46,10 @@ container:
   submitTopicAddress: ffc-sfi-agreement-submit
   calculateTopicAddress: ffc-sfi-agreement-calculate
   withdrawTopicAddress: ffc-sfi-agreement-withdraw
+  redisHostname: redis-redis-ha.default
+  redisPassword: redis
+  redisPort: 6379
+  redisPartition: ffc-sfi-ffc-sfi-agreement-calculator
 
 postgresService:
   postgresDb: ffc_sfi_agreement_calculator

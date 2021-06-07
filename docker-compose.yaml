@@ -33,6 +33,7 @@ services:
       POSTGRES_PORT: 5432
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
+      REDIS_HOSTNAME: redis
   
   ffc-sfi-agreement-calculator-postgres:
     image: postgres:11.4-alpine
