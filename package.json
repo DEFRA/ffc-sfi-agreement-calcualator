@@ -26,7 +26,8 @@
     "pg-hstore": "^2.3.3",
     "sequelize": "^6.6.2",
     "@hapi/catbox-redis": "^6.0.2",
-    "@hapi/yar": "^10.1.1"
+    "@hapi/yar": "^10.1.1",
+    "@turf/turf": "^6.3.0"
   },
   "devDependencies": {
     "@azure/service-bus": "^7.0.2",

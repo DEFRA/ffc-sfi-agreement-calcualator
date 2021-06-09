@@ -4,7 +4,9 @@ const routes = [].concat(
   require('../routes/calculate'),
   require('../routes/eligibility'),
   require('../routes/standards'),
-  require('../routes/validate')
+  require('../routes/validate'),
+  require('../routes/map'),
+  require('../routes/map/parcel')
 )
 
 module.exports = {
