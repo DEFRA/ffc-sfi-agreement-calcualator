@@ -7,13 +7,15 @@ const { development, production, test } = require('./constants').environments
 // Define config schema
 const schema = Joi.object({
   port: Joi.number().default(3003),
-  env: Joi.string().valid(development, test, production).default(development)
+  env: Joi.string().valid(development, test, production).default(development),
+  publicApi: Joi.string().default('https://environment.data.gov.uk/arcgis/rest/services/RPA/')
 })
 
 // Build config
 const config = {
   port: process.env.PORT,
-  env: process.env.NODE_ENV
+  env: process.env.NODE_ENV,
+  publicApi: process.env.PUBLIC_API
 }
 
 // Validate config
