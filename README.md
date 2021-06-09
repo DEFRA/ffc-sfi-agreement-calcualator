@@ -45,17 +45,6 @@ and
 | WITHDRAW_SUBSCRIPTION_ADDRESS |  |
 | PAYMENT_TOPIC_ADDRESS |  |
 
-### Environment variables
-
-The following environment variables are required by the application container.
-Values for development are set in the Docker Compose configuration. Default
-values for production-like deployments are set in the Helm chart and may be
-overridden by build and release pipelines.
-
-| Name | Description |
-| --- | --- |
-| OS_MAP_API_KEY | Ordnance Survey API key |
-
 ## Running the application
 
 The application is designed to run in containerised environments, using Docker Compose in development and Kubernetes in production.
