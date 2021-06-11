@@ -6,6 +6,6 @@ module.exports = {
   ],
   paymentActions: [
     { action: 'establishGreenCover', value: 114 },
-    { action: 'convertArableLand', value: 114 }
+    { action: 'convertArableLand', value: 311 }
   ]
 }
