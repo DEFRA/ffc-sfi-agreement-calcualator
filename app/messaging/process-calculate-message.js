@@ -7,7 +7,8 @@ async function processCalculateMessage (message, receiver) {
     await cache.clear('calculation', message.correlationId)
     await cache.set('calculation', message.correlationId, message.body)
     console.info(`Request for calculation stored in cache, correlation Id: ${message.correlationId}`)
-    await cache.update('calculation', message.correlationId, { paymentAmount: await calculateAgreement(message.body) })
+    const calculate = await calculateAgreement(message.body)
+    await cache.update('calculation', message.correlationId, { paymentAmount: calculate.totalPayment, paymentCalculation: calculate })
     console.info(`Response available for calculation, correlation Id: ${message.correlationId}`)
     await receiver.completeMessage(message)
   } catch (err) {
