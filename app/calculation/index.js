@@ -19,10 +19,10 @@ const calculateAgreement = async (agreement) => {
   const primaryCalculation = calculatePrimary(agreement, totalArea)
   const secondaryCalculation = calculateSecondary(agreement, totalArea)
   return {
-    totalArea: totalArea,
-    totalPrimary: calculatePrimary(agreement, totalArea),
-    totalSecondary: calculateSecondary(agreement, totalArea),
-    totalPayment: (primaryCalculation + secondaryCalculation)
+    totalArea: totalArea.toFixed(2),
+    totalPrimary: calculatePrimary(agreement, totalArea).toFixed(2),
+    totalSecondary: calculateSecondary(agreement, totalArea).toFixed(2),
+    totalPayment: (primaryCalculation + secondaryCalculation).toFixed(2)
   }
 }
 
