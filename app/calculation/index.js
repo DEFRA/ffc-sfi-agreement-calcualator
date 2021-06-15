@@ -14,7 +14,20 @@ const calculateSecondary = (agreement, totalArea) => {
   }, 0) * totalArea : 0
 }
 
+const calculateParcels = async (sbi, parcels) => {
+  const promises = []
+
+  parcels.forEach(parcel => {
+    promises.push(getParcelCovers(sbi, parcels[0].sheetId, parcels[0].parcelId))
+  })
+
+  return Promise.all(promises).then(results => {
+    console.log('RESULTS', results.reduce((x, y) => x + y.totalArea, 0))
+  })
+}
+
 const calculateAgreement = async (agreement) => {
+  calculateParcels(agreement.sbi, agreement.parcels)
   const { totalArea } = await getParcelCovers(agreement.sbi, null, null, null)
   const primaryCalculation = calculatePrimary(agreement, totalArea)
   const secondaryCalculation = calculateSecondary(agreement, totalArea)
