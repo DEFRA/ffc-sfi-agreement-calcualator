@@ -5,8 +5,13 @@ const standards = [{
 {
   id: 2,
   name: 'permanentGrasslandProtection'
-}, {
+}, 
+{
   id: 3,
+  name: 'moorlandGrazing'
+},
+{
+  id: 4,
   name: 'livestockWelfare'
 }]
 
