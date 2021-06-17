@@ -1,0 +1,134 @@
+openapi: '3.1.0'
+info:
+  title: FFC SFI Agreement Calculator
+  version: 1.0.0
+servers:
+  - description: local
+    url: localhost:3003/​
+
+paths:
+  /eligibility:
+    get:
+      responses:
+        '200':
+          description: response available
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/eligibilityResponse'
+        '202':
+          description: response not yet available
+  /validate:
+    get:
+      responses:
+        '200':
+          description: response available
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/validationResponse'
+        '202':
+          description: response not yet available
+  /calculate:
+    get:
+      responses:
+        '200':
+          description: response available
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/calculationResponse'
+        '202':
+          description: response not yet available
+
+components:
+  schemas:
+    eligibilityResponse:
+      type: object
+      properties:
+        correlationId:
+          type: string
+        sbi:
+          type: integer
+          description: Single Business Identifier
+        agreementNumber:
+          type: string
+          description: unique agreement reference
+        isEligible:
+          type: string
+          description: true/false status
+    validationResponse:
+      type: object
+      properties:
+        correlationId:
+          type: string
+        sbi:
+          type: integer
+          description: Single Business Identifier
+        agreementNumber:
+          type: string
+          description: unique agreement reference
+        isValid:
+          type: string
+          description: true/false status
+        errors:
+          type: array
+          items:
+            type: object
+            properties:
+              parcelId:
+                type: string
+                description: unique parcel reference
+              errorMessage:
+                type: string
+                description: validation error message
+    calculationResponse:
+      type: object
+      properties:
+        correlationId:
+          type: string
+        sbi:
+          type: integer
+          description: Single Business Identifier
+        agreementNumber:
+          type: string
+          description: unique agreement reference
+        calculation:
+          type: object
+          properties:
+            standards:
+              soilProtection:
+                actions:
+                  cultivateDrillSlope:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  stripTillageNotill:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  soilManagementPlan:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  avoidMachineryTraffic:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  soilAssessment:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  useShallow:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  addOrganicMatter:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  establishGreenCover:
+                    $ref: '#/components/schemas/CalculationOutput'
+                  convertArableLand:
+                    $ref: '#/components/schemas/CalculationOutput'
+              permanentGrasslandProtection:
+              moorlandGrazing:
+              livestockWelfare:
+        CalculationOutput:
+          type: object
+          properties:
+            area:
+              type: number
+              description: eligible area in hectares
+            expression:
+              type: string
+              description: calculation applied
+            value:
+              type: number
+              description: payment value in GBP

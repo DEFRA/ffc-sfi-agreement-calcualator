@@ -96,5 +96,5 @@ components:
       type: object
       properties:
         area:
-          type: decimal
+          type: number
           description: Eligible area in hectares
