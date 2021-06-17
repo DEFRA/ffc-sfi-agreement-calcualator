@@ -7,6 +7,10 @@ channels:
     subscribe:
       message:
         $ref: '#/components/messages/EligibilityCheck'
+  agreement/validate:
+    subscribe:
+      message:
+        $ref: '#/components/messages/CalculateAgreement'
   agreement/calculate:
     subscribe:
       message:
