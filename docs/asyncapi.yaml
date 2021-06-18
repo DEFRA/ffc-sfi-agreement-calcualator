@@ -1,0 +1,111 @@
+asyncapi: 2.0.0
+info:
+  title: FFC SFI Agreement Calculator
+  version: '1.0.0'
+channels:
+  eligibility/check:
+    subscribe:
+      message:
+        $ref: '#/components/messages/EligibilityCheck'
+  agreement/validate:
+    subscribe:
+      message:
+        $ref: '#/components/messages/CalculateAgreement'
+  agreement/calculate:
+    subscribe:
+      message:
+        $ref: '#/components/messages/CalculateAgreement'
+  agreement/submit:
+    subscribe:
+      message:
+        $ref: '#/components/messages/SubmitAgreement'
+  agreement/withdraw:
+    subscribe:
+      message:
+        $ref: '#/components/messages/WithdrawAgreement'  
+
+components:
+  messages:
+    EligibilityCheck:
+      payload:
+        type: object
+        properties:
+          sbi:
+            type: number
+            description: Single Business Identifier
+    CalculateAgreement:
+      payload:
+        type: object
+        properties:
+          sbi:
+            type: number
+            description: Single Business Identifier
+          agreementNumber:
+            type: string
+            description: Unique agreement reference
+          calculation:
+            $ref: '#/components/schemas/Calculation'
+    SubmitAgreement:
+      payload:
+        type: object
+        properties:
+          sbi:
+            type: number
+            description: Single Business Identifier
+          agreementNumber:
+            type: string
+            description: Unique agreement reference
+          agreement:
+            type: object
+    WithdrawAgreement:
+      payload:
+        type: object
+        properties:
+          sbi:
+            type: number
+            description: Single Business Identifier
+          agreementNumber:
+            type: string
+            description: Unique agreement reference
+
+  schemas:
+    Calculation:
+      type: object
+      properties:
+        standards:
+          soilProtection:
+            actions:
+              cultivateDrillSlope:
+                $ref: '#/components/schemas/CalculationInput'
+              stripTillageNotill:
+                $ref: '#/components/schemas/CalculationInput'
+              soilManagementPlan:
+                $ref: '#/components/schemas/CalculationInput'
+              avoidMachineryTraffic:
+                $ref: '#/components/schemas/CalculationInput'
+              soilAssessment:
+                $ref: '#/components/schemas/CalculationInput'
+              useShallow:
+                $ref: '#/components/schemas/CalculationInput'
+              addOrganicMatter:
+                $ref: '#/components/schemas/CalculationInput'
+              establishGreenCover:
+                $ref: '#/components/schemas/CalculationInput'
+              convertArableLand:
+                $ref: '#/components/schemas/CalculationInput'
+          permanentGrasslandProtection:
+            actions:
+          moorlandGrazing:
+            actions:
+          livestockWelfare:
+            actions:
+    CalculationInput:
+      type: array
+      items:
+        properties:
+          parcelId:
+            type: string
+            description: sheet Id and parcel Id
+          area:
+            type: number
+            description: eligible area in hectares
