@@ -55,7 +55,7 @@ components:
           type: string
           description: unique agreement reference
         isEligible:
-          type: string
+          type: boolean
           description: true/false status
     validationResponse:
       type: object
@@ -69,7 +69,7 @@ components:
           type: string
           description: unique agreement reference
         isValid:
-          type: string
+          type: boolean
           description: true/false status
         errors:
           type: array
@@ -124,14 +124,18 @@ components:
               livestockWelfare:
                 actions:
     CalculationOutput:
-      type: object
-      properties:
-        area:
-          type: number
-          description: eligible area in hectares
-        expression:
-          type: string
-          description: calculation applied
-        value:
-          type: number
-          description: payment value in GBP
+      type: array
+      items:
+        properties:
+          parcelId:
+            type: string
+            description: sheet Id and parcel Id
+          area:
+            type: number
+            description: eligible area in hectares
+          expression:
+            type: string
+            description: calculation applied
+          value:
+            type: number
+            description: payment value in GBP

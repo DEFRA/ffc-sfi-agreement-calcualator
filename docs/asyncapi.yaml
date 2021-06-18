@@ -100,8 +100,12 @@ components:
           livestockWelfare:
             actions:
     CalculationInput:
-      type: object
-      properties:
-        area:
-          type: number
-          description: Eligible area in hectares
+      type: array
+      items:
+        properties:
+          parcelId:
+            type: string
+            description: sheet Id and parcel Id
+          area:
+            type: number
+            description: eligible area in hectares
