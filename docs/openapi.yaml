@@ -118,17 +118,20 @@ components:
                   convertArableLand:
                     $ref: '#/components/schemas/CalculationOutput'
               permanentGrasslandProtection:
+                actions:
               moorlandGrazing:
+                actions:
               livestockWelfare:
-        CalculationOutput:
-          type: object
-          properties:
-            area:
-              type: number
-              description: eligible area in hectares
-            expression:
-              type: string
-              description: calculation applied
-            value:
-              type: number
-              description: payment value in GBP
+                actions:
+    CalculationOutput:
+      type: object
+      properties:
+        area:
+          type: number
+          description: eligible area in hectares
+        expression:
+          type: string
+          description: calculation applied
+        value:
+          type: number
+          description: payment value in GBP

@@ -94,8 +94,11 @@ components:
               convertArableLand:
                 $ref: '#/components/schemas/CalculationInput'
           permanentGrasslandProtection:
+            actions:
           moorlandGrazing:
+            actions:
           livestockWelfare:
+            actions:
     CalculationInput:
       type: object
       properties:
