@@ -93,6 +93,9 @@ components:
         agreementNumber:
           type: string
           description: unique agreement reference
+        paymentAmount:
+          type: number
+          description: total overall payment amount
         calculation:
           type: object
           properties:
