@@ -12,6 +12,7 @@ module.exports = [{
         const cacheData = await cache.get('calculation', correlationId)
         if (cacheData && cacheData.paymentAmount !== undefined) {
           const calculationresponse = buildResponse(cacheData)
+          calculationresponse.correlationId = correlationId
           return h.response(calculationresponse).code(200)
         }
       }
