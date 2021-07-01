@@ -82,6 +82,17 @@ components:
               errorMessage:
                 type: string
                 description: validation error message
+        warnings:
+          type: array
+          items:
+            type: object
+            properties:
+              parcelId:
+                type: string
+                description: unique parcel reference
+              warningMessage:
+                type: string
+                description: validation warning message
     calculationResponse:
       type: object
       properties:
