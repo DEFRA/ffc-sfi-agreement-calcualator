@@ -106,6 +106,9 @@ components:
           parcelId:
             type: string
             description: sheet Id and parcel Id
+          optionId:
+            type: string
+            description: SFI option
           area:
             type: number
             description: eligible area in hectares
