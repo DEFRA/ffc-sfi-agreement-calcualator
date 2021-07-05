@@ -1,5 +1,5 @@
 const cache = require('../cache')
-const isEligible = require('../eligibility')
+const { getEligibility } = require('../api/crown-hosting')
 
 async function processEligibilityMessage (message, receiver) {
   try {
@@ -9,7 +9,8 @@ async function processEligibilityMessage (message, receiver) {
     await cache.clear('eligibility', correlationId)
     await cache.set('eligibility', correlationId, message.body)
     console.info(`Request for eligibility check stored in cache, correlation Id: ${correlationId}`)
-    await cache.update('eligibility', correlationId, { correlationId, sbi, isEligible: isEligible(sbi) })
+    const { isEligible, reason } = await getEligibility(sbi)
+    await cache.update('eligibility', correlationId, { correlationId, sbi, isEligible, reason })
     console.info(`Response available for eligibility check, correlation Id: ${correlationId}`)
     await receiver.completeMessage(message)
   } catch (err) {

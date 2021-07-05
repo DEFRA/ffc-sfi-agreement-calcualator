@@ -35,6 +35,7 @@ services:
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       REDIS_HOSTNAME: redis
+      CH_API_GATEWAY: ${CH_API_GATEWAY}
   
   ffc-sfi-agreement-calculator-postgres:
     image: postgres:11.4-alpine

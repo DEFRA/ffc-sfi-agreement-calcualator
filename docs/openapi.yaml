@@ -57,6 +57,9 @@ components:
         isEligible:
           type: boolean
           description: true/false status
+        reason:
+          type: string
+          description: reason for not being eligible 
     validationResponse:
       type: object
       properties:

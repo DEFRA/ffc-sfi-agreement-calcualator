@@ -1,5 +1,5 @@
 const isEligible = (sbi) => {
-  return true
+  return { isEligible: true, reason: '' }
 }
 
 module.exports = isEligible
