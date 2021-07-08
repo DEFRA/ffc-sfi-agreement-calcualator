@@ -17,6 +17,10 @@ module.exports = {
     name: 'calculation',
     expiresIn: defaultExpiresIn
   },
+  requestSBISegment: {
+    name: 'request-sbi',
+    expiresIn: defaultExpiresIn
+  },
   redisCatboxOptions: {
     host: process.env.REDIS_HOSTNAME,
     port: process.env.REDIS_PORT,
