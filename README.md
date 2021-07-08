@@ -39,6 +39,8 @@ configured) the microservice will use AAD Pod Identity.
 | SUBMIT_SUBSCRIPTION_ADDRESS |  |
 | WITHDRAW_TOPIC_ADDRESS |  |
 | WITHDRAW_SUBSCRIPTION_ADDRESS |  |
+| REQUEST_SBI_TOPIC_ADDRESS |  |
+| REQUEST_SBI_SUBSCRIPTION_ADDRESS |  |
 | PAYMENT_TOPIC_ADDRESS |  |
 
 ## Running the application

@@ -49,6 +49,13 @@ const mqSchema = joi.object({
     password: joi.string(),
     topic: joi.string()
   },
+  requestSBISubscription: {
+    name: joi.string().default('ffc-sfi-request-sbi'),
+    address: joi.string().default('request-sbi'),
+    username: joi.string(),
+    password: joi.string(),
+    topic: joi.string()
+  },
   paymentTopic: {
     name: joi.string().default('ffc-sfi-payment-request'),
     address: joi.string().default('payment'),
@@ -105,6 +112,13 @@ const mqConfig = {
     password: process.env.MESSAGE_QUEUE_PASSWORD,
     topic: process.env.WITHDRAW_TOPIC_ADDRESS
   },
+  requestSBISubscription: {
+    name: process.env.REQUEST_SBI_SUBSCRIPTION_NAME,
+    address: process.env.REQUEST_SBI_SUBSCRIPTION_ADDRESS,
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD,
+    topic: process.env.REQUEST_SBI_TOPIC_ADDRESS
+  },
   paymentTopic: {
     name: process.env.PAYMENT_TOPIC_NAME,
     address: process.env.PAYMENT_TOPIC_ADDRESS,
@@ -128,6 +142,7 @@ const validateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value
 const calculateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.calculateSubscription }
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
 const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
+const requestSBISubscription = { ...mqResult.value.messageQueue, ...mqResult.value.requestSBISubscription }
 const paymentTopic = { ...mqResult.value.messageQueue, ...mqResult.value.paymentTopic }
 
 module.exports = {
@@ -137,5 +152,6 @@ module.exports = {
   calculateSubscription,
   submitSubscription,
   withdrawSubscription,
+  requestSBISubscription,
   paymentTopic
 }
