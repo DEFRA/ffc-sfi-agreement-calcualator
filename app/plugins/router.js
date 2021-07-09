@@ -4,7 +4,8 @@ const routes = [].concat(
   require('../routes/calculate'),
   require('../routes/eligibility'),
   require('../routes/standards'),
-  require('../routes/validate')
+  require('../routes/validate'),
+  require('../routes/request-sbi')
 )
 
 module.exports = {
