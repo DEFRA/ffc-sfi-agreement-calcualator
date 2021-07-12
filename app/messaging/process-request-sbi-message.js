@@ -1,8 +1,5 @@
 const cache = require('../cache')
-
-const mockSBIPayload = {
-  sbis: ['106336339', '106651310']
-}
+const api = require('../api')
 
 async function processRequestSBIMessage (message, receiver) {
   try {
@@ -11,7 +8,7 @@ async function processRequestSBIMessage (message, receiver) {
     await cache.clear('request-sbi', correlationId)
     await cache.set('request-sbi', correlationId, message.body)
     console.info(`Request for SBIs from CRN stored in cache, correlation Id: ${correlationId}`)
-    const payload = mockSBIPayload
+    const payload = await api.post('/request-sbi', message.body)
     await cache.update('request-sbi', correlationId, { ...payload, correlationId })
     console.info(`Response available for request-sbi, correlation Id: ${correlationId}`)
     await receiver.completeMessage(message)
