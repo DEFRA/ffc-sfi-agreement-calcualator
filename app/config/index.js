@@ -7,13 +7,15 @@ const { development, production, test } = require('./constants').environments
 // Define config schema
 const schema = Joi.object({
   port: Joi.number().default(3003),
-  env: Joi.string().valid(development, test, production).default(development)
+  env: Joi.string().valid(development, test, production).default(development),
+  apiGatewayEndpoint: Joi.string().uri().required()
 })
 
 // Build config
 const config = {
   port: process.env.PORT,
-  env: process.env.NODE_ENV
+  env: process.env.NODE_ENV,
+  apiGatewayEndpoint: process.env.API_GATEWAY_ENDPOINT
 }
 
 // Validate config
