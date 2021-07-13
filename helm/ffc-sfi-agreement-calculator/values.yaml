@@ -40,6 +40,7 @@ container:
   submitSubscriptionAddress: ffc-sfi-agreement-submit-calculator
   calculateSubscriptionAddress: ffc-sfi-agreement-calculate-calculator
   withdrawSubscriptionAddress: ffc-sfi-agreement-withdraw-calculator
+  requestSbiSubscriptionAddress: ffc-sfi-agreement-calculator
   eligibilityTopicAddress: ffc-sfi-eligibility-check
   standardsTopicAddress: ffc-sfi-standards-request
   validateTopicAddress: ffc-sfi-agreement-validate
@@ -47,6 +48,7 @@ container:
   calculateTopicAddress: ffc-sfi-agreement-calculate
   withdrawTopicAddress: ffc-sfi-agreement-withdraw
   paymentTopicAddress: ffc-sfi-payment-request
+  requestSbiTopicAddress: ffc-sfi-request-sbi
   redisHostname: redis-redis-ha.default
   redisPassword: redis
   redisPort: 6379
