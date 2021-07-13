@@ -18,6 +18,7 @@ data:
   SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
   WITHDRAW_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.withdrawSubscriptionAddress }}
   PAYMENT_TOPIC_ADDRESS: {{ quote .Values.container.paymentTopicAddress }}
+  API_GATEWAY_ENDPOINT: {{ quote .Values.container.apiGatewayEndpoint }}
   REQUEST_SBI_TOPIC_ADDRESS: {{ quote .Values.container.requestSbiTopicAddress }}
   REQUEST_SBI_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.requestSbiSubscriptionAddress }}
   {{- if .Values.container.redisHostname }}

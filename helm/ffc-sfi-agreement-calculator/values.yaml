@@ -53,6 +53,7 @@ container:
   redisPassword: redis
   redisPort: 6379
   redisPartition: ffc-sfi-ffc-sfi-agreement-calculator
+  apiGatewayEndpoint: http://ffc-sfi-api-gateway.ffc-sfi
 
 postgresService:
   postgresDb: ffc_sfi_agreement_calculator
