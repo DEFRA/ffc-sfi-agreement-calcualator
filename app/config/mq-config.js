@@ -28,6 +28,12 @@ const mqSchema = joi.object({
     password: joi.string(),
     topic: joi.string()
   },
+  validationResponseTopic: {
+    name: joi.string().default('ffc-sfi-agreement-validate-response'),
+    address: joi.string().default('validation'),
+    username: joi.string(),
+    password: joi.string()
+  },
   calculateSubscription: {
     name: joi.string().default('ffc-sfi-agreement-calculate'),
     address: joi.string().default('calculate'),
@@ -91,6 +97,12 @@ const mqConfig = {
     password: process.env.MESSAGE_QUEUE_PASSWORD,
     topic: process.env.VALIDATE_TOPIC_ADDRESS
   },
+  validationResponseTopic: {
+    name: process.env.VALIDATION_TOPIC_NAME,
+    address: process.env.VALIDATION_TOPIC_ADDRESS,
+    username: process.env.MESSAGE_QUEUE_USER,
+    password: process.env.MESSAGE_QUEUE_PASSWORD
+  },
   calculateSubscription: {
     name: process.env.CALCULATE_SUBSCRIPTION_NAME,
     address: process.env.CALCULATE_SUBSCRIPTION_ADDRESS,
@@ -144,6 +156,7 @@ const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.s
 const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
 const requestSBISubscription = { ...mqResult.value.messageQueue, ...mqResult.value.requestSBISubscription }
 const paymentTopic = { ...mqResult.value.messageQueue, ...mqResult.value.paymentTopic }
+const validationResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.validateResponseTopic }
 
 module.exports = {
   eligibilitySubscription,
@@ -153,5 +166,6 @@ module.exports = {
   submitSubscription,
   withdrawSubscription,
   requestSBISubscription,
-  paymentTopic
+  paymentTopic,
+  validationResponseTopic
 }
