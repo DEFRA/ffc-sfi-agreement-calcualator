@@ -1,16 +1,10 @@
 const hoek = require('@hapi/hoek')
 const config = require('../config').cacheConfig
-let eligibilityCache
 let standardsCache
 let validationCache
 let calculationCache
-let requestSBICache
 
 const setup = (server) => {
-  eligibilityCache = server.cache({
-    expiresIn: config.eligibilitySegment.expiresIn,
-    segment: config.eligibilitySegment.name
-  })
   standardsCache = server.cache({
     expiresIn: config.standardsSegment.expiresIn,
     segment: config.standardsSegment.name
@@ -22,10 +16,6 @@ const setup = (server) => {
   calculationCache = server.cache({
     expiresIn: config.calculationSegment.expiresIn,
     segment: config.calculationSegment.name
-  })
-  requestSBICache = server.cache({
-    expiresIn: config.requestSBISegment.expiresIn,
-    segment: config.requestSBISegment.name
   })
 }
 
@@ -53,16 +43,12 @@ const clear = async (cacheName, key) => {
 
 const getCache = (cacheName) => {
   switch (cacheName) {
-    case 'eligibility':
-      return eligibilityCache
     case 'standards':
       return standardsCache
     case 'validation':
       return validationCache
     case 'calculation':
       return calculationCache
-    case 'request-sbi':
-      return requestSBICache
     default:
       throw new Error(`Cache ${cacheName} does not exist`)
   }
