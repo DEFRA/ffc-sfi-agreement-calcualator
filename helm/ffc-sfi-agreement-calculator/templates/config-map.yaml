@@ -5,13 +5,11 @@ data:
   PORT: {{ quote .Values.container.port }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
-  ELIGIBILITY_TOPIC_ADDRESS: {{ quote .Values.container.eligibilityTopicAddress }}
   STANDARDS_TOPIC_ADDRESS: {{ quote .Values.container.standardsTopicAddress }}
   VALIDATE_TOPIC_ADDRESS: {{ quote .Values.container.validateTopicAddress }}
   CALCULATE_TOPIC_ADDRESS: {{ quote .Values.container.calculateTopicAddress }}
   SUBMIT_TOPIC_ADDRESS: {{ quote .Values.container.submitTopicAddress }}
   WITHDRAW_TOPIC_ADDRESS: {{ quote .Values.container.withdrawTopicAddress }}
-  ELIGIBILITY_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.eligibilitySubscriptionAddress }}
   STANDARDS_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.standardsSubscriptionAddress }}
   VALIDATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.validateSubscriptionAddress }}
   VALIDATION_TOPIC_ADDRESS: {{ quote .Values.container.validationTopicAddress }}
@@ -20,8 +18,6 @@ data:
   WITHDRAW_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.withdrawSubscriptionAddress }}
   PAYMENT_TOPIC_ADDRESS: {{ quote .Values.container.paymentTopicAddress }}
   API_GATEWAY_ENDPOINT: {{ quote .Values.container.apiGatewayEndpoint }}
-  REQUEST_SBI_TOPIC_ADDRESS: {{ quote .Values.container.requestSbiTopicAddress }}
-  REQUEST_SBI_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.requestSbiSubscriptionAddress }}
   {{- if .Values.container.redisHostname }}
   REDIS_HOSTNAME: {{ quote .Values.container.redisHostname }}
   {{- end }}

@@ -7,13 +7,6 @@ const mqSchema = joi.object({
     type: joi.string(),
     appInsights: joi.object()
   },
-  eligibilitySubscription: {
-    name: joi.string().default('ffc-sfi-eligibility-check'),
-    address: joi.string().default('eligibility'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string()
-  },
   standardsSubscription: {
     name: joi.string().default('ffc-sfi-standards-request'),
     address: joi.string().default('standards'),
@@ -55,13 +48,6 @@ const mqSchema = joi.object({
     password: joi.string(),
     topic: joi.string()
   },
-  requestSBISubscription: {
-    name: joi.string().default('ffc-sfi-request-sbi'),
-    address: joi.string().default('request-sbi'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string()
-  },
   paymentTopic: {
     name: joi.string().default('ffc-sfi-payment-request'),
     address: joi.string().default('payment'),
@@ -75,13 +61,6 @@ const mqConfig = {
     useCredentialChain: process.env.NODE_ENV === 'production',
     type: 'subscription',
     appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
-  },
-  eligibilitySubscription: {
-    name: process.env.ELIGIBILITY_SUBSCRIPTION_NAME,
-    address: process.env.ELIGIBILITY_SUBSCRIPTION_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
-    topic: process.env.ELIGIBILITY_TOPIC_ADDRESS
   },
   standardsSubscription: {
     name: process.env.STANDARDS_SUBSCRIPTION_NAME,
@@ -124,13 +103,6 @@ const mqConfig = {
     password: process.env.MESSAGE_QUEUE_PASSWORD,
     topic: process.env.WITHDRAW_TOPIC_ADDRESS
   },
-  requestSBISubscription: {
-    name: process.env.REQUEST_SBI_SUBSCRIPTION_NAME,
-    address: process.env.REQUEST_SBI_SUBSCRIPTION_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
-    topic: process.env.REQUEST_SBI_TOPIC_ADDRESS
-  },
   paymentTopic: {
     name: process.env.PAYMENT_TOPIC_NAME,
     address: process.env.PAYMENT_TOPIC_ADDRESS,
@@ -148,24 +120,20 @@ if (mqResult.error) {
   throw new Error(`The message queue config is invalid. ${mqResult.error.message}`)
 }
 
-const eligibilitySubscription = { ...mqResult.value.messageQueue, ...mqResult.value.eligibilitySubscription }
 const standardsSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.standardsSubscription }
 const validateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.validateSubscription }
 const calculateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.calculateSubscription }
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
 const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
-const requestSBISubscription = { ...mqResult.value.messageQueue, ...mqResult.value.requestSBISubscription }
 const paymentTopic = { ...mqResult.value.messageQueue, ...mqResult.value.paymentTopic }
 const validationResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.validateResponseTopic }
 
 module.exports = {
-  eligibilitySubscription,
   standardsSubscription,
   validateSubscription,
   calculateSubscription,
   submitSubscription,
   withdrawSubscription,
-  requestSBISubscription,
   paymentTopic,
   validationResponseTopic
 }

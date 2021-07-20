@@ -3,10 +3,6 @@ info:
   title: FFC SFI Agreement Calculator
   version: '1.0.0'
 channels:
-  eligibility/check:
-    subscribe:
-      message:
-        $ref: '#/components/messages/EligibilityCheck'
   agreement/validate:
     subscribe:
       message:
@@ -26,13 +22,6 @@ channels:
 
 components:
   messages:
-    EligibilityCheck:
-      payload:
-        type: object
-        properties:
-          sbi:
-            type: number
-            description: Single Business Identifier
     CalculateAgreement:
       payload:
         type: object

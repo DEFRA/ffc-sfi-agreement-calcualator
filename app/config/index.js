@@ -36,13 +36,11 @@ value.isDev = value.env === development
 value.isTest = value.env === test
 value.isProd = value.env === production
 
-value.eligibilitySubscription = mqConfig.eligibilitySubscription
 value.standardsSubscription = mqConfig.standardsSubscription
 value.validateSubscription = mqConfig.validateSubscription
 value.calculateSubscription = mqConfig.calculateSubscription
 value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
-value.requestSBISubscription = mqConfig.requestSBISubscription
 value.paymentTopic = mqConfig.paymentTopic
 value.validationResponseTopic = mqConfig.validationResponseTopic
 

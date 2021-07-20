@@ -1,10 +1,6 @@
 const defaultExpiresIn = 3600 * 1000 // 1 hour
 
 module.exports = {
-  eligibilitySegment: {
-    name: 'eligibility',
-    expiresIn: defaultExpiresIn
-  },
   standardsSegment: {
     name: 'standards',
     expiresIn: defaultExpiresIn
@@ -15,10 +11,6 @@ module.exports = {
   },
   calculationSegment: {
     name: 'calculation',
-    expiresIn: defaultExpiresIn
-  },
-  requestSBISegment: {
-    name: 'request-sbi',
     expiresIn: defaultExpiresIn
   },
   redisCatboxOptions: {

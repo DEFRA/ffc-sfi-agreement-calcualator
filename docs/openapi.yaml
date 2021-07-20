@@ -7,17 +7,6 @@ servers:
     url: localhost:3003/​
 
 paths:
-  /eligibility:
-    get:
-      responses:
-        '200':
-          description: response available
-          content:
-            application/json:
-              schema:
-                $ref: '#components/schemas/eligibilityResponse'
-        '202':
-          description: response not yet available
   /validate:
     get:
       responses:
@@ -43,20 +32,6 @@ paths:
 
 components:
   schemas:
-    eligibilityResponse:
-      type: object
-      properties:
-        correlationId:
-          type: string
-        sbi:
-          type: integer
-          description: Single Business Identifier
-        agreementNumber:
-          type: string
-          description: unique agreement reference
-        isEligible:
-          type: boolean
-          description: true/false status
     validationResponse:
       type: object
       properties:

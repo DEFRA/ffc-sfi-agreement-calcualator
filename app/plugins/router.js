@@ -2,10 +2,8 @@ const routes = [].concat(
   require('../routes/healthy'),
   require('../routes/healthz'),
   require('../routes/calculate'),
-  require('../routes/eligibility'),
   require('../routes/standards'),
-  require('../routes/validate'),
-  require('../routes/request-sbi')
+  require('../routes/validate')
 )
 
 module.exports = {
