@@ -44,6 +44,7 @@ container:
   eligibilityTopicAddress: ffc-sfi-eligibility-check
   standardsTopicAddress: ffc-sfi-standards-request
   validateTopicAddress: ffc-sfi-agreement-validate
+  validationTopicAddress: ffc-sfi-agreement-validate-response
   submitTopicAddress: ffc-sfi-agreement-submit
   calculateTopicAddress: ffc-sfi-agreement-calculate
   withdrawTopicAddress: ffc-sfi-agreement-withdraw

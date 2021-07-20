@@ -1,5 +1,7 @@
 const cache = require('../cache')
 const validationResponse = require('../validation')
+const sendMessage = require('./send-message')
+const config = require('../config')
 
 async function processValidateMessage (message, receiver) {
   try {
@@ -7,7 +9,9 @@ async function processValidateMessage (message, receiver) {
     await cache.clear('validation', message.correlationId)
     await cache.set('validation', message.correlationId, message.body)
     console.info(`Request for validation stored in cache, correlation Id: ${message.correlationId}`)
-    await cache.update('validation', message.correlationId, validationResponse(message.body, message.correlationId))
+    const validationResult = validationResponse(message.body, message.correlationId)
+    await cache.update('validation', message.correlationId, validationResponse)
+    await sendMessage(validationResult, 'uk.gov.sfi.validate.result', message.correlationId, config.validationResponseTopic)
     console.info(`Response available for validation check, correlation Id: ${message.correlationId}`)
     await receiver.completeMessage(message)
   } catch (err) {

@@ -14,6 +14,7 @@ data:
   ELIGIBILITY_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.eligibilitySubscriptionAddress }}
   STANDARDS_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.standardsSubscriptionAddress }}
   VALIDATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.validateSubscriptionAddress }}
+  VALIDATION_TOPIC_ADDRESS: {{ quote .Values.container.validationTopicAddress }}
   CALCULATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.calculateSubscriptionAddress }}
   SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
   WITHDRAW_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.withdrawSubscriptionAddress }}
