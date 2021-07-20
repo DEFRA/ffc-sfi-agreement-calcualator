@@ -31,6 +31,7 @@ configured) the microservice will use AAD Pod Identity.
 | MESSAGE_QUEUE_USER     | Azure Service Bus SAS policy name, e.g. `RootManageSharedAccessKey` |
 | VALIDATE_TOPIC_ADDRESS |  |
 | VALIDATE_SUBSCRIPTION_ADDRESS |  |
+| VALIDATION_TOPIC_ADDRESS |  |
 | CALCULATE_TOPIC_ADDRESS |  |
 | CALCULATE_SUBSCRIPTION_ADDRESS |  |
 | SUBMIT_TOPIC_ADDRESS |  |

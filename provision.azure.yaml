@@ -2,6 +2,7 @@ resources:
   topics:
     - name: standards
     - name: validate
+    - name: validation
     - name: calculate
     - name: submit
     - name: withdraw
