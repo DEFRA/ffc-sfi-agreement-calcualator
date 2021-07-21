@@ -1,16 +1,23 @@
-async function checkSSSI (parcelId) {
-  return Promise.resolve({ parcelId, result: false })
+const sssiData = require('./data/sssi.json')
+
+function checkSSSI (parcelId) {
+  const item = sssiData.find(item => item.parcelId === parcelId)
+  return item ? item.sssi : false
 }
 
-async function applySSSI (landCover) {
-  const parcels = landCover.parcels // TODO
+async function applySSSI (standard) {
+  const parcels = standard.parcels
 
   // Apply SSSI status to each parcel
   for (let i = 0; i < parcels.length; i++) {
     const parcel = parcels[i]
+    const sssiStatus = checkSSSI(parcel.id)
 
-    const sssiStatus = await checkSSSI(parcel.id)
-    parcel.hasSSSI = sssiStatus.result
+    if (sssiStatus) {
+      parcel.warnings.push({
+        SSSI: true
+      })
+    }
   }
 }
 

@@ -1,47 +1,60 @@
 const { applySSSI } = require('./sssi')
 const { applyHEFER } = require('./hefer')
 const { getLandCover } = require('./land-cover')
-const { filterExistingSFIAgreements } = require('./sfi')
+const { applyExistingSFIAgreements } = require('./sfi')
 const { filterCountrysideStewardshipClaim } = require('./countryside-stewardship')
 const { filterEnvironmentalStewardshipClaim } = require('./environmental-stewardship')
 
-// const standards = [{
-//   id: 1,
-//   name: 'soilProtection'
-// },
-// {
-//   id: 2,
-//   name: 'permanentGrasslandProtection'
-// },
-// {
-//   id: 3,
-//   name: 'moorlandGrazing'
-// },
-// {
-//   id: 4,
-//   name: 'livestockWelfare'
-// }]
+async function getStandards (organisationId, sbi, callerId) {
+  // Get the land cover data for the organisation id
+  const landCover = await getLandCover(organisationId, callerId)
 
-async function getStandards (sbi) {
-  // Get the land cover data for the sbi
-  const landCover = await getLandCover(sbi)
+  const getParcelsByCode = (code) => {
+    return landCover.filter(parcel => parcel.info.find(info => info.code === code && info.area > 0))
+  }
 
-  // Apply SSSI status
-  await applySSSI(landCover)
+  const standards = [
+    {
+      code: '130',
+      name: 'Permanent grassland'
+    },
+    {
+      code: '110',
+      name: 'Arable land'
+    }
+  ]
 
-  // Apply CS filter to land cover
-  await filterCountrysideStewardshipClaim(landCover)
+  for (let i = 0; i < standards.length; i++) {
+    const standard = standards[i]
 
-  // Apply ES filter to land cover
-  await filterEnvironmentalStewardshipClaim(landCover)
+    const parcels = getParcelsByCode(standard.code)
 
-  // Apply SSSI status
-  await applyHEFER(landCover)
+    standard.parcels = parcels.map(parcel => ({
+      id: parcel.id,
+      area: parcel.info
+        .filter(info => info.code === standard.code)
+        .map(info => info.area)
+        .reduce((a, b) => a + b, 0),
+      warnings: []
+    }))
 
-  // Apply existing SFI agreement filter to land cover
-  await filterExistingSFIAgreements(landCover)
+    // Apply SSSI status
+    await applySSSI(standard)
 
-  return landCover
+    // Apply CS filter to land cover
+    await filterCountrysideStewardshipClaim(standard)
+
+    // Apply ES filter to land cover
+    await filterEnvironmentalStewardshipClaim(standard)
+
+    // Apply HEFER status
+    await applyHEFER(standard)
+
+    // Apply existing SFI agreement filter to land cover
+    await applyExistingSFIAgreements(standard)
+  }
+
+  return standards
 }
 
-module.exports = getStandards
+module.exports = { getStandards }
