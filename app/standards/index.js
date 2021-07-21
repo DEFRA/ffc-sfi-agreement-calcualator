@@ -9,6 +9,11 @@ async function getStandards (organisationId, sbi, callerId) {
   // Get the land cover data for the organisation id
   const landCover = await getLandCover(organisationId, callerId)
 
+  // Return the calculated standards for the land cover parcels
+  return calculateStandards(landCover)
+}
+
+function calculateStandards (parcels) {
   const standards = [
     {
       code: '130',
@@ -22,8 +27,8 @@ async function getStandards (organisationId, sbi, callerId) {
     }
   ]
 
-  for (let i = 0; i < landCover.length; i++) {
-    const parcel = landCover[i]
+  for (let i = 0; i < parcels.length; i++) {
+    const parcel = parcels[i]
     const parcelInfo = parcel.info
 
     for (let j = 0; j < standards.length; j++) {
@@ -39,7 +44,7 @@ async function getStandards (organisationId, sbi, callerId) {
         }
       }
 
-      // If there are areas within the parcel, apply the -ve adjustments (CS/ES)
+      // If there is area within the parcel, apply the -ve adjustments (CS/ES)
       // and then, if there is still parcel area remaining, apply the various
       // status flags (HEFER/SSSI/SFI) and add the parcel to the current standard.
       if (area > 0) {
@@ -77,4 +82,7 @@ async function getStandards (organisationId, sbi, callerId) {
   return standards
 }
 
-module.exports = { getStandards }
+module.exports = {
+  getStandards,
+  calculateStandards
+}
