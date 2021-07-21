@@ -1,10 +1,8 @@
-// const { get } = require('../api')
-const landCover = require('./data/land-cover.json')
+const { get } = require('../api')
 
 async function getLandCover (organisationId, callerId) {
-  return landCover
-  // const parcels = await get(`/lms/organisation/${organisationId}/land-covers`, callerId)
-  // return parcels
+  const parcels = await get(`/lms/organisation/${organisationId}/land-covers`, callerId)
+  return parcels
 }
 
 module.exports = {
