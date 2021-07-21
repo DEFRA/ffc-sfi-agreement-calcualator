@@ -30,6 +30,7 @@ async function getStandards (organisationId, sbi, callerId) {
       const standard = standards[j]
       let area = 0
 
+      // Sum the parcel area eligible for this standard
       for (let k = 0; k < parcelInfo.length; k++) {
         const info = parcelInfo[k]
 
@@ -38,31 +39,37 @@ async function getStandards (organisationId, sbi, callerId) {
         }
       }
 
-      // Apply adjustments
-      const csClaimArea = getCountrysideStewardshipClaim(parcel.id, standard.code)
-      if (csClaimArea > 0) area -= csClaimArea
-
-      const esClaimArea = getEnvironmentalStewardshipClaim(parcel.id, standard.code)
-      if (esClaimArea > 0) area -= esClaimArea
-
+      // If there are areas within the parcel, apply the -ve adjustments (CS/ES)
+      // and then, if there is still parcel area remaining, apply the various
+      // status flags (HEFER/SSSI/SFI) and add the parcel to the current standard.
       if (area > 0) {
-        const warnings = []
+        // Apply adjustments
+        const csClaimArea = getCountrysideStewardshipClaim(parcel.id, standard.code)
+        if (csClaimArea > 0) area -= csClaimArea
 
-        // Apply flags
-        const sssiStatus = checkSSSI(parcel.id)
-        if (sssiStatus) warnings.push({ SSSI: true })
+        const esClaimArea = getEnvironmentalStewardshipClaim(parcel.id, standard.code)
+        if (esClaimArea > 0) area -= esClaimArea
 
-        const heferStatus = checkHEFER(parcel.id)
-        if (heferStatus) warnings.push({ HEFER: true })
+        if (area > 0) {
+          const warnings = []
 
-        const sfiStatus = checkSFI(parcel.id)
-        if (sfiStatus) warnings.push({ SFI: true })
+          // Apply status flags
+          const sssiStatus = checkSSSI(parcel.id)
+          if (sssiStatus) warnings.push({ SSSI: true })
 
-        standard.parcels.push({
-          id: parcel.id,
-          area,
-          warnings
-        })
+          const heferStatus = checkHEFER(parcel.id)
+          if (heferStatus) warnings.push({ HEFER: true })
+
+          const sfiStatus = checkSFI(parcel.id)
+          if (sfiStatus) warnings.push({ SFI: true })
+
+          // Add the parcel with the adjusted area to the standard
+          standard.parcels.push({
+            id: parcel.id,
+            area,
+            warnings
+          })
+        }
       }
     }
   }
