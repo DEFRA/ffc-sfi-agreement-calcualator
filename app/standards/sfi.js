@@ -22,5 +22,6 @@ async function applyExistingSFIAgreements (standard) {
 }
 
 module.exports = {
+  checkSFI: checkExistingSFIAgreements,
   applyExistingSFIAgreements
 }

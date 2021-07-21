@@ -22,5 +22,6 @@ async function applyHEFER (standard) {
 }
 
 module.exports = {
+  checkHEFER,
   applyHEFER
 }

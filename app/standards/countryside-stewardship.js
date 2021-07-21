@@ -10,7 +10,7 @@ async function filterCountrysideStewardshipClaim (standard) {
     const item = csData.find(item => item.parcelId === parcel.id)
 
     if (item) {
-      const landCover = item.landCovers.find(lc => lc.code === standard.code && lc.area > 0)
+      const landCover = item.landCover.find(lc => lc.code === standard.code && lc.area > 0)
 
       if (landCover) {
         parcel.area -= landCover.area
@@ -19,6 +19,16 @@ async function filterCountrysideStewardshipClaim (standard) {
   }
 }
 
+function getCountrysideStewardshipClaim (parcelId, landCoverCode) {
+  return csData
+    .filter(item => item.parcelId === parcelId)
+    .map(item => item.landCover.filter(lc => lc.code === landCoverCode))
+    .flat()
+    .map(item => item.area)
+    .reduce((a, b) => a + b, 0)
+}
+
 module.exports = {
+  getCountrysideStewardshipClaim,
   filterCountrysideStewardshipClaim
 }

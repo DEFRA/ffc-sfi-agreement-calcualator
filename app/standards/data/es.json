@@ -1,7 +1,7 @@
 [
   {
     "parcelId": "SW44332378",
-    "landCovers": [
+    "landCover": [
       {
         "code": "130",
         "area": 100
@@ -10,7 +10,7 @@
   },
   {
     "parcelId": "SW42317073",
-    "landCovers": [
+    "landCover": [
       {
         "code": "110",
         "area": 50
