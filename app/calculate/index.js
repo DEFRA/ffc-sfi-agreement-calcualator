@@ -1,22 +1,23 @@
-const buildResponse = (calculatePayload) => {
-  calculate(calculatePayload, 'soilProtection', 6)
-  calculate(calculatePayload, 'permanentGrasslandProtection', 6)
-  calculate(calculatePayload, 'moorlandGrazing', 6)
-  calculate(calculatePayload, 'livestockWelfare', 6)
-  return calculatePayload
-}
+const rates = require('./rates.json')
 
-const calculate = (calculatePayload, standardType, amount) => {
-  const standard = calculatePayload.calculation.standards[standardType].actions
-  for (const [key, value] of Object.entries(standard)) {
-    standard[key] = value.map(action => {
-      action.expression = 'x*y'
-      action.value = 616800
-      action.expression = `AREA*${amount}`
-      action.value = action.area * amount
-      return action
-    })
+/**
+ * Calulates the standard payment rate for each ambition
+ * @param {String} code - The land use cover code (standard code)
+ * @param {Array} parcels - The array of eligible parcels allocated for use
+ * @returns {Object} - A payment rates object
+ */
+function calculatePaymentRates (code, parcels) {
+  const paymentRates = {}
+  const rate = rates[`_${code}`] || {}
+  const totalArea = parcels.reduce((a, b) => a + (b.area || 0), 0)
+
+  for (const key in rate) {
+    paymentRates[key] = (totalArea * rate[key]).toFixed(2)
   }
+
+  return paymentRates
 }
 
-module.exports = buildResponse
+module.exports = {
+  calculatePaymentRates
+}
