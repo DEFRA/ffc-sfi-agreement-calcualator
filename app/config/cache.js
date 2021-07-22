@@ -9,8 +9,8 @@ module.exports = {
     name: 'validation',
     expiresIn: defaultExpiresIn
   },
-  calculationSegment: {
-    name: 'calculation',
+  calculateSegment: {
+    name: 'calculate',
     expiresIn: defaultExpiresIn
   },
   redisCatboxOptions: {

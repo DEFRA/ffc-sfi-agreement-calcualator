@@ -1,14 +1,17 @@
 const cache = require('../cache')
-const calculateAgreement = require('../calculation')
+const { calculatePaymentRates } = require('../calculate')
 
 async function processCalculateMessage (message, receiver) {
   try {
-    console.info('Received request for calculation')
-    await cache.clear('calculation', message.correlationId)
-    await cache.set('calculation', message.correlationId, message.body)
-    console.info(`Request for calculation stored in cache, correlation Id: ${message.correlationId}`)
-    await cache.update('calculation', message.correlationId, { paymentAmount: calculateAgreement(message.body) })
-    console.info(`Response available for calculation, correlation Id: ${message.correlationId}`)
+    const { body, correlationId } = message
+    const { code, parcels } = body
+    console.info('Received request for calculate')
+    await cache.clear('calculate', correlationId)
+    await cache.set('calculate', correlationId, body)
+    console.info(`Request for calculate stored in cache, correlation Id: ${correlationId}`)
+    const paymentRates = calculatePaymentRates(code, parcels)
+    await cache.update('calculate', correlationId, { paymentRates })
+    console.info(`Response available for calculate, correlation Id: ${message}`)
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
