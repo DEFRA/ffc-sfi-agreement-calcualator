@@ -27,18 +27,14 @@ function calculateStandards (parcels) {
     }
   ]
 
-  for (let i = 0; i < parcels.length; i++) {
-    const parcel = parcels[i]
-    const parcelInfo = parcel.info
+  for (const parcel of parcels) {
+    const infos = parcel.info
 
-    for (let j = 0; j < standards.length; j++) {
-      const standard = standards[j]
+    for (const standard of standards) {
       let area = 0
 
       // Sum the parcel area eligible for this standard
-      for (let k = 0; k < parcelInfo.length; k++) {
-        const info = parcelInfo[k]
-
+      for (const info of infos) {
         if (info.area > 0 && info.code === standard.code) {
           area += info.area
         }
