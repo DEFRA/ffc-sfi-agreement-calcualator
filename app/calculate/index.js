@@ -12,7 +12,12 @@ function calculatePaymentRates (code, parcels) {
   const totalArea = parcels.reduce((a, b) => a + (b.area || 0), 0)
 
   for (const key in rate) {
-    paymentRates[key] = (totalArea * rate[key]).toFixed(2)
+    const ambitionRate = rate[key] || 0
+
+    paymentRates[key] = {
+      rate: ambitionRate,
+      paymentAmount: (totalArea * ambitionRate).toFixed(2)
+    }
   }
 
   return paymentRates
