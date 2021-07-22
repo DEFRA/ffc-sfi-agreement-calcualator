@@ -26,7 +26,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#components/schemas/calculationResponse'
+                $ref: '#components/schemas/calculateResponse'
         '202':
           description: response not yet available
 
@@ -57,7 +57,7 @@ components:
               errorMessage:
                 type: string
                 description: validation error message
-    calculationResponse:
+    calculateResponse:
       type: object
       properties:
         correlationId:

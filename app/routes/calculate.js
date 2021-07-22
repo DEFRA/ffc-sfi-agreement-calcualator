@@ -1,5 +1,5 @@
 const cache = require('../cache')
-const buildResponse = require('../calculation')
+const buildResponse = require('../calculate')
 
 module.exports = [{
   method: 'GET',
@@ -9,11 +9,11 @@ module.exports = [{
       const correlationId = request.query.correlationId
 
       if (correlationId) {
-        const cacheData = await cache.get('calculation', correlationId)
+        const cacheData = await cache.get('calculate', correlationId)
         if (cacheData && cacheData.paymentAmount !== undefined) {
-          const calculationresponse = buildResponse(cacheData)
-          calculationresponse.correlationId = correlationId
-          return h.response(calculationresponse).code(200)
+          const calculateResponse = buildResponse(cacheData)
+          calculateResponse.correlationId = correlationId
+          return h.response(calculateResponse).code(200)
         }
       }
       return h.response(`value for ${correlationId} not in cache, try later`).code(202)
