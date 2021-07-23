@@ -41,7 +41,6 @@ value.validateSubscription = mqConfig.validateSubscription
 value.calculateSubscription = mqConfig.calculateSubscription
 value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
-value.paymentTopic = mqConfig.paymentTopic
 value.validateResponseTopic = mqConfig.validateResponseTopic
 
 value.cacheConfig = cacheConfig

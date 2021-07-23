@@ -16,7 +16,6 @@ data:
   CALCULATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.calculateSubscriptionAddress }}
   SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
   WITHDRAW_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.withdrawSubscriptionAddress }}
-  PAYMENT_TOPIC_ADDRESS: {{ quote .Values.container.paymentTopicAddress }}
   API_GATEWAY_ENDPOINT: {{ quote .Values.container.apiGatewayEndpoint }}
   {{- if .Values.container.redisHostname }}
   REDIS_HOSTNAME: {{ quote .Values.container.redisHostname }}
