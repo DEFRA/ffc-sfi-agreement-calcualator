@@ -5,12 +5,12 @@ describe('Server tests', () => {
   let server
 
   test('createServer returns server', async () => {
-    jest.mock('../../../../app/config', () => {
-      return {
-        port: 3004,
-        isDev: false
-      }
-    })
+    // jest.mock('../../../../app/config', () => {
+    //   return {
+    //     port: 3004,
+    //     isDev: false
+    //   }
+    // })
 
     createServer = require('../../../../app/server')
     server = await createServer()
@@ -19,12 +19,12 @@ describe('Server tests', () => {
   })
 
   test('createServer returns server in development', async () => {
-    jest.mock('../../../../app/config', () => {
-      return {
-        port: 3004,
-        isDev: true
-      }
-    })
+    // jest.mock('../../../../app/config', () => {
+    //   return {
+    //     port: 3004,
+    //     isDev: true
+    //   }
+    // })
 
     createServer = require('../../../../app/server')
     server = await createServer()
