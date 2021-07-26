@@ -5,7 +5,7 @@ async function processSubmitMessage (message, receiver) {
     console.info('Received submitted agreement')
     const { correlationId } = message
     console.info(`Creating agreement for, correlation Id: ${correlationId}`)
-    await createAgreement(message)
+    await createAgreement(message.body)
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

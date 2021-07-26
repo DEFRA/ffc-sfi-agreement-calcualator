@@ -1,7 +1,6 @@
 const db = require('../data')
 
-async function createAgreement (message) {
-  const { body } = message
+async function createAgreement (body) {
   const { sbi, agreement } = body
 
   return db.agreement.create({
