@@ -8,10 +8,10 @@ async function processStandardsMessage (message, receiver) {
     await cache.clear('standards', message.correlationId)
     await cache.set('standards', message.correlationId, message.body)
     console.info(`Request for standards stored in cache, correlation Id: ${message.correlationId}`)
-    const application = await cache.get('application', message.correlationId)
-    application?.aagreementNumber ?? await cache.update('application', message.correlationId, { aagreementNumber: `AG${new Date().getTime()}` })
+    const agreement = await cache.get('agreement', message.correlationId)
+    agreement?.agreementNumber ?? await cache.update('agreement', message.correlationId, { agreementNumber: `AG${new Date().getTime()}` })
     const standards = await getStandards(organisationId, sbi, callerId)
-    await cache.update('standards', message.correlationId, { standards })
+    await cache.update('standards', message.correlationId, { standards, agreementNumber: agreement?.agreementNumber })
     console.info(`Response available for standards request, correlation Id: ${message.correlationId}`)
     await receiver.completeMessage(message)
   } catch (err) {

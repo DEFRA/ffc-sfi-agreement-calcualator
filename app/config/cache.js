@@ -13,8 +13,8 @@ module.exports = {
     name: 'calculate',
     expiresIn: defaultExpiresIn
   },
-  applicationSegment: {
-    name: 'application',
+  agreementSegment: {
+    name: 'agreement',
     expiresIn: defaultExpiresIn
   },
   redisCatboxOptions: {
