@@ -3,6 +3,7 @@ const config = require('../config').cacheConfig
 let standardsCache
 let validationCache
 let calculateCache
+let applicationCache
 
 const setup = (server) => {
   standardsCache = server.cache({
@@ -16,6 +17,10 @@ const setup = (server) => {
   calculateCache = server.cache({
     expiresIn: config.calculateSegment.expiresIn,
     segment: config.calculateSegment.name
+  })
+  applicationCache = server.cache({
+    expiresIn: config.applicationSegment.expiresIn,
+    segment: config.applicationSegment.name
   })
 }
 
@@ -49,6 +54,8 @@ const getCache = (cacheName) => {
       return validationCache
     case 'calculate':
       return calculateCache
+    case 'application':
+      return applicationCache
     default:
       throw new Error(`Cache ${cacheName} does not exist`)
   }

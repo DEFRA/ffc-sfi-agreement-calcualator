@@ -13,6 +13,10 @@ module.exports = {
     name: 'calculate',
     expiresIn: defaultExpiresIn
   },
+  applicationSegment: {
+    name: 'application',
+    expiresIn: defaultExpiresIn
+  },
   redisCatboxOptions: {
     host: process.env.REDIS_HOSTNAME,
     port: process.env.REDIS_PORT,
