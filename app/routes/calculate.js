@@ -1,5 +1,4 @@
 const cache = require('../cache')
-const buildResponse = require('../calculate')
 
 module.exports = [{
   method: 'GET',
