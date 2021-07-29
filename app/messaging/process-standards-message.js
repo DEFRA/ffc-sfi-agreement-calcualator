@@ -3,8 +3,8 @@ const { getStandards } = require('../standards')
 
 async function processStandardsMessage (message, receiver) {
   try {
-    const { organisationId, sbi, callerId } = message.body
     console.info('Received request for available standards')
+    const { organisationId, sbi, callerId } = message.body
     await cache.clear('standards', message.correlationId)
     await cache.set('standards', message.correlationId, message.body)
     console.info(`Request for standards stored in cache, correlation Id: ${message.correlationId}`)
