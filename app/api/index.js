@@ -12,7 +12,8 @@ function getConfiguration (callerId) {
     headers: {
       callerId
     },
-    json: true
+    json: true,
+    rejectUnauthorized: false
   }
 }
 
