@@ -1,16 +1,14 @@
-const cache = require('../cache')
-const validationResponse = require('../validation')
 const sendMessage = require('./send-message')
 const config = require('../config')
+const { getStandards } = require('../standards')
+const getStandardWarnings = require('../standards/get-standard-warnings')
 
 async function processValidateMessage (message, receiver) {
   try {
-    console.info('Received request for validation')
-    await cache.clear('validation', message.correlationId)
-    await cache.set('validation', message.correlationId, message.body)
-    console.info(`Request for validation stored in cache, correlation Id: ${message.correlationId}`)
-    const validationResult = validationResponse(message.body, message.correlationId)
-    await cache.update('validation', message.correlationId, validationResult)
+    console.info(`Request for validation, correlation Id: ${message.correlationId}`)
+    const { organisationId, sbi, callerId } = message.body
+    const standards = await getStandards(organisationId, sbi, callerId)
+    const validationResult = getStandardWarnings(standards)
     await sendMessage(validationResult, 'uk.gov.sfi.validate.result', message.correlationId, config.validateResponseTopic)
     console.info(`Response available for validation check, correlation Id: ${message.correlationId}`)
     await receiver.completeMessage(message)

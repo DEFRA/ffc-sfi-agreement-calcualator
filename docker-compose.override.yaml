@@ -13,7 +13,7 @@ services:
       - "3003:3003"
       - "9232:9229"
     volumes:
-      - ./app/:/home/node/app/
+      - ./app:/home/node/app
       - ./package.json:/home/node/package.json
   
   ffc-sfi-agreement-calculator-postgres:
