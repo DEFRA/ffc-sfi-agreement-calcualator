@@ -5,17 +5,17 @@ ignore:
   SNYK-JS-VALIDATOR-1090599:
     - sequelize > validator:
         reason: no fix
-        expires: '2021-07-03T13:05:59.428Z'
+        expires: '2021-09-03T13:05:59.428Z'
   SNYK-JS-VALIDATOR-1090600:
     - sequelize > validator:
         reason: no fix
-        expires: '2021-07-03T13:05:59.428Z'
+        expires: '2021-09-03T13:05:59.428Z'
   SNYK-JS-VALIDATOR-1090601:
     - sequelize > validator:
         reason: no fix
-        expires: '2021-07-03T13:05:59.428Z'
+        expires: '2021-09-03T13:05:59.428Z'
   SNYK-JS-VALIDATOR-1090602:
     - sequelize > validator:
         reason: no fix
-        expires: '2021-07-03T13:09:36.259Z'
+        expires: '2021-09-03T13:09:36.259Z'
 patch: {}

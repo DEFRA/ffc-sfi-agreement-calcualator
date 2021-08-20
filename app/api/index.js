@@ -1,9 +1,9 @@
 const wreck = require('@hapi/wreck')
 const config = require('../config')
-const { apiGatewayEndpoint } = config
+const { chApiGateway } = config
 
 async function get (url, callerId) {
-  const { payload } = await wreck.get(`${apiGatewayEndpoint}${url}`, getConfiguration(callerId))
+  const { payload } = await wreck.get(`${chApiGateway}${url}`, getConfiguration(callerId))
   return payload
 }
 
