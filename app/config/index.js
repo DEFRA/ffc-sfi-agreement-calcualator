@@ -8,7 +8,7 @@ const { development, production, test } = require('./constants').environments
 const schema = Joi.object({
   port: Joi.number().default(3003),
   env: Joi.string().valid(development, test, production).default(development),
-  chApiGateway: Joi.string().default('').allow('')
+  chApiGateway: Joi.string().uri().required()
 })
 
 // Build config
