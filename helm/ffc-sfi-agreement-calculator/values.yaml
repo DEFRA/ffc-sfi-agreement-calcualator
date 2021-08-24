@@ -21,7 +21,7 @@ deployment:
   priorityClassName: default
   replicas: 2
   minReplicas: 2
-  maxReplicas: 4
+  maxReplicas: 10
   cpuThreshold: 80
   memoryThreshold: 80
   minReadySeconds: 0
@@ -29,9 +29,9 @@ deployment:
 container:
   imagePullPolicy: IfNotPresent
   requestMemory: 120Mi
-  requestCpu: 120m
-  limitMemory: 120Mi
-  limitCpu: 120m
+  requestCpu: 10m
+  limitMemory: 200Mi
+  limitCpu: 500m
   port: 3003
   messageQueueHost: namespace.servicebus.windows.net
   standardsSubscriptionAddress: ffc-sfi-standards-request-calculator
@@ -65,16 +65,18 @@ postgresService:
 livenessProbe:
   path: /healthz
   port: 3003
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 30
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 readinessProbe:
   path: /healthy
   port: 3003
-  initialDelaySeconds: 10
-  periodSeconds: 10
-  failureThreshold: 3
+  initialDelaySeconds: 20
+  periodSeconds: 30
+  timeoutSeconds: 5
+  failureThreshold: 5
 
 aadPodIdentity: true
 
