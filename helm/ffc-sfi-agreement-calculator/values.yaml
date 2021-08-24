@@ -18,7 +18,7 @@ containerSecret:
 
 deployment:
   restartPolicy: Always
-  priorityClassName: default
+  priorityClassName: high
   replicas: 2
   minReplicas: 2
   maxReplicas: 10
