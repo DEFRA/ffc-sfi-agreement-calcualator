@@ -37,8 +37,10 @@ value.isTest = value.env === test
 value.isProd = value.env === production
 
 value.standardsSubscription = mqConfig.standardsSubscription
+value.standardsResponseTopic = mqConfig.standardsResponseTopic
 value.validateSubscription = mqConfig.validateSubscription
 value.calculateSubscription = mqConfig.calculateSubscription
+value.calculateResponseTopic = mqConfig.calculateResponseTopic
 value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
 value.validateResponseTopic = mqConfig.validateResponseTopic
