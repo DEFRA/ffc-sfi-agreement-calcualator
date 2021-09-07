@@ -3,7 +3,7 @@ const config = require('../config')
 const { getStandards } = require('../standards')
 const getStandardWarnings = require('../standards/get-standard-warnings')
 
-async function processValidateMessage (message, receiver) {
+const processValidateMessage = async (message, receiver) => {
   try {
     const { organisationId, sbi, callerId } = message.body
     const standards = await getStandards(organisationId, sbi, callerId)

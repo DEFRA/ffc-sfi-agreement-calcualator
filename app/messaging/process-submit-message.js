@@ -1,6 +1,6 @@
 const { createAgreement } = require('../submit')
 
-async function processSubmitMessage (message, receiver) {
+const processSubmitMessage = async (message, receiver) => {
   try {
     await createAgreement(message.body)
     await receiver.completeMessage(message)

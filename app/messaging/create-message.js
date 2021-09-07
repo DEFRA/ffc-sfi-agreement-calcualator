@@ -1,4 +1,4 @@
-function createMessage (body, type, correlationId) {
+const createMessage = (body, type, correlationId) => {
   return {
     body,
     type,

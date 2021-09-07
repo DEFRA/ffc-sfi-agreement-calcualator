@@ -11,7 +11,7 @@ let calculateReceiver
 let submitReceiver
 let withdrawReceiver
 
-async function start () {
+const start = async () => {
   const standardsAction = message => processStandardsMessage(message, standardsReceiver)
   standardsReceiver = new MessageReceiver(config.standardsSubscription, standardsAction)
   await standardsReceiver.subscribe()
@@ -35,7 +35,7 @@ async function start () {
   console.info('Ready to receive messages')
 }
 
-async function stop () {
+const stop = async () => {
   await standardsReceiver.closeConnection()
   await validateReceiver.closeConnection()
   await calculateReceiver.closeConnection()

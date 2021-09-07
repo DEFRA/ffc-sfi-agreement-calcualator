@@ -1,7 +1,7 @@
 const cache = require('../cache')
 const { getStandards } = require('../standards')
 
-async function processStandardsMessage (message, receiver) {
+const processStandardsMessage = async (message, receiver) => {
   try {
     const { organisationId, sbi, callerId } = message.body
     await cache.clear('standards', message.correlationId)
