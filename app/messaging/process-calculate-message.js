@@ -8,38 +8,24 @@ const processCalculateMessage = async (message, receiver) => {
   try {
     const { body, correlationId, messageId } = message
     const { code, parcels } = body
-    let paymentRates
+    let response
 
     // get cache for current session
-    const cacheData = await cache.get('calculate', correlationId)
-
-    // ensure an array for all session requests created
-    if (!cacheData.requests) {
-      cacheData.requests = []
-    }
-
-    // if request is unique, add to cache
-    if (!cacheData.requests.some(x => isDeepStrictEqual(x.body, body))) {
-      cacheData.requests.push({ body })
-      await cache.update('calculate', correlationId, cacheData)
-    }
-
-    // find cache entry for request
-    const requestIndex = cacheData.requests.findIndex(x => isDeepStrictEqual(x.body, body))
+    const { cacheData, requestIndex } = await getCacheData('calculate', correlationId, body)
 
     // if request already processed then return without reprocessing
     if (!cacheData.requests[requestIndex].paymentRates) {
       console.log(`Processing correlation Id: ${correlationId}, message Id: ${messageId}`)
-      paymentRates = calculatePaymentRates(code, parcels)
-      cacheData.requests[requestIndex].paymentRates = paymentRates
+      response = calculatePaymentRates(code, parcels)
+      cacheData.requests[requestIndex].paymentRates = response
       await cache.update('calculate', correlationId, cacheData)
     } else {
       console.log(`Already processed correlation Id: ${correlationId}, message Id: ${messageId}, skipping`)
-      paymentRates = cacheData.requests[requestIndex].paymentRates
+      response = cacheData.requests[requestIndex].paymentRates
     }
 
     const responseMessage = {
-      body: paymentRates,
+      body: { response },
       type: 'uk.gov.sfi.agreement.calculate.response',
       source: 'ffc-sfi-agreement-calculator',
       sessionId: messageId
@@ -56,3 +42,22 @@ const processCalculateMessage = async (message, receiver) => {
 }
 
 module.exports = processCalculateMessage
+
+const getCacheData = async (cacheName, correlationId, body) => {
+  const cacheData = await cache.get(cacheName, correlationId)
+
+  // ensure an array for all session requests created
+  if (!cacheData.requests) {
+    cacheData.requests = []
+  }
+
+  // if request is unique, add to cache
+  if (!cacheData.requests.some(x => isDeepStrictEqual(x.body, body))) {
+    cacheData.requests.push({ body })
+    await cache.update('calculate', correlationId, cacheData)
+  }
+
+  // find cache entry for request
+  const requestIndex = cacheData.requests.findIndex(x => isDeepStrictEqual(x.body, body))
+  return { cacheData, requestIndex }
+}
