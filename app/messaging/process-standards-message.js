@@ -1,4 +1,4 @@
-const cache = require('../cache')
+const { getCachedResponse, setCachedResponse } = require('../cache')
 const { getStandards } = require('../standards')
 const config = require('../config')
 const sendMessage = require('./send-message')
@@ -8,14 +8,14 @@ const processStandardsMessage = async (message, receiver) => {
     const { body, correlationId, messageId } = message
     const { organisationId, sbi, callerId } = message.body
 
-    const cachedResponse = await cache.getCachedResponse('standards', body, correlationId)
+    const cachedResponse = await getCachedResponse('standards', body, correlationId)
 
     // if request already processed then return without reprocessing
     if (cachedResponse) {
       await sendMessage(cachedResponse, 'uk.gov.sfi.agreement.standards.request.response', undefined, messageId, config.standardsResponseQueue)
     } else {
       const standards = await getStandards(organisationId, sbi, callerId)
-      await cache.updateCache('standards', correlationId, body, { standards })
+      await setCachedResponse('standards', correlationId, body, { standards })
       await sendMessage({ standards }, 'uk.gov.sfi.agreement.standards.request.response', undefined, messageId, config.standardsResponseQueue)
     }
 
