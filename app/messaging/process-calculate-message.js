@@ -25,7 +25,7 @@ const processCalculateMessage = async (message, receiver) => {
     }
 
     const responseMessage = {
-      body: { response },
+      body: { standards: response },
       type: 'uk.gov.sfi.agreement.calculate.response',
       source: 'ffc-sfi-agreement-calculator',
       sessionId: messageId
