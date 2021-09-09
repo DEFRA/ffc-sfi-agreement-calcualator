@@ -47,6 +47,18 @@ describe('process calculate message', () => {
     expect(mockSendMessage).toHaveBeenCalled()
   })
 
+  test('sends session with message Id as session Id', async () => {
+    await processCalculateMessage(message, receiver)
+    expect(mockSendMessage.mock.calls[0][0].sessionId).toBe('messageId')
+  })
+
+  test('sends message with all ambition levels', async () => {
+    await processCalculateMessage(message, receiver)
+    expect(mockSendMessage.mock.calls[0][0].body.Introductory).toBeDefined()
+    expect(mockSendMessage.mock.calls[0][0].body.Intermediate).toBeDefined()
+    expect(mockSendMessage.mock.calls[0][0].body.Advanced).toBeDefined()
+  })
+
   test('abandons invalid message', async () => {
     message = undefined
     await processCalculateMessage(message, receiver)

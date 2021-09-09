@@ -70,6 +70,16 @@ describe('process standards message', () => {
     expect(mockSendMessage).toHaveBeenCalled()
   })
 
+  test('sends session with message Id as session Id', async () => {
+    await processStandardsMessage(message, receiver)
+    expect(mockSendMessage.mock.calls[0][0].sessionId).toBe('messageId')
+  })
+
+  test('sends message with standards', async () => {
+    await processStandardsMessage(message, receiver)
+    expect(mockSendMessage.mock.calls[0][0].body.standards).toBeDefined()
+  })
+
   test('abandons invalid message', async () => {
     message = undefined
     await processStandardsMessage(message, receiver)
