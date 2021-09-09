@@ -1,8 +1,8 @@
 const { MessageSender } = require('ffc-messaging')
 const createMessage = require('./create-message')
 
-const sendMessage = async (body, type, correlationId, options) => {
-  const message = createMessage(body, type, correlationId)
+const sendMessage = async (body, type, correlationId, sessionId, options) => {
+  const message = createMessage(body, type, correlationId, sessionId)
   const sender = new MessageSender(options)
   await sender.sendMessage(message)
   await sender.closeConnection()

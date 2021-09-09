@@ -1,39 +1,23 @@
 const cache = require('../cache')
 const { calculatePaymentRates } = require('../calculate')
-const { isDeepStrictEqual } = require('util')
-const { MessageSender } = require('ffc-messaging')
 const config = require('../config')
+const sendMessage = require('./send-message')
 
 const processCalculateMessage = async (message, receiver) => {
   try {
     const { body, correlationId, messageId } = message
     const { code, parcels } = body
-    let response
 
-    // get cache for current session
-    const { cacheData, requestIndex } = await getCacheData('calculate', correlationId, body)
+    const cachedResponse = await cache.getCachedResponse('calculate', body, correlationId)
 
     // if request already processed then return without reprocessing
-    if (!cacheData.requests[requestIndex].paymentRates) {
-      console.log(`Processing correlation Id: ${correlationId}, message Id: ${messageId}`)
-      response = calculatePaymentRates(code, parcels)
-      cacheData.requests[requestIndex].paymentRates = response
-      await cache.update('calculate', correlationId, cacheData)
+    if (cachedResponse) {
+      await sendMessage(cachedResponse, 'uk.gov.sfi.agreement.calculate.response', undefined, messageId, config.calculateResponseQueue)
     } else {
-      console.log(`Already processed correlation Id: ${correlationId}, message Id: ${messageId}, skipping`)
-      response = cacheData.requests[requestIndex].paymentRates
+      const paymentRates = calculatePaymentRates(code, parcels)
+      await cache.updateCache('calculate', correlationId, body, paymentRates)
+      await sendMessage(paymentRates, 'uk.gov.sfi.agreement.calculate.response', undefined, messageId, config.calculateResponseQueue)
     }
-
-    const responseMessage = {
-      body: { paymentRates: response },
-      type: 'uk.gov.sfi.agreement.calculate.response',
-      source: 'ffc-sfi-agreement-calculator',
-      sessionId: messageId
-    }
-
-    const sender = new MessageSender(config.calculateResponseQueue)
-    await sender.sendMessage(responseMessage)
-    await sender.closeConnection()
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
@@ -42,22 +26,3 @@ const processCalculateMessage = async (message, receiver) => {
 }
 
 module.exports = processCalculateMessage
-
-const getCacheData = async (cacheName, correlationId, body) => {
-  const cacheData = await cache.get(cacheName, correlationId)
-
-  // ensure an array for all session requests created
-  if (!cacheData.requests) {
-    cacheData.requests = []
-  }
-
-  // if request is unique, add to cache
-  if (!cacheData.requests.some(x => isDeepStrictEqual(x.body, body))) {
-    cacheData.requests.push({ body })
-    await cache.update('calculate', correlationId, cacheData)
-  }
-
-  // find cache entry for request
-  const requestIndex = cacheData.requests.findIndex(x => isDeepStrictEqual(x.body, body))
-  return { cacheData, requestIndex }
-}
