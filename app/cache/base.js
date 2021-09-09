@@ -1,22 +1,17 @@
 const hoek = require('@hapi/hoek')
 const config = require('../config').cacheConfig
+const { Client, Policy } = require('@hapi/catbox')
+const engine = config.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 let standardsCache
-let validationCache
 let calculateCache
+let validationCache
 
-const setup = (server) => {
-  standardsCache = server.cache({
-    expiresIn: config.standardsSegment.expiresIn,
-    segment: config.standardsSegment.name
-  })
-  validationCache = server.cache({
-    expiresIn: config.validationSegment.expiresIn,
-    segment: config.validationSegment.name
-  })
-  calculateCache = server.cache({
-    expiresIn: config.calculateSegment.expiresIn,
-    segment: config.calculateSegment.name
-  })
+const setup = async () => {
+  const client = new Client(engine, { partition: config.redisCatboxOptions.partition })
+  await client.start()
+  standardsCache = new Policy({ expiresIn: config.standardsSegment.expiresIn }, client, config.standardsSegment.name)
+  calculateCache = new Policy({ expiresIn: config.standardsSegment.expiresIn }, client, config.standardsSegment.name)
+  validationCache = new Policy({ expiresIn: config.validationSegment.expiresIn }, client, config.validationSegment.name)
 }
 
 const get = async (cacheName, key) => {
@@ -27,7 +22,7 @@ const get = async (cacheName, key) => {
 
 const set = async (cacheName, key, value) => {
   const cache = getCache(cacheName)
-  await cache.set(key, value)
+  await cache.set(key, value, 0)
 }
 
 const update = async (cacheName, key, object) => {
