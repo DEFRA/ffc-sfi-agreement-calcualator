@@ -1,14 +1,15 @@
 const sendMessage = require('./send-message')
-const config = require('../config')
+const config = require('../config').validateResponseTopic
 const { getStandards } = require('../standards')
 const getStandardWarnings = require('../standards/get-standard-warnings')
 
 const processValidateMessage = async (message, receiver) => {
   try {
-    const { organisationId, sbi, callerId } = message.body
+    const { body, correlationId } = message
+    const { organisationId, sbi, callerId } = body
     const standards = await getStandards(organisationId, sbi, callerId)
     const validationResult = getStandardWarnings(standards)
-    await sendMessage({ validationResult }, 'uk.gov.sfi.validate.result', message.correlationId, undefined, config.validateResponseTopic)
+    await sendMessage({ validationResult }, 'uk.gov.sfi.validate.result', config, { correlationId })
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

@@ -1,6 +1,6 @@
 const { getCachedResponse, setCachedResponse } = require('../cache')
 const { getStandards } = require('../standards')
-const config = require('../config')
+const config = require('../config').standardsResponseQueue
 const sendMessage = require('./send-message')
 
 const processStandardsMessage = async (message, receiver) => {
@@ -15,7 +15,7 @@ const processStandardsMessage = async (message, receiver) => {
       await setCachedResponse('standards', correlationId, body, standards)
     }
 
-    await sendMessage(standards, 'uk.gov.sfi.agreement.standards.request.response', undefined, messageId, config.standardsResponseQueue)
+    await sendMessage(standards, 'uk.gov.sfi.agreement.standards.request.response', config, { sessionId: messageId })
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

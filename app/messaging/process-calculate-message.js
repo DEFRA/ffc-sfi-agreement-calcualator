@@ -1,6 +1,6 @@
 const { getCachedResponse, setCachedResponse } = require('../cache')
 const { calculatePaymentRates } = require('../calculate')
-const config = require('../config')
+const config = require('../config').calculateResponseQueue
 const sendMessage = require('./send-message')
 
 const processCalculateMessage = async (message, receiver) => {
@@ -15,7 +15,7 @@ const processCalculateMessage = async (message, receiver) => {
       await setCachedResponse('calculate', correlationId, body, paymentRates)
     }
 
-    await sendMessage(paymentRates, 'uk.gov.sfi.agreement.calculate.response', undefined, messageId, config.calculateResponseQueue)
+    await sendMessage(paymentRates, 'uk.gov.sfi.agreement.calculate.response', config, { sessionId: messageId })
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
