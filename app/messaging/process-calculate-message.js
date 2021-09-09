@@ -47,7 +47,7 @@ const processCalculateMessage = async (message, receiver) => {
 
     const sender = new MessageSender(config.calculateResponseQueue)
     await sender.sendMessage(responseMessage)
-
+    await sender.closeConnection()
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
