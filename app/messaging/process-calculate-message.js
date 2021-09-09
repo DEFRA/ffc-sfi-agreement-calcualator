@@ -9,15 +9,13 @@ const processCalculateMessage = async (message, receiver) => {
     const { code, parcels } = body
 
     const cachedResponse = await getCachedResponse('calculate', body, correlationId)
+    const paymentRates = cachedResponse ?? calculatePaymentRates(code, parcels)
 
-    // if request already processed then return without reprocessing
-    if (cachedResponse) {
-      await sendMessage(cachedResponse, 'uk.gov.sfi.agreement.calculate.response', undefined, messageId, config.calculateResponseQueue)
-    } else {
-      const paymentRates = calculatePaymentRates(code, parcels)
+    if (!cachedResponse) {
       await setCachedResponse('calculate', correlationId, body, paymentRates)
-      await sendMessage(paymentRates, 'uk.gov.sfi.agreement.calculate.response', undefined, messageId, config.calculateResponseQueue)
     }
+
+    await sendMessage(paymentRates, 'uk.gov.sfi.agreement.calculate.response', undefined, messageId, config.calculateResponseQueue)
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

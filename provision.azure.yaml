@@ -1,12 +1,14 @@
 resources:
   topics:
     - name: standards
-    - name: standardsresponse
-      enableSessions: true
     - name: validate
     - name: validation
-    - name: calculate
-    - name: calculateresponse
-      enableSessions: true
+    - name: calculate    
     - name: submit
     - name: withdraw
+  queues:
+    - name: calculateresponse
+      enableSessions: true
+    - name: standardsresponse
+      enableSessions: true
+    
