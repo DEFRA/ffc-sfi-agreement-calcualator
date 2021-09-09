@@ -13,7 +13,7 @@ const mqSchema = Joi.object({
     address: Joi.string(),
     topic: Joi.string()
   },
-  standardsResponseTopic: {
+  standardsResponseQueue: {
     address: Joi.string()
   },
   validateSubscription: {
@@ -27,7 +27,7 @@ const mqSchema = Joi.object({
     address: Joi.string(),
     topic: Joi.string()
   },
-  calculateResponseTopic: {
+  calculateResponseQueue: {
     address: Joi.string()
   },
   submitSubscription: {
@@ -52,8 +52,8 @@ const mqConfig = {
     address: process.env.STANDARDS_SUBSCRIPTION_ADDRESS,
     topic: process.env.STANDARDS_TOPIC_ADDRESS
   },
-  standardsResponseTopic: {
-    address: process.env.STANDARDSRESPONSE_TOPIC_ADDRESS
+  standardsResponseQueue: {
+    address: process.env.STANDARDSRESPONSE_QUEUE_ADDRESS
   },
   validateSubscription: {
     address: process.env.VALIDATE_SUBSCRIPTION_ADDRESS,
@@ -66,8 +66,8 @@ const mqConfig = {
     address: process.env.CALCULATE_SUBSCRIPTION_ADDRESS,
     topic: process.env.CALCULATE_TOPIC_ADDRESS
   },
-  calculateResponseTopic: {
-    address: process.env.CALCULATERESPONSE_TOPIC_ADDRESS
+  calculateResponseQueue: {
+    address: process.env.CALCULATERESPONSE_QUEUE_ADDRESS
   },
   submitSubscription: {
     address: process.env.SUBMIT_SUBSCRIPTION_ADDRESS,
@@ -89,20 +89,20 @@ if (mqResult.error) {
 }
 
 const standardsSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.standardsSubscription }
-const standardsResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.standardsResponseTopic }
+const standardsResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.standardsResponseQueue }
 const validateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.validateSubscription }
 const calculateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.calculateSubscription }
-const calculateResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.calculateResponseTopic }
+const calculateResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.calculateResponseQueue }
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
 const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
 const validateResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.validateResponseTopic }
 
 module.exports = {
   standardsSubscription,
-  standardsResponseTopic,
+  standardsResponseQueue,
   validateSubscription,
   calculateSubscription,
-  calculateResponseTopic,
+  calculateResponseQueue,
   submitSubscription,
   withdrawSubscription,
   validateResponseTopic

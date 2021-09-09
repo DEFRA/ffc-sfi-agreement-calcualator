@@ -1,14 +1,53 @@
 const cache = require('../cache')
 const { calculatePaymentRates } = require('../calculate')
+const { isDeepStrictEqual } = require('util')
+const { MessageSender } = require('ffc-messaging')
+const config = require('../config')
 
 const processCalculateMessage = async (message, receiver) => {
   try {
-    const { body, correlationId } = message
+    const { body, correlationId, messageId } = message
     const { code, parcels } = body
-    await cache.clear('calculate', correlationId)
-    await cache.set('calculate', correlationId, body)
-    const paymentRates = calculatePaymentRates(code, parcels)
-    await cache.update('calculate', correlationId, { paymentRates })
+    let paymentRates
+
+    // get cache for current session
+    const cacheData = await cache.get('calculate', correlationId)
+
+    // ensure an array for all session requests created
+    if (!cacheData.requests) {
+      cacheData.requests = []
+    }
+
+    // if request is unique, add to cache
+    if (!cacheData.requests.some(x => isDeepStrictEqual(x.body, body))) {
+      cacheData.requests.push({ body })
+      await cache.update('calculate', correlationId, cacheData)
+    }
+
+    // find cache entry for request
+    const requestIndex = cacheData.requests.findIndex(x => isDeepStrictEqual(x.body, body))
+
+    // if request already processed then return without reprocessing
+    if (!cacheData.requests[requestIndex].paymentRates) {
+      console.log(`Processing correlation Id: ${correlationId}, message Id: ${messageId}`)
+      paymentRates = calculatePaymentRates(code, parcels)
+      cacheData.requests[requestIndex].paymentRates = paymentRates
+      await cache.update('calculate', correlationId, cacheData)
+    } else {
+      console.log(`Already processed correlation Id: ${correlationId}, message Id: ${messageId}, skipping`)
+      paymentRates = cacheData.requests[requestIndex].paymentRates
+    }
+
+    const responseMessage = {
+      body: paymentRates,
+      type: 'uk.gov.sfi.agreement.calculate.response',
+      source: 'ffc-sfi-agreement-calculator',
+      sessionId: messageId
+    }
+
+    const sender = new MessageSender(config.calculateResponseQueue)
+    await sender.sendMessage(responseMessage)
+
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

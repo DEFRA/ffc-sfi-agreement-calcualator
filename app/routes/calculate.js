@@ -9,8 +9,8 @@ module.exports = [{
 
       if (correlationId) {
         const cacheData = await cache.get('calculate', correlationId)
-        if (cacheData && cacheData.paymentRates !== undefined) {
-          return h.response({ paymentRates: cacheData.paymentRates }).code(200)
+        if (cacheData?.requests && cacheData.requests[cacheData.requests.length - 1]?.paymentRates) {
+          return h.response({ paymentRates: cacheData.requests[cacheData.requests.length - 1].paymentRates }).code(200)
         }
       }
       return h.response(`value for ${correlationId} not in cache, try later`).code(202)
