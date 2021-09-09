@@ -11,6 +11,7 @@ jest.mock('ffc-messaging', () => {
 })
 const processCalculateMessage = require('../../../../app/messaging/process-calculate-message')
 jest.mock('../../../../app/cache')
+const mockCache = require('../../../../app/cache')
 let receiver
 let message
 
@@ -63,5 +64,16 @@ describe('process calculate message', () => {
     message = undefined
     await processCalculateMessage(message, receiver)
     expect(receiver.abandonMessage).toHaveBeenCalledWith(message)
+  })
+
+  test('processes and sets cache if no cached result', async () => {
+    await processCalculateMessage(message, receiver)
+    expect(mockCache.setCachedResponse).toHaveBeenCalled()
+  })
+
+  test('does not process and set cache if cached result', async () => {
+    mockCache.getCachedResponse.mockReturnValue(true)
+    await processCalculateMessage(message, receiver)
+    expect(mockCache.setCachedResponse).not.toHaveBeenCalled()
   })
 })

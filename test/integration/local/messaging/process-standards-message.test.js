@@ -35,6 +35,7 @@ jest.mock('../../../../app/api', () => {
   }
 })
 jest.mock('../../../../app/cache')
+const mockCache = require('../../../../app/cache')
 let receiver
 let message
 
@@ -84,5 +85,16 @@ describe('process standards message', () => {
     message = undefined
     await processStandardsMessage(message, receiver)
     expect(receiver.abandonMessage).toHaveBeenCalledWith(message)
+  })
+
+  test('processes and sets cache if no cached result', async () => {
+    await processStandardsMessage(message, receiver)
+    expect(mockCache.setCachedResponse).toHaveBeenCalled()
+  })
+
+  test('does not process and set cache if cached result', async () => {
+    mockCache.getCachedResponse.mockReturnValue(true)
+    await processStandardsMessage(message, receiver)
+    expect(mockCache.setCachedResponse).not.toHaveBeenCalled()
   })
 })
