@@ -32,7 +32,6 @@ container:
   requestCpu: 10m
   limitMemory: 200Mi
   limitCpu: 500m
-  port: 3003
   messageQueueHost: namespace.servicebus.windows.net
   standardsSubscriptionAddress: ffc-sfi-standards-request-calculator
   validateSubscriptionAddress: ffc-sfi-agreement-validate-calculator
@@ -63,22 +62,6 @@ postgresService:
   postgresPort: 5432
   postgresSchema: public
   postgresUser: postgres
-
-livenessProbe:
-  path: /healthz
-  port: 3003
-  initialDelaySeconds: 30
-  periodSeconds: 30
-  timeoutSeconds: 5
-  failureThreshold: 5
-
-readinessProbe:
-  path: /healthy
-  port: 3003
-  initialDelaySeconds: 20
-  periodSeconds: 30
-  timeoutSeconds: 5
-  failureThreshold: 5
 
 aadPodIdentity: true
 
