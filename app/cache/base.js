@@ -4,11 +4,7 @@ const { createClient } = require('redis')
 let client
 
 const start = async () => {
-  client = createClient({
-    password: config.password,
-    host: config.host,
-    tls: config.tls
-  })
+  client = createClient({ socket: config.socket })
   await client.connect()
 }
 
