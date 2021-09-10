@@ -10,18 +10,20 @@ const start = async () => {
 
 const get = async (cache, key) => {
   const fullKey = getFullKey(cache, key)
-  const object = await client.get(fullKey)
-  return object ?? {}
+  const value = await client.get(fullKey)
+  return value ? JSON.parse(value) : {}
 }
 
 const set = async (cache, key, value) => {
-  const fullKey = getFullKey(cache)
-  await client.set(fullKey, value)
+  const fullKey = getFullKey(cache, key)
+  const serializedValue = JSON.stringify(value)
+  await client.set(fullKey, serializedValue)
+  await client.expire(fullKey, config.ttl)
 }
 
-const update = async (cache, key, object) => {
-  const existing = await client.hGetAll(cache, key)
-  hoek.merge(existing, object, { mergeArrays: false })
+const update = async (cache, key, cacheData) => {
+  const existing = await get(cache, key)
+  hoek.merge(existing, cacheData, { mergeArrays: false })
   await set(cache, key, existing)
 }
 

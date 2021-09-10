@@ -2,8 +2,8 @@ const { isDeepStrictEqual } = require('util')
 const { get, update } = require('./base')
 const getRequestIndex = require('./get-request-index')
 
-const getCachedResponse = async (cacheName, request, key) => {
-  const cacheData = await get(cacheName, key)
+const getCachedResponse = async (cache, request, key) => {
+  const cacheData = await get(cache, key)
 
   // ensure an array for all session requests created
   if (!cacheData.requests) {
@@ -13,7 +13,7 @@ const getCachedResponse = async (cacheName, request, key) => {
   // if request is unique, add to cache
   if (!cacheData.requests.some(x => isDeepStrictEqual(x.request, request))) {
     cacheData.requests.push({ request })
-    await update(cacheName, key, cacheData)
+    await update(cache, key, cacheData)
   }
 
   // find cache entry for request
