@@ -10,13 +10,13 @@ const start = async () => {
 
 const get = async (cache, key) => {
   const fullKey = getFullKey(cache, key)
-  const object = await client.hGetAll(fullKey)
+  const object = await client.get(fullKey)
   return object ?? {}
 }
 
 const set = async (cache, key, value) => {
   const fullKey = getFullKey(cache)
-  await client.hSetAll(fullKey, value)
+  await client.set(fullKey, value)
 }
 
 const update = async (cache, key, object) => {
@@ -27,7 +27,7 @@ const update = async (cache, key, object) => {
 
 const clear = async (cache, key) => {
   const fullKey = getFullKey(cache, key)
-  await client.hDel(fullKey)
+  await client.del(fullKey)
 }
 
 const getFullKey = (cache, key) => {
