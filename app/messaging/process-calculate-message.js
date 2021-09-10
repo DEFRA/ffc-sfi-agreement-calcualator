@@ -12,10 +12,7 @@ const processCalculateMessage = async (message, receiver) => {
     const paymentRates = cachedResponse ?? calculatePaymentRates(code, parcels)
 
     if (!cachedResponse) {
-      console.info('Calculating')
       await setCachedResponse(config.cacheConfig.calculateCache, correlationId, body, paymentRates)
-    } else {
-      console.info('Using cached response')
     }
 
     await sendMessage(paymentRates, 'uk.gov.sfi.agreement.calculate.response', config.calculateResponseQueue, { sessionId: messageId })
