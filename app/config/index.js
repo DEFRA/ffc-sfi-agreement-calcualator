@@ -44,12 +44,6 @@ value.withdrawSubscription = mqConfig.withdrawSubscription
 value.validateResponseTopic = mqConfig.validateResponseTopic
 
 value.cacheConfig = cacheConfig
-// Don't try to connect to Redis for testing or if Redis not available
-value.useRedis = !value.isTest && value.cacheConfig.redisCatboxOptions.host !== undefined
-
-if (!value.useRedis) {
-  console.info('Redis disabled, using in memory cache')
-}
 
 value.dbConfig = dbConfig
 

@@ -1,18 +1,15 @@
 require('./insights').setup()
 const messageService = require('./messaging')
-const { setup: setupCache } = require('./cache')
+const cache = require('./cache')
 
-process.on('SIGTERM', async () => {
-  await messageService.stop()
-  process.exit(0)
-})
-
-process.on('SIGINT', async () => {
-  await messageService.stop()
-  process.exit(0)
-})
+for (const signal of ['SIGINT', 'SIGTERM', 'SIGQUIT']) {
+  process.on(signal, async () => {
+    await messageService.stop()
+    process.exit()
+  })
+}
 
 module.exports = (async function startService () {
-  await setupCache()
+  await cache.start()
   await messageService.start()
 }())
