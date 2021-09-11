@@ -8,6 +8,10 @@ const start = async () => {
   await client.connect()
 }
 
+const stop = async () => {
+  await client.disconnect()
+}
+
 const get = async (cache, key) => {
   const fullKey = getFullKey(cache, key)
   const value = await client.get(fullKey)
@@ -32,6 +36,10 @@ const clear = async (cache, key) => {
   await client.del(fullKey)
 }
 
+const flushAll = async () => {
+  await client.flushAll()
+}
+
 const getFullKey = (cache, key) => {
   const prefix = getKeyPrefix(cache)
   return `${prefix}:${key}`
@@ -43,8 +51,10 @@ const getKeyPrefix = (cache) => {
 
 module.exports = {
   start,
+  stop,
   get,
   set,
   update,
-  clear
+  clear,
+  flushAll
 }

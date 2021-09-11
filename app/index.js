@@ -5,6 +5,7 @@ const cache = require('./cache')
 for (const signal of ['SIGINT', 'SIGTERM', 'SIGQUIT']) {
   process.on(signal, async () => {
     await messageService.stop()
+    await cache.stop()
     process.exit()
   })
 }

@@ -1,4 +1,4 @@
-const { start, stop, get, set, update, clear } = require('./base')
+const { start, stop, get, set, update, clear, flushAll } = require('./base')
 const getCachedResponse = require('./get-cached-response')
 const setCachedResponse = require('./set-cached-response')
 
@@ -9,6 +9,7 @@ module.exports = {
   set,
   update,
   clear,
+  flushAll,
   getCachedResponse,
   setCachedResponse
 }
