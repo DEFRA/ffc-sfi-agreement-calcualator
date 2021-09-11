@@ -1,4 +1,4 @@
-const { convertToDecimal } = require('../conversion')
+const { convertToDecimal, convertToInteger } = require('../conversion')
 const rates = require('./rates.json')
 
 /**
@@ -11,11 +11,12 @@ const calculatePaymentRates = (code, parcels) => {
   const paymentRates = {}
   const rate = rates[`_${code}`] || {}
   const totalArea = parcels.reduce((a, b) => a + (b.area || 0), 0)
+  const totalAreaToCalculate = convertToInteger(totalArea)
 
   for (const key in rate) {
     const ambitionRate = rate[key] || 0
 
-    const paymentAmountInPence = Math.ceil(totalArea * ambitionRate)
+    const paymentAmountInPence = Math.ceil((totalAreaToCalculate * ambitionRate) / 100)
 
     paymentRates[key] = {
       rate: convertToDecimal(ambitionRate),

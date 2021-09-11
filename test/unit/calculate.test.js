@@ -30,4 +30,19 @@ describe('calculate payment rates', () => {
     const result = calculatePaymentRates(110, [{ area: 100 }])
     expect(result.Advanced.rate).toBe('60.00')
   })
+
+  test('calculates multiple parcels', () => {
+    const result = calculatePaymentRates(110, [{ area: 100 }, { area: 100 }])
+    expect(result.Introductory.paymentAmount).toBe('5200.00')
+  })
+
+  test('calculates decimal parcel', () => {
+    const result = calculatePaymentRates(110, [{ area: 100.1 }])
+    expect(result.Introductory.paymentAmount).toBe('2602.60')
+  })
+
+  test('calculates multiple decimal parcels', () => {
+    const result = calculatePaymentRates(110, [{ area: 100.1 }, { area: 100.2 }])
+    expect(result.Introductory.paymentAmount).toBe('5207.80')
+  })
 })
