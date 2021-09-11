@@ -1,4 +1,4 @@
-const { convertToPounds } = require('../currency-convert')
+const { convertToDecimal } = require('../conversion')
 const rates = require('./rates.json')
 
 /**
@@ -16,11 +16,10 @@ const calculatePaymentRates = (code, parcels) => {
     const ambitionRate = rate[key] || 0
 
     const paymentAmountInPence = Math.ceil(totalArea * ambitionRate)
-    const paymentAmountInPounds = convertToPounds(paymentAmountInPence)
 
     paymentRates[key] = {
-      rate: ambitionRate,
-      paymentAmount: paymentAmountInPounds
+      rate: convertToDecimal(ambitionRate),
+      paymentAmount: convertToDecimal(paymentAmountInPence)
     }
   }
 
