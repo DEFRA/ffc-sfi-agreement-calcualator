@@ -1,0 +1,129 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+  <changeSet author="John Watson" id="1">
+    <tagDatabase tag="v1.2.0" />
+  </changeSet>
+  <changeSet author="John Watson" id="2">
+    <createTable tableName="schemes">
+      <column autoIncrement="true" name="schemeId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="schemeId_pkey" />
+      </column>
+      <column name="name" type="VARCHAR(10)" />
+      <column name="active" type="BOOLEAN" />
+    </createTable>
+    <insert tableName="schemes">
+      <column name="schemeId" value="1" />
+      <column name="name" value="SFI" />
+    </insert>
+  </changeSet>
+  <changeSet author="John Watson" id="3">
+    <createTable tableName="standards">
+      <column autoIncrement="true" name="standardId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="standardId_pkey" />
+      </column>
+      <column name="schemeId" type="INTEGER" />
+      <column name="name" type="VARCHAR(255)" />
+      <column name="code" type="VARCHAR(10)" />
+    </createTable>
+    <insert tableName="standards">
+      <column name="standardId" value="1" />
+      <column name="schemeId" value="1" />
+      <column name="name" value="Arable and horticultural soils" />
+      <column name="code" value="110" />
+    </insert>
+    <insert tableName="standards">
+      <column name="standardId" value="2" />
+      <column name="schemeId" value="1" />
+      <column name="name" value="Improved grassland soils" />
+      <column name="code" value="130" />
+    </insert>
+    <addForeignKeyConstraint baseColumnNames="schemeId" baseTableName="standards" constraintName="fk_standard_schemeId" referencedColumnNames="schemeId" referencedTableName="schemes" />
+  </changeSet>
+  <changeSet author="John Watson" id="4">
+    <createTable tableName="levels">
+      <column autoIncrement="true" name="levelId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="levelId_pkey" />
+      </column>
+      <column name="standardId" type="INTEGER" />
+      <column name="name" type="VARCHAR(20)" />
+    </createTable>
+    <insert tableName="levels">
+      <column name="levelId" value="1" />
+      <column name="standardId" value="1" />
+      <column name="name" value="Introductory" />
+    </insert>
+    <insert tableName="levels">
+      <column name="levelId" value="2" />
+      <column name="standardId" value="1" />
+      <column name="name" value="Intermediate" />
+    </insert>
+    <insert tableName="levels">
+      <column name="levelId" value="3" />
+      <column name="standardId" value="1" />
+      <column name="name" value="Advanced" />
+    </insert>
+    <insert tableName="levels">
+      <column name="levelId" value="4" />
+      <column name="standardId" value="2" />
+      <column name="name" value="Introductory" />
+    </insert>
+    <insert tableName="levels">
+      <column name="levelId" value="5" />
+      <column name="standardId" value="2" />
+      <column name="name" value="Intermediate" />
+    </insert>
+    <insert tableName="levels">
+      <column name="levelId" value="6" />
+      <column name="standardId" value="2" />
+      <column name="name" value="Advanced" />
+    </insert>
+    <addForeignKeyConstraint baseColumnNames="standardId" baseTableName="levels" constraintName="fk_level_standardId" referencedColumnNames="standardId" referencedTableName="standards" />
+  </changeSet>
+  <changeSet author="John Watson" id="5">
+    <createTable tableName="rates">
+      <column autoIncrement="true" name="rateId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" primaryKeyName="rateId_pkey" />
+      </column>
+      <column name="levelId" type="INTEGER" />
+      <column name="rate" type="INTEGER" />
+      <column name="startDate" type="TIMESTAMP" />
+    </createTable>
+    <insert tableName="rates">
+      <column name="rateId" value="1" />
+      <column name="levelId" value="1" />
+      <column name="rate" value="2600" />
+      <column name="startDate" valueDate="2021-01-01" />
+    </insert>
+    <insert tableName="rates">
+      <column name="rateId" value="2" />
+      <column name="levelId" value="2" />
+      <column name="rate" value="4100" />
+      <column name="startDate" valueDate="2021-01-01" />
+    </insert>
+    <insert tableName="rates">
+      <column name="rateId" value="3" />
+      <column name="levelId" value="3" />
+      <column name="rate" value="6000" />
+      <column name="startDate" valueDate="2021-01-01" />
+    </insert>
+    <insert tableName="rates">
+      <column name="rateId" value="4" />
+      <column name="levelId" value="4" />
+      <column name="rate" value="2600" />
+      <column name="startDate" valueDate="2021-01-01" />
+    </insert>
+    <insert tableName="rates">
+      <column name="rateId" value="5" />
+      <column name="levelId" value="5" />
+      <column name="rate" value="4400" />
+      <column name="startDate" valueDate="2021-01-01" />
+    </insert>
+    <insert tableName="rates">
+      <column name="rateId" value="6" />
+      <column name="levelId" value="6" />
+      <column name="rate" value="7000" />
+      <column name="startDate" valueDate="2021-01-01" />
+    </insert>    
+    <addForeignKeyConstraint baseColumnNames="levelId" baseTableName="rates" constraintName="fk_rate_levelId" referencedColumnNames="levelId" referencedTableName="levels" />
+  </changeSet>
+</databaseChangeLog>
