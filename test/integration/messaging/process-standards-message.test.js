@@ -39,8 +39,11 @@ let receiver
 let message
 
 describe('process standards message', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await cache.start()
+  })
+
+  beforeEach(async () => {
     await cache.flushAll()
     receiver = {
       completeMessage: jest.fn(),
@@ -58,10 +61,13 @@ describe('process standards message', () => {
     }
   })
 
-  afterEach(async () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  afterAll(async () => {
     await cache.flushAll()
     await cache.stop()
-    jest.clearAllMocks()
   })
 
   test('completes valid message', async () => {

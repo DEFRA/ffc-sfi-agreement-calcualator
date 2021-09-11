@@ -39,8 +39,11 @@ let receiver
 let message
 
 describe('process validate message', () => {
-  beforeEach(async () => {
+  beforeAll(async () => {
     await cache.start()
+  })
+
+  beforeEach(async () => {
     await cache.flushAll()
     receiver = {
       completeMessage: jest.fn(),
@@ -57,10 +60,13 @@ describe('process validate message', () => {
     }
   })
 
-  afterEach(async () => {
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  afterAll(async () => {
     await cache.flushAll()
     await cache.stop()
-    jest.clearAllMocks()
   })
 
   test('completes valid message', async () => {
@@ -78,10 +84,10 @@ describe('process validate message', () => {
     expect(mockSendMessage.mock.calls[0][0].body.validationResult).toBeDefined()
   })
 
-  test('abandons invalid message', async () => {
+  test('does not abandon invalid message', async () => {
     message = undefined
     await processValidateMessage(message, receiver)
-    expect(receiver.abandonMessage).toHaveBeenCalledWith(message)
+    expect(receiver.abandonMessage).not.toHaveBeenCalledWith(message)
   })
 
   test('sets cache if no cached result', async () => {

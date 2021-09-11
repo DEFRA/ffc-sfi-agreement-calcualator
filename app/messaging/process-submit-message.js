@@ -1,8 +1,8 @@
-const { createAgreement } = require('../submit')
+const saveAgreement = require('../submit')
 
 const processSubmitMessage = async (message, receiver) => {
   try {
-    await createAgreement(message.body)
+    await saveAgreement(message.body)
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
