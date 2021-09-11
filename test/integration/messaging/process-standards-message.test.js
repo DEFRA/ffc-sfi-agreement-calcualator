@@ -1,3 +1,4 @@
+const cache = require('../../../app/cache')
 const mockSendMessage = jest.fn()
 jest.mock('ffc-messaging', () => {
   return {
@@ -34,13 +35,13 @@ jest.mock('../../../app/api', () => {
     })
   }
 })
-jest.mock('../../../app/cache')
-const mockCache = require('../../../app/cache')
 let receiver
 let message
 
 describe('process standards message', () => {
   beforeEach(async () => {
+    await cache.start()
+    await cache.flushAll()
     receiver = {
       completeMessage: jest.fn(),
       abandonMessage: jest.fn()
@@ -57,7 +58,9 @@ describe('process standards message', () => {
     }
   })
 
-  afterEach(() => {
+  afterEach(async () => {
+    await cache.flushAll()
+    await cache.stop()
     jest.clearAllMocks()
   })
 
@@ -87,14 +90,31 @@ describe('process standards message', () => {
     expect(receiver.abandonMessage).toHaveBeenCalledWith(message)
   })
 
-  test('processes and sets cache if no cached result', async () => {
+  test('sets cache if no cached result', async () => {
     await processStandardsMessage(message, receiver)
-    expect(mockCache.setCachedResponse).toHaveBeenCalled()
+    const result = await cache.get('standards', 'correlationId')
+    expect(result.requests).toBeDefined()
   })
 
-  test('does not process and set cache if cached result', async () => {
-    mockCache.getCachedResponse.mockReturnValue(true)
+  test('adds request to cache', async () => {
     await processStandardsMessage(message, receiver)
-    expect(mockCache.setCachedResponse).not.toHaveBeenCalled()
+    const result = await cache.get('standards', 'correlationId')
+    expect(result.requests[0].request).toStrictEqual(message.body)
+  })
+
+  test('does not update cache if duplicate message', async () => {
+    await processStandardsMessage(message, receiver)
+    await processStandardsMessage(message, receiver)
+    const result = await cache.get('standards', 'correlationId')
+    expect(result.requests[0].request).toStrictEqual(message.body)
+    expect(result.requests.length).toBe(1)
+  })
+
+  test('updates cache if new message', async () => {
+    await processStandardsMessage(message, receiver)
+    message.body.sbi = 123456788
+    await processStandardsMessage(message, receiver)
+    const result = await cache.get('standards', 'correlationId')
+    expect(result.requests.length).toBe(2)
   })
 })

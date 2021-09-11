@@ -9,14 +9,14 @@ const processValidateMessage = async (message, receiver) => {
     const { body, correlationId } = message
     const { organisationId, sbi, callerId } = body
 
-    const cachedResponse = await getCachedResponse(config.cacheConfig.validateCache, body, correlationId)
+    const cachedResponse = await getCachedResponse(config.cacheConfig.validationCache, body, correlationId)
     const validationResult = cachedResponse ?? (async () => {
       const standards = await getStandards(organisationId, sbi, callerId)
       return getStandardWarnings(standards)
     })
 
     if (!cachedResponse) {
-      await setCachedResponse(config.cacheConfig.validateCache, correlationId, body, validationResult)
+      await setCachedResponse(config.cacheConfig.validationCache, correlationId, body, validationResult)
     }
 
     await sendMessage(validationResult, 'uk.gov.sfi.validate.result', config.validateResponseTopic, { correlationId })
