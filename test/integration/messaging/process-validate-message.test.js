@@ -10,7 +10,7 @@ jest.mock('ffc-messaging', () => {
     })
   }
 })
-const processStandardsMessage = require('../../../app/messaging/process-standards-message')
+const processValidateMessage = require('../../../app/messaging/process-validate-message')
 jest.mock('../../../app/api', () => {
   return {
     get: jest.fn().mockImplementation(() => {
@@ -38,7 +38,7 @@ jest.mock('../../../app/api', () => {
 let receiver
 let message
 
-describe('process standards message', () => {
+describe('process validate message', () => {
   beforeEach(async () => {
     await cache.start()
     await cache.flushAll()
@@ -49,7 +49,6 @@ describe('process standards message', () => {
 
     message = {
       correlationId: 'correlationId',
-      messageId: 'messageId',
       body: {
         organisationId: 1,
         sbi: 123456789,
@@ -65,56 +64,51 @@ describe('process standards message', () => {
   })
 
   test('completes valid message', async () => {
-    await processStandardsMessage(message, receiver)
+    await processValidateMessage(message, receiver)
     expect(receiver.completeMessage).toHaveBeenCalledWith(message)
   })
 
-  test('sends session message if valid', async () => {
-    await processStandardsMessage(message, receiver)
+  test('sends message if valid', async () => {
+    await processValidateMessage(message, receiver)
     expect(mockSendMessage).toHaveBeenCalled()
   })
 
-  test('sends session with message Id as session Id', async () => {
-    await processStandardsMessage(message, receiver)
-    expect(mockSendMessage.mock.calls[0][0].sessionId).toBe('messageId')
-  })
-
-  test('sends message with standards', async () => {
-    await processStandardsMessage(message, receiver)
-    expect(mockSendMessage.mock.calls[0][0].body.standards).toBeDefined()
+  test('sends message with result', async () => {
+    await processValidateMessage(message, receiver)
+    expect(mockSendMessage.mock.calls[0][0].body.validationResult).toBeDefined()
   })
 
   test('abandons invalid message', async () => {
     message = undefined
-    await processStandardsMessage(message, receiver)
+    await processValidateMessage(message, receiver)
     expect(receiver.abandonMessage).toHaveBeenCalledWith(message)
   })
 
   test('sets cache if no cached result', async () => {
-    await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
+    await processValidateMessage(message, receiver)
+    const result = await cache.get('validate', 'correlationId')
     expect(result.requests).toBeDefined()
   })
 
   test('adds request to cache', async () => {
-    await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
+    await processValidateMessage(message, receiver)
+    const result = await cache.get('validate', 'correlationId')
     expect(result.requests[0].request).toStrictEqual(message.body)
   })
 
   test('does not update cache if duplicate message', async () => {
-    await processStandardsMessage(message, receiver)
-    await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
+    await processValidateMessage(message, receiver)
+    await processValidateMessage(message, receiver)
+    const result = await cache.get('validate', 'correlationId')
     expect(result.requests[0].request).toStrictEqual(message.body)
     expect(result.requests.length).toBe(1)
   })
 
   test('updates cache if new message', async () => {
-    await processStandardsMessage(message, receiver)
+    await processValidateMessage(message, receiver)
     message.body.sbi = 123456788
-    await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
+    await processValidateMessage(message, receiver)
+    const result = await cache.get('validate', 'correlationId')
     expect(result.requests.length).toBe(2)
   })
 })

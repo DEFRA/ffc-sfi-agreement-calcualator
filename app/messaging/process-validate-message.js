@@ -9,13 +9,11 @@ const processValidateMessage = async (message, receiver) => {
     const { body, correlationId } = message
     const { organisationId, sbi, callerId } = body
 
-    const cachedResponse = await getCachedResponse(config.cacheConfig.validateCache, body, correlationId)
-    const validationResult = cachedResponse ?? (async () => {
-      const standards = await getStandards(organisationId, sbi, callerId)
-      return getStandardWarnings(standards)
-    })
+    let validationResult = await getCachedResponse(config.cacheConfig.validateCache, body, correlationId)
 
-    if (!cachedResponse) {
+    if (!validationResult) {
+      const standards = await getStandards(organisationId, sbi, callerId)
+      validationResult = { validationResult: getStandardWarnings(standards) }
       await setCachedResponse(config.cacheConfig.validateCache, correlationId, body, validationResult)
     }
 
