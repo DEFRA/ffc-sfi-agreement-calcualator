@@ -12,6 +12,7 @@ services:
     command: npm run test
     environment: 
       NODE_ENV: test
+      CH_API_GATEWAY: http://api-gateway/
     volumes:
       - ./app:/home/node/app
       - ./test:/home/node/test

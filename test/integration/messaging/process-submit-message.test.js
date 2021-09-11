@@ -37,4 +37,17 @@ describe('process submit message', () => {
     await processSubmitMessage(message, receiver)
     expect(receiver.abandonMessage).not.toHaveBeenCalledWith(message)
   })
+
+  test('saves valid message', async () => {
+    await processSubmitMessage(message, receiver)
+    const agreements = await db.agreement.findAll({ where: { agreementNumber: message.body.agreementNumber } })
+    expect(agreements.length).toBe(1)
+  })
+
+  test('does not save duplicate message', async () => {
+    await processSubmitMessage(message, receiver)
+    await processSubmitMessage(message, receiver)
+    const agreements = await db.agreement.findAll({ where: { agreementNumber: message.body.agreementNumber } })
+    expect(agreements.length).toBe(1)
+  })
 })
