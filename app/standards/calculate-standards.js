@@ -3,20 +3,10 @@ const { checkSSSI } = require('./sssi')
 const { checkHEFER } = require('./hefer')
 const { getCountrysideStewardshipClaim } = require('./countryside-stewardship')
 const { getEnvironmentalStewardshipClaim } = require('./environmental-stewardship')
+const getAllStandards = require('./get-all-standards')
 
 const calculateStandards = async (parcels) => {
-  const standards = [
-    {
-      code: '130',
-      name: 'Permanent grassland',
-      parcels: []
-    },
-    {
-      code: '110',
-      name: 'Arable land',
-      parcels: []
-    }
-  ]
+  const standards = await getAllStandards()
 
   for (const parcel of parcels) {
     const infos = parcel.info
@@ -26,7 +16,7 @@ const calculateStandards = async (parcels) => {
 
       // Sum the parcel area eligible for this standard
       for (const info of infos) {
-        if (info.area > 0 && info.code === standard.code) {
+        if (info.area > 0 && standard.codes.includes(info.code)) {
           area += info.area
         }
       }

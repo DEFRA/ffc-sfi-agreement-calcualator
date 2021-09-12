@@ -36,7 +36,5 @@
       <column name="landCoverId" value="130" />
       <column name="standardId" value="2" />
     </insert>
-    <addForeignKeyConstraint baseColumnNames="landCoverId" baseTableName="landCovers" constraintName="fk_standardLandCover_landCoverId" referencedColumnNames="landCoverId" referencedTableName="standardLandCovers" />
-    <addForeignKeyConstraint baseColumnNames="standardId" baseTableName="standards" constraintName="fk_standardLandCover_standardId" referencedColumnNames="standardId" referencedTableName="standardLandCovers" />
-  </changeSet>  
+  </changeSet>
 </databaseChangeLog>
