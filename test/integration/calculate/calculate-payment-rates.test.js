@@ -109,13 +109,13 @@ describe('calculate payment rates', () => {
   })
 
   test('calculates ignoring rates later than calculation date', async () => {
-    await db.rate.create({ levelId: 3, rate: 8600, startDate: new Date(2022, 4, 1) })
+    await db.rate.create({ rateId: 4, levelId: 3, rate: 8600, startDate: new Date(2022, 4, 1) })
     const result = await calculatePaymentRates(110, [{ area: 100 }], new Date(2021, 4, 1))
     expect(result.Advanced.rate).toBe('60.00')
   })
 
   test('calculates selects latest rate for level', async () => {
-    await db.rate.create({ levelId: 3, rate: 8600, startDate: new Date(2021, 4, 1) })
+    await db.rate.create({ rateId: 4, levelId: 3, rate: 8600, startDate: new Date(2021, 4, 1) })
     const result = await calculatePaymentRates(110, [{ area: 100 }])
     expect(result.Advanced.rate).toBe('86.00')
   })
