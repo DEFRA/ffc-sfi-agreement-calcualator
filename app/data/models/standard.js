@@ -19,6 +19,11 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: 'standardId',
       as: 'levels'
     })
+    standard.belongsToMany(models.landCover, {
+      foreignKey: 'standardId',
+      as: 'landCovers',
+      through: 'standardLandCovers'
+    })
   }
   return standard
 }
