@@ -2,11 +2,14 @@ const db = require('../data')
 
 const getAllStandards = async () => {
   const standards = await db.standard.findAll({
-    include: db.landCovers,
-    as: 'landCovers',
+    include: {
+      model: db.landCover,
+      as: 'landCovers',
+      attributes: ['landCoverId', 'code'],
+      through: { attributes: [] }
+    },
     nest: true
   })
-
   return mapStandards(standards)
 }
 

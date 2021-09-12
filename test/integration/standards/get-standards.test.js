@@ -46,11 +46,12 @@ describe('get standards', () => {
     }
 
     landCover = {
-      landCoverId: 110
+      landCoverId: 1,
+      code: 110
     }
 
     standardLandCover = {
-      landCoverId: 110,
+      landCoverId: 1,
       standardId: 1
     }
 
@@ -65,8 +66,14 @@ describe('get standards', () => {
     await db.sequelize.close()
   })
 
-  test('completes valid message', async () => {
+  test('returns code', async () => {
     const standards = await getStandards(1, 123456789, 1234567)
-    expect(standards).toBe()
+    expect(standards[0].code).toBe('110')
+  })
+
+  test('returns valid land cover codes', async () => {
+    const standards = await getStandards(1, 123456789, 1234567)
+    expect(standards[0].landCoverCodes.length).toBe(1)
+    expect(standards[0].landCoverCodes[0]).toBe('110')
   })
 })

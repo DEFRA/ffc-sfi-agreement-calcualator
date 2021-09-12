@@ -38,6 +38,8 @@ jest.mock('../../../app/api', () => {
 const db = require('../../../app/data')
 let scheme
 let standard
+let landCover
+let standardLandCover
 let receiver
 let message
 
@@ -62,8 +64,20 @@ describe('process standards message', () => {
       code: 110
     }
 
+    landCover = {
+      landCoverId: 1,
+      code: 110
+    }
+
+    standardLandCover = {
+      landCoverId: 1,
+      standardId: 1
+    }
+
     await db.scheme.create(scheme)
     await db.standard.create(standard)
+    await db.landCover.create(landCover)
+    await db.standardLandCover.create(standardLandCover)
 
     receiver = {
       completeMessage: jest.fn(),
