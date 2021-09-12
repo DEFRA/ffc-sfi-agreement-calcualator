@@ -11,7 +11,8 @@ const getAllStandards = async () => {
 }
 
 const mapStandards = (standards) => standards.map(x => ({
-  codes: x.landCovers?.map(y => y.landCoverId) ?? [],
+  code: x.code,
+  landCoverCodes: x.landCovers?.map(y => y.landCoverId) ?? [],
   name: x.name,
   parcels: []
 }))

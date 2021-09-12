@@ -16,7 +16,7 @@ const calculateStandards = async (parcels) => {
 
       // Sum the parcel area eligible for this standard
       for (const info of infos) {
-        if (info.area > 0 && standard.codes.includes(info.code)) {
+        if (info.area > 0 && standard.landCoverCodes.includes(info.code)) {
           area += info.area
         }
       }
