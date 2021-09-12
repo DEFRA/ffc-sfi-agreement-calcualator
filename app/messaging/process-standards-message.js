@@ -1,5 +1,5 @@
 const { getCachedResponse, setCachedResponse } = require('../cache')
-const { getStandards } = require('../standards')
+const getStandards = require('../standards')
 const config = require('../config')
 const sendMessage = require('./send-message')
 

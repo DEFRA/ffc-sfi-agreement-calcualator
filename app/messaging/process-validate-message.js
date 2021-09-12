@@ -1,6 +1,6 @@
 const sendMessage = require('./send-message')
 const config = require('../config')
-const { getStandards } = require('../standards')
+const getStandards = require('../standards')
 const getStandardWarnings = require('../standards/get-standard-warnings')
 const { setCachedResponse, getCachedResponse } = require('../cache')
 
