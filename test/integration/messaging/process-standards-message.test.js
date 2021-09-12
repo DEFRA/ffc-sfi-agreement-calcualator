@@ -61,12 +61,12 @@ describe('process standards message', () => {
       standardId: 1,
       schemeId: 1,
       name: 'Arable and horticultural soils',
-      code: 110
+      code: '110'
     }
 
     landCover = {
       landCoverId: 1,
-      code: 110
+      code: '110'
     }
 
     standardLandCover = {
