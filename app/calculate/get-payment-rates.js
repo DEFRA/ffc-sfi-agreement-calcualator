@@ -10,12 +10,7 @@ const getPaymentRates = async (code, calculateDate) => {
       as: 'levels',
       include: {
         model: db.rate,
-        as: 'rates'//,
-        // where: {
-        //   startDate: { [db.Sequelize.Op.lte]: calculateDate }
-        // },
-        // order: ['startDate', 'DESC'],
-        // limit: 1
+        as: 'rates'
       }
     }
   })
