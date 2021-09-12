@@ -6,10 +6,10 @@ const sendMessage = require('./send-message')
 const processCalculateMessage = async (message, receiver) => {
   try {
     const { body, correlationId, messageId } = message
-    const { code, parcels } = body
+    const { code, parcels, calculateDate } = body
 
     const cachedResponse = await getCachedResponse(config.cacheConfig.calculateCache, body, correlationId)
-    const paymentRates = cachedResponse ?? calculatePaymentRates(code, parcels)
+    const paymentRates = cachedResponse ?? await calculatePaymentRates(code, parcels, calculateDate)
 
     if (!cachedResponse) {
       await setCachedResponse(config.cacheConfig.calculateCache, correlationId, body, paymentRates)
