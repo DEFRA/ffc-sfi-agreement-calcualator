@@ -1,5 +1,5 @@
 const { getCachedResponse, setCachedResponse } = require('../cache')
-const { calculatePaymentRates } = require('../calculate')
+const calculatePaymentRates = require('../calculate')
 const config = require('../config')
 const sendMessage = require('./send-message')
 

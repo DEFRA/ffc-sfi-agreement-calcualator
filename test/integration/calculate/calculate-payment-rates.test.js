@@ -1,4 +1,4 @@
-const { calculatePaymentRates } = require('../../../app/calculate')
+const calculatePaymentRates = require('../../../app/calculate')
 const db = require('../../../app/data')
 let scheme
 let standard
@@ -106,5 +106,17 @@ describe('calculate payment rates', () => {
   test('calculates multiple decimal parcels', async () => {
     const result = await calculatePaymentRates(110, [{ area: 100.1 }, { area: 100.2 }])
     expect(result.Introductory.paymentAmount).toBe('5207.80')
+  })
+
+  test('calculates ignoring rates later than calculation date', async () => {
+    await db.rate.create({ levelId: 3, rate: 8600, startDate: new Date(2022, 4, 1) })
+    const result = await calculatePaymentRates(110, [{ area: 100 }], new Date(2021, 4, 1))
+    expect(result.Advanced.rate).toBe('60.00')
+  })
+
+  test('calculates selects latest rate for level', async () => {
+    await db.rate.create({ levelId: 3, rate: 8600, startDate: new Date(2021, 4, 1) })
+    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    expect(result.Advanced.rate).toBe('86.00')
   })
 })

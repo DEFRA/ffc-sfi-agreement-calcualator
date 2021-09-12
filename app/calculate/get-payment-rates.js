@@ -1,5 +1,5 @@
 const db = require('../data')
-const getValidPaymentRatesForStandard = require('./get-valid-payment-rates')
+const mapPaymentRatesForStandard = require('./map-payment-rates')
 
 const getPaymentRates = async (code, calculateDate) => {
   const standard = await db.standard.findOne({
@@ -14,7 +14,7 @@ const getPaymentRates = async (code, calculateDate) => {
       }
     }
   })
-  return getValidPaymentRatesForStandard(standard, calculateDate)
+  return mapPaymentRatesForStandard(standard, calculateDate)
 }
 
 module.exports = getPaymentRates
