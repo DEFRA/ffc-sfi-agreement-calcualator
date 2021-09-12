@@ -1,6 +1,7 @@
 module.exports = (sequelize, DataTypes) => {
   const landCover = sequelize.define('landCover', {
-    landCoverId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: false },
+    landCoverId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    code: DataTypes.STRING,
     name: DataTypes.STRING
   },
   {

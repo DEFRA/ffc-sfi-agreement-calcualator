@@ -9,13 +9,16 @@
         <constraints nullable="false" primaryKey="true" unique="true" primaryKeyName="landCoverId_pkey" />
       </column>
       <column name="name" type="VARCHAR(255)" />
+      <column name="code" type="VARCHAR(5)" />
     </createTable>
     <insert tableName="landCovers">
-      <column name="landCoverId" value="110" />
+      <column name="landCoverId" value="1" />
+      <column name="code" value="110" />
       <column name="name" value="Arable land" />
     </insert>
     <insert tableName="landCovers">
-      <column name="landCoverId" value="130" />
+      <column name="landCoverId" value="2" />
+      <column name="code" value="130" />
       <column name="name" value="Permanent grassland" />
     </insert>
   </changeSet>
@@ -29,11 +32,11 @@
       </column>
     </createTable>
     <insert tableName="standardLandCovers">
-      <column name="landCoverId" value="110" />
+      <column name="landCoverId" value="1" />
       <column name="standardId" value="1" />
     </insert>
     <insert tableName="standardLandCovers">
-      <column name="landCoverId" value="130" />
+      <column name="landCoverId" value="2" />
       <column name="standardId" value="2" />
     </insert>
   </changeSet>
