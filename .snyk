@@ -29,9 +29,15 @@ ignore:
     - '@azure/identity > keytar > prebuild-install > npmlog > gauge > string-width > strip-ansi > ansi-regex':
         reason: No fix
         expires: '2021-10-13T14:56:25.291Z'
+      '@azure/identity > keytar > prebuild-install > npmlog > gauge > strip-ansi > ansi-regex':
+        reason: No fix
+        expires: '2021-10-13T15:06:11.276Z'
     - ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > string-width > strip-ansi > ansi-regex:
         reason: No fix
         expires: '2021-10-13T14:56:25.291Z'
+      ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > strip-ansi > ansi-regex:
+        reason: No fix
+        expires: '2021-10-13T15:06:11.276Z'
     - '@azure/identity > keytar > prebuild-install > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex':
         reason: No fix
         expires: '2021-10-13T14:56:25.291Z'
