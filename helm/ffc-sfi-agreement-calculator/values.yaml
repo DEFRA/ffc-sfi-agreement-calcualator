@@ -40,10 +40,12 @@ container:
   calculateSubscriptionAddress: ffc-sfi-agreement-calculate-calculator
   withdrawSubscriptionAddress: ffc-sfi-agreement-withdraw-calculator 
   standardsTopicAddress: ffc-sfi-standards-request
+  standardsResponseQueueAddress: ffc-sfi-standards-request-response
   validateTopicAddress: ffc-sfi-agreement-validate
   validationTopicAddress: ffc-sfi-agreement-validate-response
   submitTopicAddress: ffc-sfi-agreement-submit
   calculateTopicAddress: ffc-sfi-agreement-calculate
+  calculateResponseQueueAddress: ffc-sfi-agreement-calculate-response
   withdrawTopicAddress: ffc-sfi-agreement-withdraw
   redisHostname: redis-redis-ha.default
   redisPassword: redis

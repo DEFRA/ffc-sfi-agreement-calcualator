@@ -1,9 +1,9 @@
-function createMessage (body, type, correlationId) {
+const createMessage = (body, type, options) => {
   return {
     body,
     type,
     source: 'ffc-sfi-agreement-calculator',
-    correlationId
+    ...options
   }
 }
 

@@ -1,52 +1,42 @@
-const joi = require('joi')
+const Joi = require('joi')
 
-const mqSchema = joi.object({
+const mqSchema = Joi.object({
   messageQueue: {
-    host: joi.string().default('localhost'),
-    useCredentialChain: joi.bool().default(false),
-    type: joi.string(),
-    appInsights: joi.object()
+    host: Joi.string(),
+    useCredentialChain: Joi.bool().default(false),
+    type: Joi.string(),
+    appInsights: Joi.object(),
+    username: Joi.string(),
+    password: Joi.string()
   },
   standardsSubscription: {
-    name: joi.string().default('ffc-sfi-standards-request'),
-    address: joi.string().default('standards'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string()
+    address: Joi.string(),
+    topic: Joi.string()
+  },
+  standardsResponseQueue: {
+    address: Joi.string()
   },
   validateSubscription: {
-    name: joi.string().default('ffc-sfi-agreement-validate'),
-    address: joi.string().default('validate'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string()
+    address: Joi.string(),
+    topic: Joi.string()
   },
   validateResponseTopic: {
-    name: joi.string().default('ffc-sfi-agreement-validate-response'),
-    address: joi.string().default('validation'),
-    username: joi.string(),
-    password: joi.string()
+    address: Joi.string()
   },
   calculateSubscription: {
-    name: joi.string().default('ffc-sfi-agreement-calculate'),
-    address: joi.string().default('calculate'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string()
+    address: Joi.string(),
+    topic: Joi.string()
+  },
+  calculateResponseQueue: {
+    address: Joi.string()
   },
   submitSubscription: {
-    name: joi.string().default('ffc-sfi-agreement-submit'),
-    address: joi.string().default('submit'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string()
+    address: Joi.string(),
+    topic: Joi.string()
   },
   withdrawSubscription: {
-    name: joi.string().default('ffc-sfi-agreement-withdraw'),
-    address: joi.string().default('withdraw'),
-    username: joi.string(),
-    password: joi.string(),
-    topic: joi.string()
+    address: Joi.string(),
+    topic: Joi.string()
   }
 })
 const mqConfig = {
@@ -54,47 +44,37 @@ const mqConfig = {
     host: process.env.MESSAGE_QUEUE_HOST,
     useCredentialChain: process.env.NODE_ENV === 'production',
     type: 'subscription',
-    appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
-  },
-  standardsSubscription: {
-    name: process.env.STANDARDS_SUBSCRIPTION_NAME,
-    address: process.env.STANDARDS_SUBSCRIPTION_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
-    topic: process.env.STANDARDS_TOPIC_ADDRESS
-  },
-  validateSubscription: {
-    name: process.env.VALIDATE_SUBSCRIPTION_NAME,
-    address: process.env.VALIDATE_SUBSCRIPTION_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
-    topic: process.env.VALIDATE_TOPIC_ADDRESS
-  },
-  validateResponseTopic: {
-    name: process.env.VALIDATION_TOPIC_NAME,
-    address: process.env.VALIDATION_TOPIC_ADDRESS,
+    appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined,
     username: process.env.MESSAGE_QUEUE_USER,
     password: process.env.MESSAGE_QUEUE_PASSWORD
   },
+  standardsSubscription: {
+    address: process.env.STANDARDS_SUBSCRIPTION_ADDRESS,
+    topic: process.env.STANDARDS_TOPIC_ADDRESS
+  },
+  standardsResponseQueue: {
+    address: process.env.STANDARDSRESPONSE_QUEUE_ADDRESS
+  },
+  validateSubscription: {
+    address: process.env.VALIDATE_SUBSCRIPTION_ADDRESS,
+    topic: process.env.VALIDATE_TOPIC_ADDRESS
+  },
+  validateResponseTopic: {
+    address: process.env.VALIDATION_TOPIC_ADDRESS
+  },
   calculateSubscription: {
-    name: process.env.CALCULATE_SUBSCRIPTION_NAME,
     address: process.env.CALCULATE_SUBSCRIPTION_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
     topic: process.env.CALCULATE_TOPIC_ADDRESS
   },
+  calculateResponseQueue: {
+    address: process.env.CALCULATERESPONSE_QUEUE_ADDRESS
+  },
   submitSubscription: {
-    name: process.env.SUBMIT_SUBSCRIPTION_NAME,
     address: process.env.SUBMIT_SUBSCRIPTION_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
     topic: process.env.SUBMIT_TOPIC_ADDRESS
   },
   withdrawSubscription: {
-    name: process.env.WITHDRAW_SUBSCRIPTION_NAME,
     address: process.env.WITHDRAW_SUBSCRIPTION_ADDRESS,
-    username: process.env.MESSAGE_QUEUE_USER,
-    password: process.env.MESSAGE_QUEUE_PASSWORD,
     topic: process.env.WITHDRAW_TOPIC_ADDRESS
   }
 }
@@ -109,16 +89,20 @@ if (mqResult.error) {
 }
 
 const standardsSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.standardsSubscription }
+const standardsResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.standardsResponseQueue }
 const validateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.validateSubscription }
 const calculateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.calculateSubscription }
+const calculateResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.calculateResponseQueue }
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
 const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
 const validateResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.validateResponseTopic }
 
 module.exports = {
   standardsSubscription,
+  standardsResponseQueue,
   validateSubscription,
   calculateSubscription,
+  calculateResponseQueue,
   submitSubscription,
   withdrawSubscription,
   validateResponseTopic

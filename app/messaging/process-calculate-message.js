@@ -1,17 +1,21 @@
-const cache = require('../cache')
+const { getCachedResponse, setCachedResponse } = require('../cache')
 const { calculatePaymentRates } = require('../calculate')
+const config = require('../config').calculateResponseQueue
+const sendMessage = require('./send-message')
 
-async function processCalculateMessage (message, receiver) {
+const processCalculateMessage = async (message, receiver) => {
   try {
-    console.info('Received request for calculate')
-    const { body, correlationId } = message
+    const { body, correlationId, messageId } = message
     const { code, parcels } = body
-    await cache.clear('calculate', correlationId)
-    await cache.set('calculate', correlationId, body)
-    console.info(`Request for calculate stored in cache, correlation Id: ${correlationId}`)
-    const paymentRates = calculatePaymentRates(code, parcels)
-    await cache.update('calculate', correlationId, { paymentRates })
-    console.info(`Response available for calculate, correlation Id: ${message}`)
+
+    const cachedResponse = await getCachedResponse('calculate', body, correlationId)
+    const paymentRates = cachedResponse ?? calculatePaymentRates(code, parcels)
+
+    if (!cachedResponse) {
+      await setCachedResponse('calculate', correlationId, body, paymentRates)
+    }
+
+    await sendMessage(paymentRates, 'uk.gov.sfi.agreement.calculate.response', config, { sessionId: messageId })
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

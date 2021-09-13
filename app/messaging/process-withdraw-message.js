@@ -1,4 +1,4 @@
-async function processWithdrawMessage (message, receiver) {
+const processWithdrawMessage = async (message, receiver) => {
   try {
     console.info('Received withdraw agreement request')
     await receiver.completeMessage(message)

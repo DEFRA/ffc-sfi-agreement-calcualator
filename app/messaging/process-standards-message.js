@@ -1,16 +1,21 @@
-const cache = require('../cache')
+const { getCachedResponse, setCachedResponse } = require('../cache')
 const { getStandards } = require('../standards')
+const config = require('../config').standardsResponseQueue
+const sendMessage = require('./send-message')
 
-async function processStandardsMessage (message, receiver) {
+const processStandardsMessage = async (message, receiver) => {
   try {
-    console.info('Received request for available standards')
+    const { body, correlationId, messageId } = message
     const { organisationId, sbi, callerId } = message.body
-    await cache.clear('standards', message.correlationId)
-    await cache.set('standards', message.correlationId, message.body)
-    console.info(`Request for standards stored in cache, correlation Id: ${message.correlationId}`)
-    const standards = await getStandards(organisationId, sbi, callerId)
-    await cache.update('standards', message.correlationId, { standards })
-    console.info(`Response available for standards request, correlation Id: ${message.correlationId}`)
+
+    const cachedResponse = await getCachedResponse('standards', body, correlationId)
+    const standards = cachedResponse ?? { standards: await getStandards(organisationId, sbi, callerId) }
+
+    if (!cachedResponse) {
+      await setCachedResponse('standards', correlationId, body, standards)
+    }
+
+    await sendMessage(standards, 'uk.gov.sfi.agreement.standards.request.response', config, { sessionId: messageId })
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)

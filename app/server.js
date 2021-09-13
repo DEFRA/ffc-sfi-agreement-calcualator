@@ -3,7 +3,7 @@ const config = require('./config')
 const messageService = require('./messaging')
 const catbox = config.useRedis ? require('@hapi/catbox-redis') : require('@hapi/catbox-memory')
 const catboxOptions = config.useRedis ? config.cacheConfig.redisCatboxOptions : {}
-const cache = require('./cache')
+const { setup: setupCache } = require('./cache')
 
 async function createServer () {
   // Create the hapi server
@@ -36,7 +36,7 @@ async function createServer () {
     await server.register(require('./plugins/logging'))
   }
 
-  cache.setup(server)
+  setupCache(server)
 
   await messageService.start()
 
