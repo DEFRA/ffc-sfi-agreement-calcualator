@@ -1,5 +1,5 @@
 const sendMessage = require('./send-message')
-const config = require('../config')
+const config = require('../config').validateResponseTopic
 const { getStandards } = require('../standards')
 const getStandardWarnings = require('../standards/get-standard-warnings')
 const { setCachedResponse, getCachedResponse } = require('../cache')
