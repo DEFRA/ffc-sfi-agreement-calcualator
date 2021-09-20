@@ -11,6 +11,11 @@ jest.mock('ffc-messaging', () => {
   }
 })
 const processCalculateMessage = require('../../../app/messaging/process-calculate-message')
+const db = require('../../../app/data')
+let scheme
+let standard
+let levels
+let rates
 let receiver
 let message
 
@@ -21,6 +26,53 @@ describe('process calculate message', () => {
 
   beforeEach(async () => {
     await cache.flushAll()
+    await db.sequelize.truncate({ cascade: true })
+
+    scheme = {
+      schemeId: 1,
+      name: 'SFI'
+    }
+
+    standard = {
+      standardId: 1,
+      schemeId: 1,
+      name: 'Arable and horticultural soils',
+      code: 110
+    }
+
+    levels = [{
+      levelId: 1,
+      standardId: 1,
+      name: 'Introductory'
+    }, {
+      levelId: 2,
+      standardId: 1,
+      name: 'Intermediate'
+    }, {
+      levelId: 3,
+      standardId: 1,
+      name: 'Advanced'
+    }]
+
+    rates = [{
+      rateId: 1,
+      levelId: 1,
+      rate: 2600
+    }, {
+      rateId: 2,
+      levelId: 2,
+      rate: 4100
+    }, {
+      rateId: 3,
+      levelId: 3,
+      rate: 6000
+    }]
+
+    await db.scheme.create(scheme)
+    await db.standard.create(standard)
+    await db.level.bulkCreate(levels)
+    await db.rate.bulkCreate(rates)
+
     receiver = {
       completeMessage: jest.fn(),
       abandonMessage: jest.fn()
@@ -30,7 +82,7 @@ describe('process calculate message', () => {
       correlationId: 'correlationId',
       messageId: 'messageId',
       body: {
-        code: 130,
+        code: 110,
         parcels: [{
           area: 100
         }]
@@ -43,6 +95,8 @@ describe('process calculate message', () => {
   })
 
   afterAll(async () => {
+    await db.sequelize.truncate({ cascade: true })
+    await db.sequelize.close()
     await cache.flushAll()
     await cache.stop()
   })

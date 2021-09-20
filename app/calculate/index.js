@@ -1,32 +1,11 @@
-const { convertToDecimal, convertToInteger } = require('../conversion')
-const rates = require('./rates.json')
+const calculateAllRates = require('./calculate-all-rates')
+const calculateTotalArea = require('./calculate-total-area')
+const getPaymentRates = require('./get-payment-rates')
 
-/**
- * Calculates the standard payment rate for each ambition
- * @param {String} code - The land use cover code (standard code)
- * @param {Array} parcels - The array of eligible parcels allocated for use
- * @returns {Object} - A payment rates object
- */
-const calculatePaymentRates = (code, parcels) => {
-  const paymentRates = {}
-  const rate = rates[`_${code}`] || {}
-  const totalArea = parcels.reduce((a, b) => a + (b.area || 0), 0)
-  const totalAreaToCalculate = convertToInteger(totalArea)
-
-  for (const key in rate) {
-    const ambitionRate = rate[key] || 0
-
-    const paymentAmountInPence = Math.ceil((totalAreaToCalculate * ambitionRate) / 100)
-
-    paymentRates[key] = {
-      rate: convertToDecimal(ambitionRate),
-      paymentAmount: convertToDecimal(paymentAmountInPence)
-    }
-  }
-
-  return paymentRates
+const calculatePaymentRates = async (code, parcels, calculateDate = new Date()) => {
+  const paymentRates = await getPaymentRates(code.toString(), calculateDate)
+  const totalArea = calculateTotalArea(parcels)
+  return calculateAllRates(paymentRates, totalArea)
 }
 
-module.exports = {
-  calculatePaymentRates
-}
+module.exports = calculatePaymentRates
