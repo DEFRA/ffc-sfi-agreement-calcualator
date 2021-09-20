@@ -1,22 +1,26 @@
+const { convertToDecimal, convertToInteger } = require('../conversion')
 const rates = require('./rates.json')
 
 /**
- * Calulates the standard payment rate for each ambition
+ * Calculates the standard payment rate for each ambition
  * @param {String} code - The land use cover code (standard code)
  * @param {Array} parcels - The array of eligible parcels allocated for use
  * @returns {Object} - A payment rates object
  */
-function calculatePaymentRates (code, parcels) {
+const calculatePaymentRates = (code, parcels) => {
   const paymentRates = {}
   const rate = rates[`_${code}`] || {}
   const totalArea = parcels.reduce((a, b) => a + (b.area || 0), 0)
+  const totalAreaToCalculate = convertToInteger(totalArea)
 
   for (const key in rate) {
     const ambitionRate = rate[key] || 0
 
+    const paymentAmountInPence = Math.ceil((totalAreaToCalculate * ambitionRate) / 100)
+
     paymentRates[key] = {
-      rate: ambitionRate,
-      paymentAmount: (totalArea * ambitionRate).toFixed(2)
+      rate: convertToDecimal(ambitionRate),
+      paymentAmount: convertToDecimal(paymentAmountInPence)
     }
   }
 

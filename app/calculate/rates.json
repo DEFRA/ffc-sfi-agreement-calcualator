@@ -1,12 +1,12 @@
 {
   "_110": {
-    "Introductory": 26.0,
-    "Intermediate": 41.0,
-    "Advanced": 60.0
+    "Introductory": 2600,
+    "Intermediate": 4100,
+    "Advanced": 6000
   },
   "_130": {
-    "Introductory": 26.0,
-    "Intermediate": 44.0,
-    "Advanced": 70.0
+    "Introductory": 2600,
+    "Intermediate": 4400,
+    "Advanced": 7000
   }
 }
