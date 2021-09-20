@@ -2,7 +2,6 @@
 {{- define "ffc-sfi-agreement-calculator.config-map" -}}
 data:
   NODE_ENV: {{ quote .Values.environment }}
-  PORT: {{ quote .Values.container.port }}
   APPINSIGHTS_CLOUDROLE: {{ quote .Values.name }}
   MESSAGE_QUEUE_HOST: {{ quote .Values.container.messageQueueHost }}
   STANDARDS_TOPIC_ADDRESS: {{ quote .Values.container.standardsTopicAddress }}

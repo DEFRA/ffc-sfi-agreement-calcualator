@@ -1,19 +1,27 @@
 const sendMessage = require('./send-message')
-const config = require('../config').validateResponseTopic
+const config = require('../config')
 const { getStandards } = require('../standards')
 const getStandardWarnings = require('../standards/get-standard-warnings')
+const { setCachedResponse, getCachedResponse } = require('../cache')
 
 const processValidateMessage = async (message, receiver) => {
   try {
     const { body, correlationId } = message
     const { organisationId, sbi, callerId } = body
-    const standards = await getStandards(organisationId, sbi, callerId)
-    const validationResult = getStandardWarnings(standards)
-    await sendMessage({ validationResult }, 'uk.gov.sfi.validate.result', config, { correlationId })
+
+    let validationResult = await getCachedResponse(config.cacheConfig.validateCache, body, correlationId)
+
+    if (!validationResult) {
+      const standards = await getStandards(organisationId, sbi, callerId)
+      validationResult = { validationResult: getStandardWarnings(standards) }
+      await setCachedResponse(config.cacheConfig.validateCache, correlationId, body, validationResult)
+    }
+
+    await sendMessage(validationResult, 'uk.gov.sfi.validate.result', config.validateResponseTopic, { correlationId })
+
     await receiver.completeMessage(message)
   } catch (err) {
     console.error('Unable to process message:', err)
-    await receiver.abandonMessage(message)
   }
 }
 

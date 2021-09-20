@@ -1,9 +1,9 @@
 module.exports = (sequelize, DataTypes) => {
-  const agreement = sequelize.define('agreement', {
+  return sequelize.define('agreement', {
     agreementId: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     sbi: DataTypes.INTEGER,
+    agreementNumber: DataTypes.STRING,
     agreementData: DataTypes.JSON,
-    statusId: DataTypes.INTEGER,
     createdAt: DataTypes.DATE,
     updatedAt: DataTypes.DATE
   },
@@ -11,11 +11,4 @@ module.exports = (sequelize, DataTypes) => {
     tableName: 'agreements',
     freezeTableName: true
   })
-  agreement.associate = function (models) {
-    agreement.hasOne(models.status, {
-      foreignKey: 'statusId',
-      as: 'status'
-    })
-  }
-  return agreement
 }

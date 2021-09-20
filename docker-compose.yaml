@@ -9,6 +9,7 @@ services:
     container_name: ffc-sfi-agreement-calculator
     depends_on:
       - ffc-sfi-agreement-calculator-postgres
+      - redis
     environment:
       APPINSIGHTS_CLOUDROLE: ffc-sfi-agreement-calculator-local
       APPINSIGHTS_INSTRUMENTATIONKEY: ${APPINSIGHTS_INSTRUMENTATIONKEY}
@@ -43,3 +44,6 @@ services:
       POSTGRES_DB: ffc_sfi_agreement_calculator
       POSTGRES_PASSWORD: ppp
       POSTGRES_USERNAME: postgres
+
+  redis:
+    image: redis:4.0.14

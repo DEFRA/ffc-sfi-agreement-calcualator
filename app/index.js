@@ -1,9 +1,16 @@
 require('./insights').setup()
-const createServer = require('./server')
+const messageService = require('./messaging')
+const cache = require('./cache')
 
-createServer()
-  .then(server => server.start())
-  .catch(err => {
-    console.log(err)
-    process.exit(1)
+for (const signal of ['SIGINT', 'SIGTERM', 'SIGQUIT']) {
+  process.on(signal, async () => {
+    await messageService.stop()
+    await cache.stop()
+    process.exit()
   })
+}
+
+module.exports = (async function startService () {
+  await cache.start()
+  await messageService.start()
+}())
