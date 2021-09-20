@@ -1,0 +1,43 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+  <changeSet author="John Watson" id="1">
+    <tagDatabase tag="v1.3.0" />
+  </changeSet>
+  <changeSet author="John Watson" id="2">
+    <createTable tableName="landCovers">
+      <column autoIncrement="false" name="landCoverId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" unique="true" primaryKeyName="landCoverId_pkey" />
+      </column>
+      <column name="name" type="VARCHAR(255)" />
+      <column name="code" type="VARCHAR(5)" />
+    </createTable>
+    <insert tableName="landCovers">
+      <column name="landCoverId" value="1" />
+      <column name="code" value="110" />
+      <column name="name" value="Arable land" />
+    </insert>
+    <insert tableName="landCovers">
+      <column name="landCoverId" value="2" />
+      <column name="code" value="130" />
+      <column name="name" value="Permanent grassland" />
+    </insert>
+  </changeSet>
+  <changeSet author="John Watson" id="3">
+    <createTable tableName="standardLandCovers">
+      <column autoIncrement="false" name="landCoverId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" unique="true" primaryKeyName="standardLandCoverId_pkey" />
+      </column>
+      <column autoIncrement="false" name="standardId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" unique="true" primaryKeyName="standardLandCoverId_pkey" />
+      </column>
+    </createTable>
+    <insert tableName="standardLandCovers">
+      <column name="landCoverId" value="1" />
+      <column name="standardId" value="1" />
+    </insert>
+    <insert tableName="standardLandCovers">
+      <column name="landCoverId" value="2" />
+      <column name="standardId" value="2" />
+    </insert>
+  </changeSet>
+</databaseChangeLog>
