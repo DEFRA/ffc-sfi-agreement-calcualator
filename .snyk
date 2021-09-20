@@ -25,4 +25,51 @@ ignore:
     - ffc-messaging > @azure/identity > @azure/msal-node > axios:
         reason: None given
         expires: '2021-10-06T14:36:20.677Z'
+  SNYK-JS-ANSIREGEX-1583908:
+    - '@azure/identity > keytar > prebuild-install > npmlog > gauge > string-width > strip-ansi > ansi-regex':
+        reason: No fix
+        expires: '2021-10-13T14:56:25.291Z'
+      '@azure/identity > keytar > prebuild-install > npmlog > gauge > strip-ansi > ansi-regex':
+        reason: No fix
+        expires: '2021-10-13T15:06:11.276Z'
+    - ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > string-width > strip-ansi > ansi-regex:
+        reason: No fix
+        expires: '2021-10-13T14:56:25.291Z'
+      ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > strip-ansi > ansi-regex:
+        reason: No fix
+        expires: '2021-10-13T15:06:11.276Z'
+    - '@azure/identity > keytar > prebuild-install > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex':
+        reason: No fix
+        expires: '2021-10-13T14:56:25.291Z'
+    - ffc-messaging > @azure/identity > keytar > prebuild-install > npmlog > gauge > wide-align > string-width > strip-ansi > ansi-regex:
+        reason: No fix
+        expires: '2021-10-13T14:56:25.291Z'
+    - '@jest/core > @jest/reporters > string-length > strip-ansi > ansi-regex':
+        reason: No fix
+        expires: '2021-10-13T14:56:25.291Z'
+    - jest > @jest/core > @jest/reporters > string-length > strip-ansi > ansi-regex:
+        reason: No fix
+        expires: '2021-10-13T14:56:25.291Z'
+    - '@jest/core > jest-config > @jest/test-sequencer > jest-runner > jest-leak-detector > pretty-format > ansi-regex':
+        reason: No fix
+        expires: '2021-10-13T14:56:25.292Z'
+    - jest > @jest/core > jest-config > @jest/test-sequencer > jest-runner > jest-leak-detector > pretty-format > ansi-regex:
+        reason: No fix
+        expires: '2021-10-13T14:56:25.292Z'
+    - jest-junit > strip-ansi > ansi-regex:
+        reason: No fix
+        expires: '2021-10-13T14:56:25.292Z'
+  SNYK-JS-SETVALUE-1540541:
+    - '@jest/core > @jest/reporters > @jest/transform > jest-haste-map > sane > anymatch > micromatch > braces > snapdragon > base > cache-base > set-value':
+        reason: No fix
+        expires: '2021-10-13T14:56:25.292Z'
+    - jest > @jest/core > @jest/reporters > @jest/transform > jest-haste-map > sane > anymatch > micromatch > braces > snapdragon > base > cache-base > set-value:
+        reason: No fix
+        expires: '2021-10-13T14:56:25.292Z'
+    - '@jest/core > @jest/reporters > @jest/transform > jest-haste-map > sane > anymatch > micromatch > braces > snapdragon > base > cache-base > union-value > set-value':
+        reason: No fix
+        expires: '2021-10-13T14:56:25.293Z'
+    - jest > @jest/core > @jest/reporters > @jest/transform > jest-haste-map > sane > anymatch > micromatch > braces > snapdragon > base > cache-base > union-value > set-value:
+        reason: No fix
+        expires: '2021-10-13T14:56:25.293Z'
 patch: {}
