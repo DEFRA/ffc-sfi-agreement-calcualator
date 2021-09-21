@@ -13,7 +13,7 @@
       <column name="landCoverId" type="INTEGER" />
       <column name="area" type="DECIMAL" />
     </createTable>
-    <addForeignKeyConstraint baseColumnNames="schemeId" baseTableName="crossCheck" constraintName="fk_crossCheck_schemeId" referencedColumnNames="schemeId" referencedTableName="schemes" />
-    <addForeignKeyConstraint baseColumnNames="landCoverId" baseTableName="crossCheck" constraintName="fk_crossCheck_landCoverId" referencedColumnNames="landCoverId" referencedTableName="landCovers" />
+    <addForeignKeyConstraint baseColumnNames="schemeId" baseTableName="crossChecks" constraintName="fk_crossCheck_schemeId" referencedColumnNames="schemeId" referencedTableName="schemes" />
+    <addForeignKeyConstraint baseColumnNames="landCoverId" baseTableName="crossChecks" constraintName="fk_crossCheck_landCoverId" referencedColumnNames="landCoverId" referencedTableName="landCovers" />
   </changeSet>
 </databaseChangeLog>
