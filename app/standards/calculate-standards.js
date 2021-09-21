@@ -4,6 +4,7 @@ const { checkHEFER } = require('./hefer')
 const { getCountrysideStewardshipClaim } = require('./countryside-stewardship')
 const { getEnvironmentalStewardshipClaim } = require('./environmental-stewardship')
 const getAllStandards = require('./get-all-standards')
+const { convertToDecimal } = require('../conversion')
 
 const calculateStandards = async (parcels) => {
   const standards = await getAllStandards()
@@ -48,7 +49,7 @@ const calculateStandards = async (parcels) => {
           // Add the parcel with the adjusted area to the standard
           standard.parcels.push({
             id: parcel.id,
-            area,
+            area: convertToDecimal(area),
             warnings
           })
         }
