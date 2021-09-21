@@ -4,7 +4,7 @@
     <tagDatabase tag="v1.4.0" />
   </changeSet>
   <changeSet author="Fareed Mohammed" id="2">
-    <createTable tableName="crossCheck">
+    <createTable tableName="crossChecks">
       <column autoIncrement="false" name="crossCheckId" type="INTEGER">
         <constraints nullable="false" primaryKey="true" unique="true" primaryKeyName="crossCheckId_pkey" />
       </column>
