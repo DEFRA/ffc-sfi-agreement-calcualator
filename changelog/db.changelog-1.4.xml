@@ -1,0 +1,19 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+  <changeSet author="Fareed Mohammed" id="1">
+    <tagDatabase tag="v1.4.0" />
+  </changeSet>
+  <changeSet author="Fareed Mohammed" id="2">
+    <createTable tableName="crossCheck">
+      <column autoIncrement="false" name="crossCheckId" type="INTEGER">
+        <constraints nullable="false" primaryKey="true" unique="true" primaryKeyName="crossCheckId_pkey" />
+      </column>
+      <column name="schemeId" type="INTEGER" />
+      <column name="parcel" type="VARCHAR(255)" />
+      <column name="landCoverId" type="INTEGER" />
+      <column name="area" type="DECIMAL" />
+    </createTable>
+    <addForeignKeyConstraint baseColumnNames="schemeId" baseTableName="crossCheck" constraintName="fk_crossCheck_schemeId" referencedColumnNames="schemeId" referencedTableName="schemes" />
+    <addForeignKeyConstraint baseColumnNames="landCoverId" baseTableName="crossCheck" constraintName="fk_crossCheck_landCoverId" referencedColumnNames="landCoverId" referencedTableName="landCovers" />
+  </changeSet>
+</databaseChangeLog>
