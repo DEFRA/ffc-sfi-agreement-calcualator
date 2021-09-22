@@ -6,6 +6,7 @@ let client
 const start = async () => {
   client = createClient({ socket: config.socket })
   await client.connect()
+  client.on('error', (err) => console.log(`Redis error:${err}`))
 }
 
 const stop = async () => {
