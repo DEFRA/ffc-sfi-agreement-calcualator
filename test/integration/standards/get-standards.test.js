@@ -125,7 +125,7 @@ describe('get standards', () => {
 
   test('returns valid parcel area', async () => {
     const standards = await getStandards(1, 123456789, 1234567)
-    expect(standards[0].parcels.find(x => x.id === 'SP89858278').area).toBeGreaterThan(0)
-    expect(standards[0].parcels.find(x => x.id === 'SP89858279').area).toBeGreaterThan(0)
+    expect(Number(standards[0].parcels.find(x => x.id === 'SP89858278').area)).toBeGreaterThan(0)
+    expect(Number(standards[0].parcels.find(x => x.id === 'SP89858279').area)).toBeGreaterThan(0)
   })
 })
