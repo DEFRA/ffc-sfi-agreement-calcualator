@@ -3,7 +3,8 @@ const { convertToInteger } = require('../conversion')
 
 const getLandCover = async (organisationId, callerId) => {
   const parcels = await get(`/lms/organisation/${organisationId}/land-covers`, callerId)
-  return parcels.forEach(x => x.info.forEach(y => { y.area = convertMetresToHectares(y.area) }))
+  parcels.forEach(x => x.info.forEach(y => { y.area = convertMetresToHectares(y.area) }))
+  return parcels
 }
 
 const convertMetresToHectares = (area) => {
