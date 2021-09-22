@@ -1,8 +1,7 @@
 const { convertToInteger } = require('../conversion')
 
 const calculateTotalArea = (parcels) => {
-  const totalArea = parcels.reduce((a, b) => a + (b.area || 0), 0)
-  return convertToInteger(totalArea)
+  return parcels.reduce((a, b) => a + (convertToInteger(b.area || 0)), 0)
 }
 
 module.exports = calculateTotalArea
