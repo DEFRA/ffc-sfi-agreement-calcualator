@@ -18,7 +18,7 @@
     <insert tableName="standards">
       <column name="standardId" value="3" />
       <column name="schemeId" value="1" />
-      <column name="name" value="moorland standard" />
+      <column name="name" value="Moorland and rough grazing" />
       <column name="code" value="sfi-moorland" />
     </insert>
   </changeSet>
