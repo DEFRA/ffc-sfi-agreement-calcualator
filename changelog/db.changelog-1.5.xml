@@ -7,15 +7,15 @@
       <modifyDataType columnName="code" newDataType="VARCHAR(50)" tableName="standards" />
   </changeSet>
   <changeSet author="Fay Toward" id="3">
-     <update tableName="standards">
-        <column name="code" value="sfi-arable-soil" />
-        <where> code = '110'</where>
-     </update>
-     <update tableName="standards">
-        <column name="code" value="sfi-improved-grassland" />
-        <where> code = '130'</where>
-     </update>
-     <insert tableName="standards">
+    <update tableName="standards">
+      <column name="code" value="sfi-arable-soil" />
+      <where> code = '110'</where>
+    </update>
+    <update tableName="standards">
+      <column name="code" value="sfi-improved-grassland" />
+      <where> code = '130'</where>
+    </update>
+    <insert tableName="standards">
       <column name="standardId" value="3" />
       <column name="schemeId" value="1" />
       <column name="name" value="moorland standard" />
