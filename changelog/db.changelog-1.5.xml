@@ -1,0 +1,25 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:pro="http://www.liquibase.org/xml/ns/pro" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.9.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.9.xsd">
+  <changeSet author="Fay Toward" id="1">
+    <tagDatabase tag="v1.5.0" />
+  </changeSet>
+  <changeSet author="Fay Toward" id="2">
+      <modifyDataType columnName="code" newDataType="VARCHAR(50)" tableName="standards" />
+  </changeSet>
+  <changeSet author="Fay Toward" id="3">
+    <update tableName="standards">
+      <column name="code" value="sfi-arable-soil" />
+      <where> code = '110'</where>
+    </update>
+    <update tableName="standards">
+      <column name="code" value="sfi-improved-grassland" />
+      <where> code = '130'</where>
+    </update>
+    <insert tableName="standards">
+      <column name="standardId" value="3" />
+      <column name="schemeId" value="1" />
+      <column name="name" value="Moorland and rough grazing" />
+      <column name="code" value="sfi-moorland" />
+    </insert>
+  </changeSet>
+</databaseChangeLog>
