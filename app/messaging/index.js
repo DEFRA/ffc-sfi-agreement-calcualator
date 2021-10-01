@@ -19,7 +19,7 @@ const start = async () => {
   await standardsReceiver.subscribe()
 
   const eligibilityAction = message => processEligibilityMessage(message, eligibilityReceiver)
-  eligibilityReceiver = new MessageReceiver(config.eligibilityCheckSubscription, eligibilityAction)
+  eligibilityReceiver = new MessageReceiver(config.eligibilitySubscription, eligibilityAction)
   await eligibilityReceiver.subscribe()
 
   const validateAction = message => processValidateMessage(message, validateReceiver)

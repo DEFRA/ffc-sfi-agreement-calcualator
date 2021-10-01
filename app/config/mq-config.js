@@ -27,7 +27,7 @@ const mqSchema = Joi.object({
     address: Joi.string(),
     topic: Joi.string()
   },
-  eligibilityCheckSubscription: {
+  eligibilitySubscription: {
     address: Joi.string(),
     topic: Joi.string()
   },
@@ -73,7 +73,7 @@ const mqConfig = {
     address: process.env.CALCULATE_SUBSCRIPTION_ADDRESS,
     topic: process.env.CALCULATE_TOPIC_ADDRESS
   },
-  eligibilityCheckSubscription: {
+  eligibilitySubscription: {
     address: process.env.ELIGIBILITY_SUBSCRIPTION_ADDRESS,
     topic: process.env.ELIGIBILITY_TOPIC_ADDRESS
   },
@@ -106,7 +106,7 @@ const standardsSubscription = { ...mqResult.value.messageQueue, ...mqResult.valu
 const standardsResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.standardsResponseQueue }
 const validateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.validateSubscription }
 const calculateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.calculateSubscription }
-const eligibilityCheckSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.eligibilityCheckSubscription }
+const eligibilitySubscription = { ...mqResult.value.messageQueue, ...mqResult.value.eligibilitySubscription }
 const calculateResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.calculateResponseQueue }
 const eligibilityCheckResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.eligibilityCheckResponseQueue }
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
@@ -118,7 +118,7 @@ module.exports = {
   standardsResponseQueue,
   validateSubscription,
   calculateSubscription,
-  eligibilityCheckSubscription,
+  eligibilitySubscription,
   calculateResponseQueue,
   eligibilityCheckResponseQueue,
   submitSubscription,
