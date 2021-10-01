@@ -1,5 +1,4 @@
 const Joi = require('joi')
-const { eligibilityCheckSubscription } = require('./mq-config')
 
 // Define config schema
 const schema = Joi.object({
