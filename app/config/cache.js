@@ -1,4 +1,5 @@
 const Joi = require('joi')
+const { eligibilityCheckSubscription } = require('./mq-config')
 
 // Define config schema
 const schema = Joi.object({
@@ -12,7 +13,8 @@ const schema = Joi.object({
   ttl: Joi.number().default(3600 * 1000), // 1 hour,
   standardsCache: Joi.string().default('standards'),
   calculateCache: Joi.string().default('calculate'),
-  validateCache: Joi.string().default('validate')
+  validateCache: Joi.string().default('validate'),
+  eligibilityCache: Joi.string().default('validate')
 })
 
 // Build config
@@ -27,7 +29,8 @@ const config = {
   ttl: process.env.REDIS_TTL,
   standardsCache: process.env.REDIS_STANDARDS_CACHE,
   calculateCache: process.env.REDIS_CALCULATE_CACHE,
-  validateCache: process.env.REDIS_VALIDATE_CACHE
+  validateCache: process.env.REDIS_VALIDATE_CACHE,
+  eligibilityCache: process.env.REDIS_ELIGIBILITY_CACHE
 }
 
 // Validate config
