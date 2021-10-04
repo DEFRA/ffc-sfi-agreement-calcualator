@@ -18,7 +18,7 @@ describe('api', () => {
 
   test('get adds api gateway to url', async () => {
     await api.get('test', 1)
-    expect(mockGet.mock.calls[0][0]).toBe('http://api-gateway/test')
+    expect(mockGet.mock.calls[0][0]).toBe('https://ffc-sfi-api-gateway.ffc.snd.azure.defra.cloudtest')
   })
 
   test('get adds headers to request', async () => {
