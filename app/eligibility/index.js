@@ -29,4 +29,11 @@ const eligibleOrganisations = async (crn, callerId) => {
   return []
 }
 
-module.exports = checkEligibility
+const getEligibility = async (organisationId, sbi, callerId) => {
+  return { isEligible: true }
+}
+
+module.exports = {
+  checkEligibility,
+  getEligibility
+}

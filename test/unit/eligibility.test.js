@@ -1,4 +1,4 @@
-const checkEligibility = require('../../app/eligibility')
+const { checkEligibility } = require('../../app/eligibility')
 
 describe('eligibility', () => {
   test('check eligibility', async () => {

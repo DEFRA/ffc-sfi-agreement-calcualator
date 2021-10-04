@@ -18,10 +18,13 @@ const getOrganisations = async (crn, callerId) => {
 }
 
 const organisationAddress = (organisation) => {
-  return organisation?.address ? [organisation.address.address1 ?? '',
-    organisation.address.address2 ?? '',
-    organisation.address.address3 ?? '',
-    organisation.address.postalCode ?? ''].join(', ') : ''
+  return organisation?.address
+    ? [
+        organisation.address.address1 ?? '',
+        organisation.address.address2 ?? '',
+        organisation.address.address3 ?? '',
+        organisation.address.postalCode ?? ''].join(', ')
+    : ''
 }
 
 const enrichOrganisations = async (organisations, callerId) => {
