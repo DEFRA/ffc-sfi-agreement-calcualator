@@ -31,7 +31,7 @@ container:
   requestMemory: 120Mi
   requestCpu: 10m
   limitMemory: 200Mi
-  limitCpu: 500m
+  limitCpu: 200m
   messageQueueHost: namespace.servicebus.windows.net
   standardsSubscriptionAddress: ffc-sfi-standards-request-calculator
   validateSubscriptionAddress: ffc-sfi-agreement-validate-calculator
