@@ -27,7 +27,14 @@ const mqSchema = Joi.object({
     address: Joi.string(),
     topic: Joi.string()
   },
+  eligibilitySubscription: {
+    address: Joi.string(),
+    topic: Joi.string()
+  },
   calculateResponseQueue: {
+    address: Joi.string()
+  },
+  eligibilityCheckResponseQueue: {
     address: Joi.string()
   },
   submitSubscription: {
@@ -66,8 +73,15 @@ const mqConfig = {
     address: process.env.CALCULATE_SUBSCRIPTION_ADDRESS,
     topic: process.env.CALCULATE_TOPIC_ADDRESS
   },
+  eligibilitySubscription: {
+    address: process.env.ELIGIBILITY_SUBSCRIPTION_ADDRESS,
+    topic: process.env.ELIGIBILITY_TOPIC_ADDRESS
+  },
   calculateResponseQueue: {
     address: process.env.CALCULATERESPONSE_QUEUE_ADDRESS
+  },
+  eligibilityCheckResponseQueue: {
+    address: process.env.ELIGIBILITY_CHECK_RESPONSE_QUEUE_ADDRESS
   },
   submitSubscription: {
     address: process.env.SUBMIT_SUBSCRIPTION_ADDRESS,
@@ -92,7 +106,9 @@ const standardsSubscription = { ...mqResult.value.messageQueue, ...mqResult.valu
 const standardsResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.standardsResponseQueue }
 const validateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.validateSubscription }
 const calculateSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.calculateSubscription }
+const eligibilitySubscription = { ...mqResult.value.messageQueue, ...mqResult.value.eligibilitySubscription }
 const calculateResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.calculateResponseQueue }
+const eligibilityCheckResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.eligibilityCheckResponseQueue }
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
 const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
 const validateResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.validateResponseTopic }
@@ -102,7 +118,9 @@ module.exports = {
   standardsResponseQueue,
   validateSubscription,
   calculateSubscription,
+  eligibilitySubscription,
   calculateResponseQueue,
+  eligibilityCheckResponseQueue,
   submitSubscription,
   withdrawSubscription,
   validateResponseTopic

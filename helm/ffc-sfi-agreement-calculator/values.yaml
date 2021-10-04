@@ -37,7 +37,10 @@ container:
   validateSubscriptionAddress: ffc-sfi-agreement-validate-calculator
   submitSubscriptionAddress: ffc-sfi-agreement-submit-calculator
   calculateSubscriptionAddress: ffc-sfi-agreement-calculate-calculator
-  withdrawSubscriptionAddress: ffc-sfi-agreement-withdraw-calculator 
+  withdrawSubscriptionAddress: ffc-sfi-agreement-withdraw-calculator
+  eligibilitySubscriptionAddress: ffc-sfi-eligibility-check-calculator
+  eligibilityTopicAddress: ffc-sfi-eligibility-check
+  eligibilityCheckResponseQueueAddress: ffc-sfi-eligibility-check-response
   standardsTopicAddress: ffc-sfi-standards-request
   standardsResponseQueueAddress: ffc-sfi-standards-request-response
   validateTopicAddress: ffc-sfi-agreement-validate
