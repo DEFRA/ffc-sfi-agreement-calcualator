@@ -1,4 +1,4 @@
-const { get } = require('../api')
+const { get } = require('./api')
 
 const getOrganisation = async (organisationId, callerId) => {
   const url = `/organisation/${organisationId}`

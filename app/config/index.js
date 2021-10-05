@@ -8,7 +8,7 @@ const { development, production, test } = require('./constants').environments
 const schema = Joi.object({
   env: Joi.string().valid(development, test, production).default(development),
   chApiGateway: process.env.NODE_ENV === 'test' ? Joi.string().default('').allow('') : Joi.string().uri().required(),
-  eligibleHa: Joi.number().default(6)
+  eligibleHa: Joi.number().default(5)
 })
 
 // Build config

@@ -1,6 +1,6 @@
 const { getOrganisations, enrichOrganisations } = require('./organisation')
-const { getLandCoverArea } = require('../land-cover')
-const config = require('../config')
+const { getLandCoverArea } = require('./land-cover')
+const config = require('./config')
 
 const checkEligibility = async (crn, callerId) => {
   const organisations = await eligibleOrganisations(crn, callerId)
@@ -29,11 +29,4 @@ const eligibleOrganisations = async (crn, callerId) => {
   return []
 }
 
-const getEligibility = async (organisationId, sbi, callerId) => {
-  return { isEligible: true }
-}
-
-module.exports = {
-  checkEligibility,
-  getEligibility
-}
+module.exports = checkEligibility
