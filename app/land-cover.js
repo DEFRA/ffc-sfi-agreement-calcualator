@@ -1,5 +1,6 @@
 const { get } = require('./api')
 const { convertToInteger } = require('./conversion')
+const config = require('./config')
 
 const getLandCover = async (organisationId, callerId) => {
   const parcels = await get(`/lms/organisation/${organisationId}/land-covers`, callerId)
@@ -11,11 +12,11 @@ const getLandCoverArea = async (organisationId, callerId) => {
   let area = 0
   const landCover = await getLandCover(organisationId, callerId)
   for (const parcel of landCover) {
-    const infos = parcel.info
+    if (area > config.eligibleHa) break
+    const infos = parcel.info.filter(x => x.area > 0)
     for (const info of infos) {
-      if (info.area > 0) {
-        area += info.area
-      }
+      if (area > config.eligibleHa) break
+      area += info.area
     }
   }
 
