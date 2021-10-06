@@ -10,13 +10,13 @@ const getLandCover = async (organisationId, callerId) => {
 
 const getLandCoverArea = async (organisationId, callerId) => {
   let area = 0
-  const landCover = await getLandCover(organisationId, callerId)
+  const landCover = await get(`/lms/organisation/${organisationId}/land-covers`, callerId)
   for (const parcel of landCover) {
     if (area > config.eligibleHa) break
     const infos = parcel.info.filter(x => x.area > 0)
     for (const info of infos) {
       if (area > config.eligibleHa) break
-      area += info.area
+      area += convertMetresToHectares(info.area)
     }
   }
 
