@@ -31,7 +31,7 @@ describe('process eligibility message', () => {
       messageId: 'messageId',
       body: {
         crn: 1234567890,
-        callerId: 510015
+        callerId: 123456
       }
     }
   })
