@@ -1,3 +1,3 @@
-@Library('defra-library@v-9') _
+@Library('defra-library@psd-958-update-helm-usage-to-use-docker-image') _
 
 buildNodeJs()
