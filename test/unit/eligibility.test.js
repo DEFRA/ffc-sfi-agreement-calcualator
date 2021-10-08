@@ -47,7 +47,7 @@ describe('eligibility', () => {
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
-  test('check eligibility returns empty array - Land < 5ha', async () => {
+  test('check eligibility returns empty array - Land < 5 ha', async () => {
     responseMock = []
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 0 }] }]
     nock(chApiGateway)
@@ -62,12 +62,12 @@ describe('eligibility', () => {
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
-  test('check eligibility returns array - Land calculated over 5ha', async () => {
+  test('check eligibility returns array - Land calculated over 5 ha', async () => {
     nock(chApiGateway)
       .get(`/organisation/person/${callerId}/summary?search=`)
       .reply(200, responseOrganisationsMock)
 
-    responseLandCover = [{ id: 'SJ80778858', info: [{ code: '110', name: 'Arable Land', area: 300 }, { code: '130', name: 'Permanent Grasslands', area: 300 }] }]
+    responseLandCover = [{ id: 'SJ80778858', info: [{ code: '110', name: 'Arable Land', area: 20000 }, { code: '130', name: 'Permanent Grasslands', area: 40000 }] }]
 
     nock(chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)

@@ -12,8 +12,7 @@ const getOrganisations = async (crn, callerId) => {
   return data?._data?.map(organisation => ({
     sbi: organisation.sbi,
     name: organisation.name,
-    organisationId: organisation.id,
-    address: ''
+    organisationId: organisation.id
   }))
 }
 
