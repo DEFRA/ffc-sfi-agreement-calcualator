@@ -81,7 +81,7 @@ const mqConfig = {
     address: process.env.CALCULATERESPONSE_QUEUE_ADDRESS
   },
   eligibilityCheckResponseQueue: {
-    address: process.env.ELIGIBILITY_CHECK_RESPONSE_QUEUE_ADDRESS
+    address: process.env.ELIGIBILITYRESPONSE_QUEUE_ADDRESS
   },
   submitSubscription: {
     address: process.env.SUBMIT_SUBSCRIPTION_ADDRESS,

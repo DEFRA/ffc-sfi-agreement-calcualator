@@ -1,5 +1,5 @@
 const { getCachedResponse, setCachedResponse } = require('../cache')
-const checkEligibility = require('../eligibility')
+const getEligibleOrganisations = require('../eligibility')
 const config = require('../config')
 const sendMessage = require('./send-message')
 
@@ -9,7 +9,7 @@ const processEligibilityMessage = async (message, receiver) => {
     const { crn, callerId } = message.body
 
     const cachedResponse = await getCachedResponse(config.cacheConfig.eligibilityCache, body, correlationId)
-    const eligibility = cachedResponse ?? { eligibility: await checkEligibility(crn, callerId) }
+    const eligibility = { eligibility: await getEligibleOrganisations(crn, callerId) }
 
     if (!cachedResponse) {
       await setCachedResponse(config.cacheConfig.eligibilityCache, correlationId, body, eligibility)
