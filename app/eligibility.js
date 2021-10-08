@@ -1,7 +1,5 @@
 const { getOrganisations, enrichOrganisations } = require('./organisation')
-const { getLandCover, getLandCoverArea } = require('./land-cover')
-const { convertToDecimal } = require('./conversion')
-const calculateStandards = require('./standards/calculate-standards')
+const { getLandCoverArea } = require('./land-cover')
 const eligibleHa = 5
 
 const getEligibleOrganisations = async (crn, callerId) => {
