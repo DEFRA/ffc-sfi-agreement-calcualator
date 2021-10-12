@@ -1,7 +1,20 @@
+const mockSendMessage = jest.fn()
+jest.mock('ffc-messaging', () => {
+  return {
+    MessageSender: jest.fn().mockImplementation(() => {
+      return {
+        sendMessage: mockSendMessage,
+        closeConnection: jest.fn()
+      }
+    })
+  }
+})
+jest.mock('../../app/eligibility')
 const path = require('path')
 const { MessageConsumerPact } = require('@pact-foundation/pact')
-const Matchers = require('@pact-foundation/pact/dsl/matchers')
+const Matchers = require('@pact-foundation/pact/src/dsl/matchers')
 const processEligibilityMessage = require('../../app/messaging/process-eligibility-message')
+const pactServiceBusAdapter = require('../pact-service-bus-adapter')
 
 describe('receiving an eligibility check from SFI application', () => {
   let consumer
@@ -20,13 +33,13 @@ describe('receiving an eligibility check from SFI application', () => {
       .given('message is valid')
       .expectsToReceive('a new eligibility check')
       .withContent({
-        crn: Matchers.like('11111'),
-        callerId: Matchers.like('1111')
+        crn: Matchers.integer(1234567890),
+        callerId: Matchers.like(5089433)
       })
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(async message => processEligibilityMessage(message))
-      // check message sent
+      .verify(async message => pactServiceBusAdapter(processEligibilityMessage))
+    expect(mockSendMessage).toHaveBeenCalledTimes(1)
   })
 })
