@@ -10,6 +10,10 @@ channels:
     publish:
       message:
         $ref: '#/components/messages/EligibilityResponse'
+  agreement/eligibilityEvent:
+    publish:
+      message:
+        $ref: '#/components/messages/EligibilityEvent'
 
 components:
   messages:
@@ -56,5 +60,21 @@ components:
                 address:
                   type: string
                   description: Organisation address
+    EligibilityEvent:
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          sbi:
+            type: number
+            description: Single Business Identifier
+          eligible:
+            type: boolean
+            description: Result of eligibility check
+          validation:
+            type: array
+            description: Justification reasons for result
+            items:
+              type: string
 
 
