@@ -16,20 +16,20 @@ const getOrganisations = async (crn, callerId) => {
   }))
 }
 
-const organisationAddress = (organisation) => {
-  return organisation?.address
+const organisationAddress = (organisationAdress) => {
+  return organisationAdress
     ? [
-        organisation.address.address1 ?? null,
-        organisation.address.address2 ?? null,
-        organisation.address.address3 ?? null,
-        organisation.address.postalCode ?? null].filter(Boolean).join(', ')
+        organisationAdress.address1 ?? null,
+        organisationAdress.address2 ?? null,
+        organisationAdress.address3 ?? null,
+        organisationAdress.postalCode ?? null].filter(Boolean).join(', ')
     : ''
 }
 
 const enrichOrganisations = async (organisations, callerId) => {
   for (const organisation of organisations) {
     const organisationDetails = await getOrganisation(organisation.organisationId, callerId)
-    const address = organisationAddress(organisationDetails)
+    const address = organisationAddress(organisationDetails?.address)
     organisation.address = address
   }
 
