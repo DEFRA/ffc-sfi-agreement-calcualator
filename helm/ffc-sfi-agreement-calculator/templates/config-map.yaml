@@ -8,7 +8,7 @@ data:
   STANDARDSRESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.standardsResponseQueueAddress }}
   ELIGIBILITY_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.eligibilitySubscriptionAddress }}
   ELIGIBILITY_TOPIC_ADDRESS: {{ quote .Values.container.eligibilityTopicAddress }}
-  ELIGIBILITY_CHECK_RESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.eligibilityCheckResponseQueueAddress }}
+  ELIGIBILITYRESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.eligibilityCheckResponseQueueAddress }}
   VALIDATE_TOPIC_ADDRESS: {{ quote .Values.container.validateTopicAddress }}
   CALCULATE_TOPIC_ADDRESS: {{ quote .Values.container.calculateTopicAddress }}
   CALCULATERESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.calculateResponseQueueAddress }}

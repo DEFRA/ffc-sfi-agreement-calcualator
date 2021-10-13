@@ -9,7 +9,13 @@ const convertToDecimal = (value) => {
   return (value / 100).toFixed(2)
 }
 
+const convertMetresToHectares = (area) => {
+  const metres = convertToInteger(area)
+  return Math.ceil(metres / 10000)
+}
+
 module.exports = {
   convertToInteger,
-  convertToDecimal
+  convertToDecimal,
+  convertMetresToHectares
 }
