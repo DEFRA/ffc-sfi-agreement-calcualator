@@ -13,6 +13,9 @@ services:
     environment: 
       NODE_ENV: test
       CH_API_GATEWAY: ${CH_API_GATEWAY:-http://api-gateway}
+      PACT_BROKER_URL: ${PACT_BROKER_URL:-notset}
+      PACT_BROKER_USERNAME: ${PACT_BROKER_USERNAME:-notset}
+      PACT_BROKER_PASSWORD: ${PACT_BROKER_PASSWORD:-notset}
     volumes:
       - ./app:/home/node/app
       - ./test:/home/node/test
