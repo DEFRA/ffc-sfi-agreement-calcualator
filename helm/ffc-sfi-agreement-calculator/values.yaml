@@ -21,7 +21,7 @@ deployment:
   priorityClassName: high
   replicas: 2
   minReplicas: 2
-  maxReplicas: 10
+  maxReplicas: 5
   cpuThreshold: 80
   memoryThreshold: 80
   minReadySeconds: 0
@@ -29,7 +29,7 @@ deployment:
 container:
   imagePullPolicy: IfNotPresent
   requestMemory: 120Mi
-  requestCpu: 10m
+  requestCpu: 40m
   limitMemory: 200Mi
   limitCpu: 200m
   messageQueueHost: namespace.servicebus.windows.net
