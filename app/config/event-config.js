@@ -20,7 +20,7 @@ const config = {
   username: process.env.EVENT_USERNAME,
   password: process.env.EVENT_PASSWORD,
   mechanism: process.env.EVENT_MECHANISM,
-  topic: process.env.PAYMENT_EVENT_TOPIC,
+  topic: process.env.AGREEMENT_EVENT_TOPIC,
   clientId: process.env.EVENT_CLIENT_ID,
   appInsights: process.env.NODE_ENV === 'production' ? require('applicationinsights') : undefined
 }
