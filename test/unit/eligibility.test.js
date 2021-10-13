@@ -37,7 +37,7 @@ describe('eligibility', () => {
 
   test('check eligibility returns empty array - No organisations found', async () => {
     responseMock = []
-    responseOrganisationsMock = { _data: [] }
+    responseOrganisationsMock = {}
 
     nock(chApiGateway)
       .get(`/organisation/person/${callerId}/summary?search=`)
