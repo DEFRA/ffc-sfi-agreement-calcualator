@@ -9,7 +9,7 @@ const processEligibilityMessage = async (message, receiver) => {
     const { crn, callerId } = message.body
 
     const cachedResponse = await getCachedResponse(config.cacheConfig.eligibilityCache, body, correlationId)
-    const eligibility = { eligibility: await getEligibleOrganisations(crn, callerId) }
+    const eligibility = cachedResponse ?? { eligibility: await getEligibleOrganisations(crn, callerId) }
 
     if (!cachedResponse) {
       await setCachedResponse(config.cacheConfig.eligibilityCache, correlationId, body, eligibility)
