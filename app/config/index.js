@@ -1,5 +1,6 @@
 const Joi = require('joi')
 const mqConfig = require('./mq-config')
+const eventConfig = require('./event-config')
 const dbConfig = require('./db-config')
 const cacheConfig = require('./cache')
 const { development, production, test } = require('./constants').environments
@@ -45,8 +46,8 @@ value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
 value.validateResponseTopic = mqConfig.validateResponseTopic
 
+value.eventConfig = eventConfig
 value.cacheConfig = cacheConfig
-
 value.dbConfig = dbConfig
 
 module.exports = value
