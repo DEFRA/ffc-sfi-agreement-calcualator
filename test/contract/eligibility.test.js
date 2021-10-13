@@ -39,7 +39,7 @@ describe('receiving an eligibility check from SFI application', () => {
       .withMetadata({
         'content-type': 'application/json'
       })
-      .verify(async message => pactServiceBusAdapter(processEligibilityMessage))
+      .verify(async message => pactServiceBusAdapter(processEligibilityMessage, { completeMessage: jest.fn(), abandonMessage: jest.fn() }))
     expect(mockSendMessage).toHaveBeenCalledTimes(1)
   })
 })
