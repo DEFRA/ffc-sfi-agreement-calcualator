@@ -1,100 +1,60 @@
-asyncapi: 2.0.0
+asyncapi: 2.2.0
 info:
   title: FFC SFI Agreement Calculator
   version: '1.0.0'
 channels:
-  agreement/validate:
+  agreement/eligibility:
     subscribe:
       message:
-        $ref: '#/components/messages/CalculateAgreement'
-  agreement/calculate:
-    subscribe:
+        $ref: '#/components/messages/EligibilityCheck'
+    publish:
       message:
-        $ref: '#/components/messages/CalculateAgreement'
-  agreement/submit:
-    subscribe:
-      message:
-        $ref: '#/components/messages/SubmitAgreement'
-  agreement/withdraw:
-    subscribe:
-      message:
-        $ref: '#/components/messages/WithdrawAgreement'  
+        $ref: '#/components/messages/EligibilityResponse'
 
 components:
   messages:
-    CalculateAgreement:
+    EligibilityCheck:
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            description: GUID unique to user session
+          messageId:
+            type: string
+            description: GUID unique to message
       payload:
         type: object
         properties:
-          sbi:
+          crn:
             type: number
-            description: Single Business Identifier
-          agreementNumber:
-            type: string
-            description: Unique agreement reference
-          calculation:
-            $ref: '#/components/schemas/Calculation'
-    SubmitAgreement:
+            description: Customer Reference Number
+          callerId:
+            type: number
+            description: Unique agreement reference for CRN
+    EligibilityResponse:
+      contentType: application/json
       payload:
         type: object
         properties:
-          sbi:
-            type: number
-            description: Single Business Identifier
-          agreementNumber:
-            type: string
-            description: Unique agreement reference
-          agreement:
-            type: object
-    WithdrawAgreement:
-      payload:
-        type: object
-        properties:
-          sbi:
-            type: number
-            description: Single Business Identifier
-          agreementNumber:
-            type: string
-            description: Unique agreement reference
+          eligibility:
+            type: array
+            description: List of organisations eligible to apply for SFI
+            items:
+              type: object
+              properties:
+                sbi:
+                  type: number
+                  description: Single Business Identifier
+                name:
+                  type: string
+                  description: Organisation name
+                organisationId:
+                  type: number
+                  description: Unique organisation Identifier
+                address:
+                  type: string
+                  description: Organisation address
 
-  schemas:
-    Calculation:
-      type: object
-      properties:
-        standards:
-          soilProtection:
-            actions:
-              cultivateDrillSlope:
-                $ref: '#/components/schemas/CalculationInput'
-              stripTillageNotill:
-                $ref: '#/components/schemas/CalculationInput'
-              soilManagementPlan:
-                $ref: '#/components/schemas/CalculationInput'
-              avoidMachineryTraffic:
-                $ref: '#/components/schemas/CalculationInput'
-              soilAssessment:
-                $ref: '#/components/schemas/CalculationInput'
-              useShallow:
-                $ref: '#/components/schemas/CalculationInput'
-              addOrganicMatter:
-                $ref: '#/components/schemas/CalculationInput'
-              establishGreenCover:
-                $ref: '#/components/schemas/CalculationInput'
-              convertArableLand:
-                $ref: '#/components/schemas/CalculationInput'
-          permanentGrasslandProtection:
-            actions:
-          moorlandGrazing:
-            actions:
-          livestockWelfare:
-            actions:
-    CalculationInput:
-      type: array
-      items:
-        properties:
-          parcelId:
-            type: string
-            description: sheet Id and parcel Id
-          area:
-            type: number
-            description: eligible area in hectares
+
