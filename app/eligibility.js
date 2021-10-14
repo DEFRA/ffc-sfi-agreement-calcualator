@@ -1,7 +1,7 @@
 const { getOrganisations, enrichOrganisations } = require('./organisation')
 const { getLandCoverArea } = require('./land-cover')
 const sendEvent = require('./events')
-const eligibleHa = 500
+const eligibleArea = 500
 
 const sortOrganisations = (organisations) => {
   return organisations.sort((a, b) => (a.name > b.name) ? 1 : -1)
@@ -11,7 +11,7 @@ const getEligibleLand = async (organisations, callerId) => {
   const landEligible = []
   for (const organisation of organisations) {
     const totalArea = await getLandCoverArea(organisation.organisationId, callerId)
-    if (totalArea > eligibleHa) {
+    if (totalArea >= eligibleArea) {
       landEligible.push(organisation.organisationId)
       await sendEvent({ sbi: organisation.sbi, eligible: true, validation: ['has 5 hectares of land eligible for BPS'] }, 'uk.gov.sfi.agreement.organisation.eligible')
     } else {
