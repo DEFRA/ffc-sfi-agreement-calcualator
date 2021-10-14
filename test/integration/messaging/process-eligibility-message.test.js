@@ -1,5 +1,6 @@
 const cache = require('../../../app/cache')
-
+const nock = require('nock')
+const { chApiGateway } = require('../../../app/config')
 const mockSendMessage = jest.fn()
 jest.mock('ffc-messaging', () => {
   return {
@@ -11,9 +12,29 @@ jest.mock('ffc-messaging', () => {
     })
   }
 })
+const mockSendEvents = jest.fn()
+jest.mock('ffc-events', () => {
+  return {
+    EventSender: jest.fn().mockImplementation(() => {
+      return {
+        connect: jest.fn(),
+        sendEvents: mockSendEvents,
+        closeConnection: jest.fn()
+      }
+    })
+  }
+})
 const processEligibilityMessage = require('../../../app/messaging/process-eligibility-message')
 let receiver
 let message
+let responseOrganisationsMock
+let responseLandCover
+let responseOrganisationMock
+const organisationId = 1234567
+const name = 'Title Forename LastName'
+const sbi = 123456789
+const crn = 1234567890
+const callerId = 123456
 
 describe('process eligibility message', () => {
   beforeAll(async () => {
@@ -30,18 +51,35 @@ describe('process eligibility message', () => {
       correlationId: 'correlationId',
       messageId: 'messageId',
       body: {
-        crn: 1234567890,
-        callerId: 123456
+        crn,
+        callerId
       }
     }
+
+    responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
+    responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
+    responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
+
+    nock(chApiGateway)
+      .get(`/organisation/person/${callerId}/summary?search=`)
+      .reply(200, responseOrganisationsMock)
+
+    nock(chApiGateway)
+      .get(`/lms/organisation/${organisationId}/land-covers`)
+      .reply(200, responseLandCover)
+
+    nock(chApiGateway)
+      .get(`/organisation/${organisationId}`)
+      .reply(200, responseOrganisationMock)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
+    await cache.flushAll()
+    nock.cleanAll()
     jest.clearAllMocks()
   })
 
   afterAll(async () => {
-    await cache.flushAll()
     await cache.stop()
   })
 
@@ -92,5 +130,10 @@ describe('process eligibility message', () => {
     await processEligibilityMessage(message, receiver)
     const result = await cache.get('eligibility', 'correlationId')
     expect(result.requests.length).toBe(2)
+  })
+
+  test('sends eligible event for eligible organisation', async () => {
+    await processEligibilityMessage(message, receiver)
+    expect(mockSendEvents.mock.calls[0][0][0].body.eligible).toBeTruthy()
   })
 })

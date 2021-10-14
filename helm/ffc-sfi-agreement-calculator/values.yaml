@@ -54,6 +54,11 @@ container:
   redisPort: 6379
   redisPartition: ffc-sfi-ffc-sfi-agreement-calculator
   chApiGateway:
+  eventHost: kafka
+  eventPort: 9093
+  eventMechanism: scram-sha-512
+  eventClientId: ffc-sfi-agreement-calculator
+  agreementEventTopic: ffc-sfi-agreements
 
 postgresService:
   postgresDb: ffc_sfi_agreement_calculator
