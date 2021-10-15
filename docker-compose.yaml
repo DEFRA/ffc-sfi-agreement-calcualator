@@ -40,6 +40,7 @@ services:
       POSTGRES_SCHEMA_NAME: ${POSTGRES_SCHEMA_NAME:-public}
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       REDIS_HOSTNAME: redis
+      REDIS_PASSWORD: redis
       REDIS_TTL: 30000
       CH_API_GATEWAY: ${CH_API_GATEWAY:-notset}
       EVENT_HOST: kafka
@@ -56,6 +57,7 @@ services:
 
   redis:
     image: redis:4.0.14
+    command: redis-server --requirepass redis
 
   zookeeper:
     image: bitnami/zookeeper

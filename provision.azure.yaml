@@ -1,9 +1,10 @@
 resources:
   topics:
     - name: standards
+    - name: eligibility
     - name: validate
     - name: validation
-    - name: calculate    
+    - name: calculate
     - name: submit
     - name: withdraw
   queues:

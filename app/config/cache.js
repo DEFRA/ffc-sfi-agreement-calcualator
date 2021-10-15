@@ -5,9 +5,9 @@ const schema = Joi.object({
   socket: Joi.object({
     host: Joi.string(),
     port: Joi.number().default(6379),
-    password: Joi.string().allow(''),
     tls: Joi.boolean().default(false)
   }),
+  password: Joi.string().allow(''),
   partition: Joi.string().default('ffc-sfi-agreement-calculator'),
   ttl: Joi.number().default(3600 * 1000), // 1 hour,
   standardsCache: Joi.string().default('standards'),
@@ -21,9 +21,9 @@ const config = {
   socket: {
     host: process.env.REDIS_HOSTNAME,
     port: process.env.REDIS_PORT,
-    password: process.env.REDIS_PASSWORD,
     tls: process.env.NODE_ENV === 'production'
   },
+  password: process.env.REDIS_PASSWORD,
   partition: process.env.REDIS_PARTITION,
   ttl: process.env.REDIS_TTL,
   standardsCache: process.env.REDIS_STANDARDS_CACHE,
@@ -39,7 +39,7 @@ const result = schema.validate(config, {
 
 // Throw if config is invalid
 if (result.error) {
-  throw new Error(`The server config is invalid. ${result.error.message}`)
+  throw new Error(`The cache config is invalid. ${result.error.message}`)
 }
 
 // Use the Joi validated value
