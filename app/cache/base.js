@@ -4,7 +4,7 @@ const { createClient } = require('redis')
 let client
 
 const start = async () => {
-  client = createClient({ socket: config.socket })
+  client = createClient({ socket: config.socket, password: config.socket.password })
   client.on('error', (err) => console.log(`Redis error: ${err}`))
   client.on('reconnecting', () => console.log('Redis reconnecting...'))
   client.on('ready', () => console.log('Redis connected'))
