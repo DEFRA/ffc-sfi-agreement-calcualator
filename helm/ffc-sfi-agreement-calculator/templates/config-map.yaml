@@ -26,7 +26,7 @@ data:
   {{- end }}
   REDIS_PORT: {{ quote .Values.container.redisPort }}
   {{- if .Values.pr }}
-  REDIS_PARTITION: {{ quote .Values.container.redisPartition }}-{{ .Values.pr }}
+  REDIS_PARTITION: {{ .Values.container.redisPartition }}-{{ .Values.pr }}
   {{ else }}
   REDIS_PARTITION: {{ quote .Values.container.redisPartition }}
   {{- end }}
