@@ -14,7 +14,7 @@ const schema = Joi.object({
   calculateCache: Joi.string().default('calculate'),
   validateCache: Joi.string().default('validate'),
   eligibilityCache: Joi.string().default('eligibility'),
-  landCache: Joi.string().default('land')
+  parcelCache: Joi.string().default('parcel')
 })
 
 // Build config
@@ -31,7 +31,7 @@ const config = {
   calculateCache: process.env.REDIS_CALCULATE_CACHE,
   validateCache: process.env.REDIS_VALIDATE_CACHE,
   eligibilityCache: process.env.REDIS_ELIGIBILITY_CACHE,
-  landCache: process.env.REDIS_LAND_CACHE
+  parcelCache: process.env.REDIS_PARCEL_CACHE
 }
 
 // Validate config
