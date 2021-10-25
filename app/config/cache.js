@@ -13,8 +13,8 @@ const schema = Joi.object({
   standardsCache: Joi.string().default('standards'),
   calculateCache: Joi.string().default('calculate'),
   validateCache: Joi.string().default('validate'),
-  landCache: Joi.string().default('eligibility'),
-  eligibilityCache: Joi.string().default('eligibility')
+  eligibilityCache: Joi.string().default('eligibility'),
+  landCache: Joi.string().default('land')
 })
 
 // Build config
