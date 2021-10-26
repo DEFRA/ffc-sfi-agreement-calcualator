@@ -1,3 +1,4 @@
+const cache = require('../../app/cache')
 const nock = require('nock')
 const { chApiGateway } = require('../../app/config')
 const { MessageProviderPact } = require('@pact-foundation/pact')
@@ -14,6 +15,9 @@ describe('publishing an eligibility check response', () => {
   const callerId = 123456
 
   beforeAll(async () => {
+    await cache.start()
+    await cache.flushAll()
+
     responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
@@ -31,7 +35,9 @@ describe('publishing an eligibility check response', () => {
       .reply(200, responseOrganisationMock)
   })
 
-  afterEach(() => {
+  afterEach(async () => {
+    await cache.flushAll()
+    await cache.stop()
     nock.cleanAll()
   })
 

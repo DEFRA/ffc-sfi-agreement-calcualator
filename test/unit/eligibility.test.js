@@ -1,3 +1,4 @@
+const cache = require('../../app/cache')
 const nock = require('nock')
 const checkEligibility = require('../../app/eligibility')
 const { chApiGateway } = require('../../app/config')
@@ -14,7 +15,9 @@ let responseLandCover
 let responseOrganisationMock
 
 describe('eligibility', () => {
-  beforeEach(() => {
+  beforeEach(async () => {
+    await cache.start()
+    await cache.flushAll()
     jest.clearAllMocks()
 
     responseMock = [
@@ -29,6 +32,11 @@ describe('eligibility', () => {
     responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
+  })
+
+  afterEach(async () => {
+    await cache.flushAll()
+    await cache.stop()
   })
 
   afterAll(() => {
