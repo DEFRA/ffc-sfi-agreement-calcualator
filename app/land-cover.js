@@ -6,7 +6,7 @@ const { get: getCache, update } = require('./cache')
 const getParcels = async (organisationId, callerId) => {
   const cachedParcels = await getCache(config.cacheConfig.parcelCache, organisationId)
   if (cachedParcels.parcels) {
-    return cachedParcels
+    return cachedParcels.parcels
   }
   const parcels = await get(`/lms/organisation/${organisationId}/land-covers`, callerId)
   await update(config.cacheConfig.parcelCache, organisationId, { parcels })
