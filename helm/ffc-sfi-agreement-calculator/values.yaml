@@ -49,6 +49,9 @@ container:
   calculateTopicAddress: ffc-sfi-agreement-calculate
   calculateResponseQueueAddress: ffc-sfi-agreement-calculate-response
   withdrawTopicAddress: ffc-sfi-agreement-withdraw
+  parcelSpatialTopicAddress: ffc-sfi-parcel-spatial-request
+  parcelSpatialSubscriptionAddress: ffc-sfi-parcel-spatial-request-calculator
+  parcelSpatialResponseQueueAddress: ffc-sfi-parcel-spatial-response
   redisHostname: redis-redis-ha.default
   redisPassword: redis
   redisPort: 6379

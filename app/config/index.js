@@ -45,6 +45,8 @@ value.eligibilityCheckResponseQueue = mqConfig.eligibilityCheckResponseQueue
 value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
 value.validateResponseTopic = mqConfig.validateResponseTopic
+value.parcelSubscription = mqConfig.parcelSubscription
+value.parcelResponseQueue = mqConfig.parcelResponseQueue
 
 value.eventConfig = eventConfig
 value.cacheConfig = cacheConfig
