@@ -15,7 +15,7 @@ const getParcels = async (organisationId, callerId) => {
 
 const getLandCover = async (organisationId, callerId) => {
   const parcels = await getParcels(organisationId, callerId)
-  parcels.parcels.forEach(x => x.info.forEach(y => { y.area = convertMetresToHectares(y.area) }))
+  parcels.forEach(x => x.info.forEach(y => { y.area = convertMetresToHectares(y.area) }))
   return parcels
 }
 
