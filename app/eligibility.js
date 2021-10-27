@@ -1,7 +1,8 @@
 const { getOrganisations, enrichOrganisations } = require('./organisation')
-const { getLandCoverArea } = require('./land-cover')
+const { getLandCover } = require('./land-cover')
 const sendEvent = require('./events')
 const eligibleArea = 500
+const bpsIneligibleFeatureCode = '000'
 
 const sortOrganisations = (organisations) => {
   return organisations.sort((a, b) => (a.name > b.name) ? 1 : -1)
@@ -10,8 +11,8 @@ const sortOrganisations = (organisations) => {
 const getEligibleLand = async (organisations, callerId) => {
   const landEligible = []
   for (const organisation of organisations) {
-    const totalArea = await getLandCoverArea(organisation.organisationId, callerId)
-    if (totalArea >= eligibleArea) {
+    const parcels = await getLandCover(organisation.organisationId, callerId)
+    if (hasEligibleArea(parcels)) {
       landEligible.push(organisation.organisationId)
       await sendEvent({ sbi: organisation.sbi, eligible: true, validation: ['has 5 hectares of land eligible for BPS'] }, 'uk.gov.sfi.agreement.organisation.eligible')
     } else {
@@ -19,6 +20,21 @@ const getEligibleLand = async (organisations, callerId) => {
     }
   }
   return organisations.filter(({ organisationId }) => landEligible.includes(organisationId))
+}
+
+const hasEligibleArea = (parcels) => {
+  let totalArea = 0
+  for (const parcel of parcels) {
+    for (const landCover of parcel.info) {
+      if (landCover.code !== bpsIneligibleFeatureCode) {
+        totalArea += landCover.area
+      }
+    }
+    if (totalArea >= eligibleArea) {
+      return true
+    }
+  }
+  return false
 }
 
 const getEligibleOrganisations = async (crn, callerId) => {

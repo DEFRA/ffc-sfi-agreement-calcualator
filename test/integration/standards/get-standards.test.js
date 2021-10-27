@@ -1,3 +1,4 @@
+const cache = require('../../../app/cache')
 const getStandards = require('../../../app/standards')
 jest.mock('../../../app/api', () => {
   return {
@@ -66,6 +67,8 @@ let standardLandCover
 describe('get standards', () => {
   beforeEach(async () => {
     await db.sequelize.truncate({ cascade: true })
+    await cache.start()
+    await cache.flushAll()
 
     scheme = {
       schemeId: 1,
@@ -93,6 +96,11 @@ describe('get standards', () => {
     await db.standard.create(standard)
     await db.landCover.create(landCover)
     await db.standardLandCover.create(standardLandCover)
+  })
+
+  afterEach(async () => {
+    await cache.flushAll()
+    await cache.stop()
   })
 
   afterAll(async () => {
