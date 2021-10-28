@@ -15,7 +15,8 @@ const schema = Joi.object({
   validateCache: Joi.string().default('validate'),
   eligibilityCache: Joi.string().default('eligibility'),
   parcelCache: Joi.string().default('parcel'),
-  parcelSpatialCache: Joi.string().default('spatial')
+  parcelSpatialCache: Joi.string().default('spatial'),
+  parcelStandardCache: Joi.string().default('parcel-standard')
 })
 
 // Build config
@@ -33,7 +34,8 @@ const config = {
   validateCache: process.env.REDIS_VALIDATE_CACHE,
   eligibilityCache: process.env.REDIS_ELIGIBILITY_CACHE,
   parcelCache: process.env.REDIS_PARCEL_CACHE,
-  parcelSpatialCache: process.env.REDIS_PARCEL_SPATIAL_CACHE
+  parcelSpatialCache: process.env.REDIS_PARCEL_SPATIAL_CACHE,
+  parcelStandardCache: process.env.REDIS_PARCEL_STANDARD_CACHE
 }
 
 // Validate config

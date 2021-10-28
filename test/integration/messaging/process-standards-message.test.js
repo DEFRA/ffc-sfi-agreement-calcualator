@@ -11,7 +11,7 @@ jest.mock('ffc-messaging', () => {
   }
 })
 const processStandardsMessage = require('../../../app/messaging/process-standards-message')
-jest.mock('../../../app/api', () => {
+jest.mock('../../../app/api/private', () => {
   return {
     get: jest.fn().mockImplementation(() => {
       return [{

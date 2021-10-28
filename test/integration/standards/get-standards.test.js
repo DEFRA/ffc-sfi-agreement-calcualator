@@ -1,6 +1,6 @@
 const cache = require('../../../app/cache')
 const getStandards = require('../../../app/standards')
-jest.mock('../../../app/api', () => {
+jest.mock('../../../app/api/private', () => {
   return {
     get: jest.fn().mockImplementation(() => {
       return [{

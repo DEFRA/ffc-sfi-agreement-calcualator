@@ -1,8 +1,8 @@
 const calculateStandards = require('./calculate-standards')
-const { getLandCover } = require('../land-cover')
+const { getParcels } = require('../land')
 
 const getStandards = async (organisationId, sbi, callerId) => {
-  const landCover = await getLandCover(organisationId, callerId)
+  const landCover = await getParcels(organisationId, callerId)
   return calculateStandards(landCover)
 }
 

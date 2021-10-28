@@ -1,6 +1,6 @@
 const cache = require('../../app/cache')
 const nock = require('nock')
-const { getLandCover } = require('../../app/land-cover')
+const { getParcels } = require('../../app/land')
 const { chApiGateway } = require('../../app/config')
 
 const callerId = 123456
@@ -52,7 +52,7 @@ describe('eligibility', () => {
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseMock)
 
-    const landParcels = await getLandCover(organisationId, callerId)
+    const landParcels = await getParcels(organisationId, callerId)
     const parcels = landParcels[0].info
     expect(parcels[0].area).toEqual(500)
     expect(parcels[1].area).toEqual(500)
