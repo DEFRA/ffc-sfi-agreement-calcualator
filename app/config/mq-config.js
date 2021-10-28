@@ -51,6 +51,13 @@ const mqSchema = Joi.object({
   },
   parcelResponseQueue: {
     address: Joi.string()
+  },
+  parcelSpatialSubscription: {
+    address: Joi.string(),
+    topic: Joi.string()
+  },
+  parcelSpatialResponseQueue: {
+    address: Joi.string()
   }
 })
 const mqConfig = {
@@ -99,10 +106,17 @@ const mqConfig = {
     topic: process.env.WITHDRAW_TOPIC_ADDRESS
   },
   parcelSubscription: {
+    address: process.env.PARCEL_SUBSCRIPTION_ADDRESS,
+    topic: process.env.PARCEL_TOPIC_ADDRESS
+  },
+  parcelResponseQueue: {
+    address: process.env.PARCELRESPONSE_QUEUE_ADDRESS
+  },
+  parcelSpatialSubscription: {
     address: process.env.PARCELSPATIAL_SUBSCRIPTION_ADDRESS,
     topic: process.env.PARCELSPATIAL_TOPIC_ADDRESS
   },
-  parcelResponseQueue: {
+  parcelSpatialResponseQueue: {
     address: process.env.PARCELSPATIALRESPONSE_QUEUE_ADDRESS
   }
 }
@@ -128,6 +142,8 @@ const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value
 const validateResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.validateResponseTopic }
 const parcelSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSubscription }
 const parcelResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.parcelResponseQueue }
+const parcelSpatialSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSpatialSubscription }
+const parcelSpatialResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSpatialResponseQueue }
 
 module.exports = {
   standardsSubscription,
@@ -141,5 +157,7 @@ module.exports = {
   withdrawSubscription,
   validateResponseTopic,
   parcelSubscription,
-  parcelResponseQueue
+  parcelResponseQueue,
+  parcelSpatialSubscription,
+  parcelSpatialResponseQueue
 }

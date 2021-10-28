@@ -20,6 +20,9 @@ data:
   CALCULATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.calculateSubscriptionAddress }}
   SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
   WITHDRAW_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.withdrawSubscriptionAddress }}
+  PARCEL_TOPIC_ADDRESS: {{ quote .Values.container.parcelTopicAddress }}
+  PARCEL_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.parcelSubscriptionAddress }}
+  PARCELRESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.parcelResponseQueueAddress }}
   PARCELSPATIAL_TOPIC_ADDRESS: {{ quote .Values.container.parcelSpatialTopicAddress }}
   PARCELSPATIAL_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.parcelSpatialSubscriptionAddress }}
   PARCELSPATIALRESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.parcelSpatialResponseQueueAddress }}

@@ -49,6 +49,9 @@ container:
   calculateTopicAddress: ffc-sfi-agreement-calculate
   calculateResponseQueueAddress: ffc-sfi-agreement-calculate-response
   withdrawTopicAddress: ffc-sfi-agreement-withdraw
+  parcelTopicAddress: ffc-sfi-parcel-request
+  parcelSubscriptionAddress: ffc-sfi-parcel-request-calculator
+  parcelResponseQueueAddress: ffc-sfi-parcel-response
   parcelSpatialTopicAddress: ffc-sfi-parcel-spatial-request
   parcelSpatialSubscriptionAddress: ffc-sfi-parcel-spatial-request-calculator
   parcelSpatialResponseQueueAddress: ffc-sfi-parcel-spatial-response

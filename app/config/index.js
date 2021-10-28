@@ -49,6 +49,8 @@ value.withdrawSubscription = mqConfig.withdrawSubscription
 value.validateResponseTopic = mqConfig.validateResponseTopic
 value.parcelSubscription = mqConfig.parcelSubscription
 value.parcelResponseQueue = mqConfig.parcelResponseQueue
+value.parcelSpatialSubscription = mqConfig.parcelSpatialSubscription
+value.parcelSpatialResponseQueue = mqConfig.parcelSpatialResponseQueue
 
 value.eventConfig = eventConfig
 value.cacheConfig = cacheConfig
