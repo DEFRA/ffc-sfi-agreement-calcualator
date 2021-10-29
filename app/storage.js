@@ -44,8 +44,26 @@ const downloadFile = async (filename) => {
   return downloaded.toString()
 }
 
+const getParcelBlobClient = async (filename) => {
+  containersInitialised ?? await initialiseContainers()
+  return parcelContainer.getBlockBlobClient(filename)
+}
+
+const getParcelSpatialBlobClient = async (filename) => {
+  containersInitialised ?? await initialiseContainers()
+  return parcelSpatialContainer.getBlockBlobClient(filename)
+}
+
+const getParcelStandardBlobClient = async (filename) => {
+  containersInitialised ?? await initialiseContainers()
+  return parcelStandardContainer.getBlockBlobClient(filename)
+}
+
 module.exports = {
   getFileList,
   downloadFile,
-  blobServiceClient
+  blobServiceClient,
+  getParcelBlobClient,
+  getParcelSpatialBlobClient,
+  getParcelStandardBlobClient
 }
