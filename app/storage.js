@@ -38,8 +38,20 @@ const getFileList = async () => {
   return fileList
 }
 
-const downloadFile = async (filename) => {
+const downloadParcelFile = async (filename) => {
   const blob = await getBlob(parcelContainer, filename)
+  const downloaded = await blob.downloadToBuffer()
+  return downloaded.toString()
+}
+
+const downloadParcelSpatialFile = async (filename) => {
+  const blob = await getBlob(parcelSpatialContainer, filename)
+  const downloaded = await blob.downloadToBuffer()
+  return downloaded.toString()
+}
+
+const downloadParcelStandardFile = async (filename) => {
+  const blob = await getBlob(parcelStandardContainer, filename)
   const downloaded = await blob.downloadToBuffer()
   return downloaded.toString()
 }
@@ -61,7 +73,9 @@ const getParcelStandardBlobClient = async (filename) => {
 
 module.exports = {
   getFileList,
-  downloadFile,
+  downloadParcelFile,
+  downloadParcelSpatialFile,
+  downloadParcelStandardFile,
   blobServiceClient,
   getParcelBlobClient,
   getParcelSpatialBlobClient,
