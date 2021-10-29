@@ -9,6 +9,7 @@ resources:
     - name: withdraw
     - name: parcel
     - name: parcelSpatial
+    - name: parcelStandard
   queues:
     - name: calculateResponse
       enableSessions: true
@@ -19,4 +20,6 @@ resources:
     - name: parcelResponse
       enableSessions: true
     - name: parcelSpatialResponse
+      enableSessions: true
+    - name: parcelStandardResponse
       enableSessions: true

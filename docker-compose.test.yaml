@@ -16,6 +16,7 @@ services:
       PACT_BROKER_URL: ${PACT_BROKER_URL:-notset}
       PACT_BROKER_USERNAME: ${PACT_BROKER_USERNAME:-notset}
       PACT_BROKER_PASSWORD: ${PACT_BROKER_PASSWORD:-notset}
+      AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-sfi-payment-responses-azurite:10000/devstoreaccount1;
     volumes:
       - ./app:/home/node/app
       - ./test:/home/node/test

@@ -58,6 +58,13 @@ const mqSchema = Joi.object({
   },
   parcelSpatialResponseQueue: {
     address: Joi.string()
+  },
+  parcelStandardSubscription: {
+    address: Joi.string(),
+    topic: Joi.string()
+  },
+  parcelStandardResponseQueue: {
+    address: Joi.string()
   }
 })
 const mqConfig = {
@@ -118,6 +125,13 @@ const mqConfig = {
   },
   parcelSpatialResponseQueue: {
     address: process.env.PARCELSPATIALRESPONSE_QUEUE_ADDRESS
+  },
+  parcelStandardSubscription: {
+    address: process.env.PARCELSTANDARD_SUBSCRIPTION_ADDRESS,
+    topic: process.env.PARCELSTANDARD_TOPIC_ADDRESS
+  },
+  parcelStandardResponseQueue: {
+    address: process.env.PARCELSTANDARDRESPONSE_QUEUE_ADDRESS
   }
 }
 
@@ -144,6 +158,8 @@ const parcelSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.p
 const parcelResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.parcelResponseQueue }
 const parcelSpatialSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSpatialSubscription }
 const parcelSpatialResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSpatialResponseQueue }
+const parcelStandardSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.parcelStandardSubscription }
+const parcelStandardResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.parcelStandardResponseQueue }
 
 module.exports = {
   standardsSubscription,
@@ -159,5 +175,7 @@ module.exports = {
   parcelSubscription,
   parcelResponseQueue,
   parcelSpatialSubscription,
-  parcelSpatialResponseQueue
+  parcelSpatialResponseQueue,
+  parcelStandardSubscription,
+  parcelStandardResponseQueue
 }

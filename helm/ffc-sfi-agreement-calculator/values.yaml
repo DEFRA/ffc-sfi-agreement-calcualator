@@ -30,7 +30,7 @@ container:
   imagePullPolicy: IfNotPresent
   requestMemory: 120Mi
   requestCpu: 40m
-  limitMemory: 200Mi
+  limitMemory: 600Mi
   limitCpu: 200m
   messageQueueHost: namespace.servicebus.windows.net
   standardsSubscriptionAddress: ffc-sfi-standards-request-calculator
@@ -55,6 +55,9 @@ container:
   parcelSpatialTopicAddress: ffc-sfi-parcel-spatial-request
   parcelSpatialSubscriptionAddress: ffc-sfi-parcel-spatial-request-calculator
   parcelSpatialResponseQueueAddress: ffc-sfi-parcel-spatial-response
+  parcelStandardTopicAddress: ffc-sfi-parcel-standard-request
+  parcelStandardSubscriptionAddress: ffc-sfi-parcel-standard-request-calculator
+  parcelStandardResponseQueueAddress: ffc-sfi-parcel-standard-response
   redisHostname: redis-redis-ha.default
   redisPassword: redis
   redisPort: 6379
@@ -65,6 +68,12 @@ container:
   eventMechanism: scram-sha-512
   eventClientId: ffc-sfi-agreement-calculator
   agreementEventTopic: ffc-sfi-agreements
+  azureStorageAccountName: sfiland
+  azureStorageConnectionString: dummy
+  azureStorageUseConnectionString: false
+  parcelContainer: parcels
+  parcelSpatialContainer: parcels-spatial
+  parcelStandardContainer: parcels-standard
 
 postgresService:
   postgresDb: ffc_sfi_agreement_calculator

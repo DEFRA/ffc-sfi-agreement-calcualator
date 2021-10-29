@@ -3,6 +3,7 @@ const mqConfig = require('./mq-config')
 const eventConfig = require('./event-config')
 const dbConfig = require('./db-config')
 const cacheConfig = require('./cache')
+const storageConfig = require('./storage-config')
 const { development, production, test } = require('./constants').environments
 
 // Define config schema
@@ -51,9 +52,12 @@ value.parcelSubscription = mqConfig.parcelSubscription
 value.parcelResponseQueue = mqConfig.parcelResponseQueue
 value.parcelSpatialSubscription = mqConfig.parcelSpatialSubscription
 value.parcelSpatialResponseQueue = mqConfig.parcelSpatialResponseQueue
+value.parcelStandardSubscription = mqConfig.parcelStandardSubscription
+value.parcelStandardResponseQueue = mqConfig.parcelStandardResponseQueue
 
 value.eventConfig = eventConfig
 value.cacheConfig = cacheConfig
 value.dbConfig = dbConfig
+value.storageConfig = storageConfig
 
 module.exports = value
