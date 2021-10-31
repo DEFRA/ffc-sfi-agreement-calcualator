@@ -3,17 +3,31 @@ info:
   title: FFC SFI Agreement Calculator
   version: '1.0.0'
 channels:
-  agreement/eligibility:
+  organisation/eligibility:
     subscribe:
       message:
         $ref: '#/components/messages/EligibilityCheck'
     publish:
       message:
         $ref: '#/components/messages/EligibilityResponse'
-  agreement/eligibilityEvent:
+  organisation/eligibilityEvent:
     publish:
       message:
         $ref: '#/components/messages/EligibilityEvent'
+  parcel/spatial:
+    subscribe:
+      message:
+        $ref: '#/components/messages/ParcelSpatial'
+    publish:
+      message:
+        $ref: '#/components/messages/ParcelSpatialResponse'
+  parcel/standard:
+    subscribe:
+      message:
+        $ref: '#/components/messages/ParcelStandard'
+    publish:
+      message:
+        $ref: '#/components/messages/ParcelStandardResponse'
 
 components:
   messages:
@@ -36,7 +50,7 @@ components:
             description: Customer Reference Number
           callerId:
             type: number
-            description: Unique agreement reference for CRN
+            description: Unique reference for CRN
     EligibilityResponse:
       contentType: application/json
       payload:
@@ -76,5 +90,79 @@ components:
             description: Justification reasons for result
             items:
               type: string
+    ParcelSpatial:
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            description: GUID unique to user session
+          messageId:
+            type: string
+            description: GUID unique to message
+      payload:
+        type: object
+        properties:
+          organisationId:
+            type: number
+            description: Unique organisation reference
+          sbi:
+            type: number
+            description: Single Business Identifier
+          callerId:
+            type: number
+            description: Unique agreement reference for CRN
+    ParcelSpatialResponse:
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          organisationId:
+            type: number
+            description: Unique organisation reference
+          filename:
+            type: string
+            description: Name of file containing data
+          storageUrl:
+            type: string
+            description: URL where data file can be retrieved
+    ParcelStandard:
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            description: GUID unique to user session
+          messageId:
+            type: string
+            description: GUID unique to message
+      payload:
+        type: object
+        properties:
+          organisationId:
+            type: number
+            description: Unique organisation reference
+          sbi:
+            type: number
+            description: Single Business Identifier
+          callerId:
+            type: number
+            description: Unique agreement reference for CRN
+    ParcelStandardResponse:
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          organisationId:
+            type: number
+            description: Unique organisation reference
+          filename:
+            type: string
+            description: Name of file containing data
+          storageUrl:
+            type: string
+            description: URL where data file can be retrieved
 
 
