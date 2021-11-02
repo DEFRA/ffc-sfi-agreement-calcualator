@@ -1,7 +1,6 @@
-const { getParcelsSpatial } = require('../land')
+const { getParcelsSpatial, getParcelStandard } = require('../land')
 const config = require('../config')
 const sendMessage = require('./send-message')
-const getStandards = require('../standards')
 
 const processParcelSpatialMessage = async (message, receiver) => {
   try {
@@ -9,8 +8,8 @@ const processParcelSpatialMessage = async (message, receiver) => {
     const { organisationId, sbi, callerId } = body
 
     const parcelResponse = await getParcelsSpatial(organisationId, sbi, callerId)
-    // get standards for organisation ready for next step in journey
-    getStandards(organisationId, sbi, callerId)
+    // get standards and spatial data for organisation ready for next steps in journey
+    getParcelStandard(organisationId, sbi, callerId)
 
     await sendMessage(parcelResponse, 'uk.gov.sfi.agreement.parcel.spatial.request.response', config.parcelSpatialResponseQueue, { sessionId: messageId })
     await receiver.completeMessage(message)
