@@ -3,7 +3,7 @@ const config = require('../config')
 const { get: getCache, update } = require('../cache')
 const { getParcelSpatialBlobClient } = require('../storage')
 
-const getParcelsSpatial = async (organisationId, sbi) => {
+const getParcelsSpatial = async (organisationId, sbi, callerId) => {
   const cachedResponse = await getCache(config.cacheConfig.parcelSpatialCache, organisationId)
   if (cachedResponse.filename) {
     return cachedResponse
