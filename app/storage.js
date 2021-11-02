@@ -29,70 +29,36 @@ const getBlob = async (container, filename) => {
   return container.getBlockBlobClient(filename)
 }
 
-const getFileList = async () => {
-  containersInitialised ?? await initialiseContainers()
+const downloadFile = async (containerName, filename) => {
+  const container = getContainer(containerName)
+  const blob = await getBlob(container, filename)
+  const downloaded = await blob.downloadToBuffer()
+  return downloaded.toString()
+}
 
-  const fileList = []
-  for await (const item of parcelContainer.listBlobsFlat()) {
-    fileList.push(item.name)
+const getContainer = (containerName) => {
+  switch (containerName) {
+    case config.parcelContainer:
+      return parcelContainer
+    case config.parcelSpatialContainer:
+      return parcelSpatialContainer
+    case config.parcelStandardContainer:
+      return parcelStandardContainer
+    case config.standardContainer:
+      return standardContainer
+    default:
+      throw new Error(`Undefined storage container: ${containerName}`)
   }
-
-  return fileList
 }
 
-const downloadParcelFile = async (filename) => {
-  const blob = await getBlob(parcelContainer, filename)
-  const downloaded = await blob.downloadToBuffer()
-  return downloaded.toString()
-}
-
-const downloadParcelSpatialFile = async (filename) => {
-  const blob = await getBlob(parcelSpatialContainer, filename)
-  const downloaded = await blob.downloadToBuffer()
-  return downloaded.toString()
-}
-
-const downloadParcelStandardFile = async (filename) => {
-  const blob = await getBlob(parcelStandardContainer, filename)
-  const downloaded = await blob.downloadToBuffer()
-  return downloaded.toString()
-}
-
-const downloadStandardFile = async (filename) => {
-  const blob = await getBlob(standardContainer, filename)
-  const downloaded = await blob.downloadToBuffer()
-  return downloaded.toString()
-}
-
-const getParcelBlobClient = async (filename) => {
+const getBlobClient = async (containerName, filename) => {
   containersInitialised ?? await initialiseContainers()
-  return parcelContainer.getBlockBlobClient(filename)
-}
-
-const getParcelSpatialBlobClient = async (filename) => {
-  containersInitialised ?? await initialiseContainers()
-  return parcelSpatialContainer.getBlockBlobClient(filename)
-}
-
-const getParcelStandardBlobClient = async (filename) => {
-  containersInitialised ?? await initialiseContainers()
-  return parcelStandardContainer.getBlockBlobClient(filename)
-}
-
-const getStandardBlobClient = async (filename) => {
-  containersInitialised ?? await initialiseContainers()
-  return standardContainer.getBlockBlobClient(filename)
+  const container = getContainer(containerName)
+  return container.getBlockBlobClient(filename)
 }
 
 module.exports = {
-  getFileList,
-  downloadParcelFile,
-  downloadParcelSpatialFile,
-  downloadParcelStandardFile,
-  downloadStandardFile,
+  downloadFile,
   blobServiceClient,
-  getParcelBlobClient,
-  getParcelSpatialBlobClient,
-  getParcelStandardBlobClient,
-  getStandardBlobClient
+  getBlobClient
 }
