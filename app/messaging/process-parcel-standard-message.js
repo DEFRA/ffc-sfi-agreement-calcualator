@@ -6,10 +6,10 @@ const getParcelsStandard = require('../land/get-parcels-standard')
 const processParcelStandardMessage = async (message, receiver) => {
   try {
     const { body, correlationId, messageId } = message
-    const { organisationId, sbi, callerId } = message.body
+    const { organisationId, sbi, callerId, standardCode } = message.body
 
     const cachedResponse = await getCachedResponse(config.cacheConfig.parcelStandardCache, body, correlationId)
-    const parcels = cachedResponse ?? await getParcelsStandard(organisationId, sbi, callerId)
+    const parcels = cachedResponse ?? await getParcelsStandard(organisationId, sbi, callerId, standardCode)
 
     if (!cachedResponse) {
       await setCachedResponse(config.cacheConfig.parcelStandardCache, correlationId, body, parcels)
