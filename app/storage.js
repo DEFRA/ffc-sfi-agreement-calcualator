@@ -14,11 +14,13 @@ if (config.useConnectionStr) {
 const parcelContainer = blobServiceClient.getContainerClient(config.parcelContainer)
 const parcelSpatialContainer = blobServiceClient.getContainerClient(config.parcelSpatialContainer)
 const parcelStandardContainer = blobServiceClient.getContainerClient(config.parcelStandardContainer)
+const standardContainer = blobServiceClient.getContainerClient(config.standardContainer)
 
 const initialiseContainers = async () => {
   await parcelContainer.createIfNotExists()
   await parcelSpatialContainer.createIfNotExists()
   await parcelStandardContainer.createIfNotExists()
+  await standardContainer.createIfNotExists()
   containersInitialised = true
 }
 
@@ -56,6 +58,12 @@ const downloadParcelStandardFile = async (filename) => {
   return downloaded.toString()
 }
 
+const downloadStandardFile = async (filename) => {
+  const blob = await getBlob(standardContainer, filename)
+  const downloaded = await blob.downloadToBuffer()
+  return downloaded.toString()
+}
+
 const getParcelBlobClient = async (filename) => {
   containersInitialised ?? await initialiseContainers()
   return parcelContainer.getBlockBlobClient(filename)
@@ -71,13 +79,20 @@ const getParcelStandardBlobClient = async (filename) => {
   return parcelStandardContainer.getBlockBlobClient(filename)
 }
 
+const getStandardBlobClient = async (filename) => {
+  containersInitialised ?? await initialiseContainers()
+  return standardContainer.getBlockBlobClient(filename)
+}
+
 module.exports = {
   getFileList,
   downloadParcelFile,
   downloadParcelSpatialFile,
   downloadParcelStandardFile,
+  downloadStandardFile,
   blobServiceClient,
   getParcelBlobClient,
   getParcelSpatialBlobClient,
-  getParcelStandardBlobClient
+  getParcelStandardBlobClient,
+  getStandardBlobClient
 }

@@ -54,4 +54,5 @@ data:
   AZURE_STORAGE_PARCEL: {{ quote .Values.container.parcelContainer }}
   AZURE_STORAGE_PARCEL_SPATIAL: {{ quote .Values.container.parcelSpatialContainer }}
   AZURE_STORAGE_PARCEL_STANDARD: {{ quote .Values.container.parcelStandardContainer }}
+  AZURE_STORAGE_PARCEL: {{ quote .Values.container.standardContainer }}
 {{- end -}}

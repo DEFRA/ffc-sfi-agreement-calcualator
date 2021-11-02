@@ -74,6 +74,7 @@ container:
   parcelContainer: parcels
   parcelSpatialContainer: parcels-spatial
   parcelStandardContainer: parcels-standard
+  standardContainer: standards
 
 postgresService:
   postgresDb: ffc_sfi_agreement_calculator

@@ -9,6 +9,7 @@ const processStandardsMessage = async (message, receiver) => {
 
     const standardsResponse = await getStandards(organisationId, sbi, callerId)
 
+    // once funding changes have been updated to use storage in apply for SFI, then this should return the full response object
     await sendMessage({ standards: standardsResponse.standards }, 'uk.gov.sfi.agreement.standards.request.response', config.standardsResponseQueue, { sessionId: messageId })
     await receiver.completeMessage(message)
   } catch (err) {

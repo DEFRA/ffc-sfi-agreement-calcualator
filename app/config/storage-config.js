@@ -7,6 +7,7 @@ const schema = Joi.object({
   parcelContainer: Joi.string().default('parcels'),
   parcelSpatialContainer: Joi.string().default('parcels-spatial'),
   parcelStandardContainer: Joi.string().default('parcels-standard'),
+  standardContainer: Joi.string().default('standards'),
   useConnectionStr: Joi.boolean().default(false)
 })
 
@@ -17,6 +18,7 @@ const config = {
   parcelContainer: process.env.AZURE_STORAGE_PARCEL,
   parcelSpatialContainer: process.env.AZURE_STORAGE_PARCEL_SPATIAL,
   parcelStandardContainer: process.env.AZURE_STORAGE_PARCEL_STANDARD,
+  standardContainer: process.env.AZURE_STORAGE_STANDARD,
   useConnectionStr: process.env.AZURE_STORAGE_USE_CONNECTION_STRING === 'true'
 }
 
