@@ -10,7 +10,7 @@ const { development, production, test } = require('./constants').environments
 const schema = Joi.object({
   env: Joi.string().valid(development, test, production).default(development),
   chApiGateway: process.env.NODE_ENV === 'test' ? Joi.string().default('').allow('') : Joi.string().uri().required(),
-  publicApi: Joi.string().default('https://environment.data.gov.uk/arcgis/rest/services/RPA/')
+  publicApi: Joi.string().default('https://environment.data.gov.uk')
 })
 
 // Build config

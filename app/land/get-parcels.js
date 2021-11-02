@@ -8,8 +8,10 @@ const getParcels = async (organisationId, callerId) => {
   if (cachedParcels.parcels) {
     return cachedParcels.parcels
   }
-  const parcels = await get(`/lms/organisation/${organisationId}/land-covers`, callerId)
-  parcels.forEach(x => x.info.forEach(y => { y.area = convertMetresToHectares(y.area) }))
+  const parcels = await get(`/lms/organisation/${organisationId}/land-covers`, callerId) ?? []
+  if (parcels.length) {
+    parcels.forEach(x => x.info.forEach(y => { y.area = convertMetresToHectares(y.area) }))
+  }
   await update(config.cacheConfig.parcelCache, organisationId, { parcels })
   return parcels
 }

@@ -8,7 +8,7 @@ const getParcelsSpatial = async (organisationId, sbi, callerId) => {
   if (cachedResponse.filename) {
     return cachedResponse
   }
-  const parcels = await get(`/LandParcels/MapServer/0/query?where=SBI=${sbi}&outFields=*&outSR=27700&f=geojson`)
+  const parcels = await get(`/arcgis/rest/services/RPA/LandParcels/MapServer/0/query?where=SBI=${sbi}&outFields=*&outSR=27700&f=geojson`)
   const filename = `${organisationId}.json`
   const blobClient = await getParcelSpatialBlobClient(filename)
   const parcelString = JSON.stringify(parcels)
