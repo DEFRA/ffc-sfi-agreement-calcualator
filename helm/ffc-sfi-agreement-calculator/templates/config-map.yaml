@@ -20,6 +20,15 @@ data:
   CALCULATE_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.calculateSubscriptionAddress }}
   SUBMIT_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.submitSubscriptionAddress }}
   WITHDRAW_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.withdrawSubscriptionAddress }}
+  PARCEL_TOPIC_ADDRESS: {{ quote .Values.container.parcelTopicAddress }}
+  PARCEL_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.parcelSubscriptionAddress }}
+  PARCELRESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.parcelResponseQueueAddress }}
+  PARCELSPATIAL_TOPIC_ADDRESS: {{ quote .Values.container.parcelSpatialTopicAddress }}
+  PARCELSPATIAL_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.parcelSpatialSubscriptionAddress }}
+  PARCELSPATIALRESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.parcelSpatialResponseQueueAddress }}
+  PARCELSTANDARD_TOPIC_ADDRESS: {{ quote .Values.container.parcelStandardTopicAddress }}
+  PARCELSTANDARD_SUBSCRIPTION_ADDRESS: {{ quote .Values.container.parcelStandardSubscriptionAddress }}
+  PARCELSTANDARDRESPONSE_QUEUE_ADDRESS: {{ quote .Values.container.parcelStandardResponseQueueAddress }}
   CH_API_GATEWAY: {{ quote .Values.container.chApiGateway }}
   {{- if .Values.container.redisHostname }}
   REDIS_HOSTNAME: {{ quote .Values.container.redisHostname }}
@@ -39,4 +48,11 @@ data:
   EVENT_MECHANISM: {{ quote .Values.container.eventMechanism }}
   EVENT_CLIENT_ID: {{ quote .Values.container.eventClientId }}
   AGREEMENT_EVENT_TOPIC: {{ quote .Values.container.agreementEventTopic }}
+  AZURE_STORAGE_ACCOUNT_NAME: {{ quote .Values.container.azureStorageAccountName }}
+  AZURE_STORAGE_CONNECTION_STRING: {{ quote .Values.container.azureStorageConnectionString }}
+  AZURE_STORAGE_USE_CONNECTION_STRING: {{ quote .Values.container.azureStorageUseConnectionString }}
+  AZURE_STORAGE_PARCEL: {{ quote .Values.container.parcelContainer }}
+  AZURE_STORAGE_PARCEL_SPATIAL: {{ quote .Values.container.parcelSpatialContainer }}
+  AZURE_STORAGE_PARCEL_STANDARD: {{ quote .Values.container.parcelStandardContainer }}
+  AZURE_STORAGE_PARCEL: {{ quote .Values.container.standardContainer }}
 {{- end -}}

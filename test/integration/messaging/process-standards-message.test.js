@@ -11,7 +11,7 @@ jest.mock('ffc-messaging', () => {
   }
 })
 const processStandardsMessage = require('../../../app/messaging/process-standards-message')
-jest.mock('../../../app/api', () => {
+jest.mock('../../../app/api/private', () => {
   return {
     get: jest.fn().mockImplementation(() => {
       return [{
@@ -134,29 +134,7 @@ describe('process standards message', () => {
 
   test('sets cache if no cached result', async () => {
     await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
-    expect(result.requests).toBeDefined()
-  })
-
-  test('adds request to cache', async () => {
-    await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
-    expect(result.requests[0].request).toStrictEqual(message.body)
-  })
-
-  test('does not update cache if duplicate message', async () => {
-    await processStandardsMessage(message, receiver)
-    await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
-    expect(result.requests[0].request).toStrictEqual(message.body)
-    expect(result.requests.length).toBe(1)
-  })
-
-  test('updates cache if new message', async () => {
-    await processStandardsMessage(message, receiver)
-    message.body.sbi = 123456788
-    await processStandardsMessage(message, receiver)
-    const result = await cache.get('standards', 'correlationId')
-    expect(result.requests.length).toBe(2)
+    const result = await cache.get('standards', 1)
+    expect(result.standards).toBeDefined()
   })
 })

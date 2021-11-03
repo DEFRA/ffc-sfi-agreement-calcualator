@@ -9,6 +9,7 @@ services:
     container_name: ffc-sfi-agreement-calculator
     depends_on:
       - ffc-sfi-agreement-calculator-postgres
+      - ffc-sfi-agreement-calculator-azurite
       - redis
       - kafka
     environment:
@@ -33,6 +34,15 @@ services:
       SUBMIT_TOPIC_ADDRESS: ${SUBMIT_TOPIC_ADDRESS}
       WITHDRAW_SUBSCRIPTION_ADDRESS: ${WITHDRAW_SUBSCRIPTION_ADDRESS}
       WITHDRAW_TOPIC_ADDRESS: ${WITHDRAW_TOPIC_ADDRESS}
+      PARCEL_TOPIC_ADDRESS: ${PARCEL_TOPIC_ADDRESS}
+      PARCEL_SUBSCRIPTION_ADDRESS: ${PARCEL_SUBSCRIPTION_ADDRESS}
+      PARCELRESPONSE_QUEUE_ADDRESS: ${PARCELRESPONSE_QUEUE_ADDRESS}
+      PARCELSPATIAL_TOPIC_ADDRESS: ${PARCELSPATIAL_TOPIC_ADDRESS}
+      PARCELSPATIAL_SUBSCRIPTION_ADDRESS: ${PARCELSPATIAL_SUBSCRIPTION_ADDRESS}
+      PARCELSPATIALRESPONSE_QUEUE_ADDRESS: ${PARCELSPATIALRESPONSE_QUEUE_ADDRESS}
+      PARCELSTANDARD_TOPIC_ADDRESS: ${PARCELSTANDARD_TOPIC_ADDRESS}
+      PARCELSTANDARD_SUBSCRIPTION_ADDRESS: ${PARCELSTANDARD_SUBSCRIPTION_ADDRESS}
+      PARCELSTANDARDRESPONSE_QUEUE_ADDRESS: ${PARCELSTANDARDRESPONSE_QUEUE_ADDRESS}
       POSTGRES_DB: ffc_sfi_agreement_calculator
       POSTGRES_HOST: ${POSTGRES_HOST:-ffc-sfi-agreement-calculator-postgres}
       POSTGRES_PASSWORD: ${POSTGRES_SCHEMA_PASSWORD:-ppp}
@@ -41,11 +51,14 @@ services:
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       REDIS_HOSTNAME: redis
       REDIS_TTL: 30000
-      CH_API_GATEWAY: ${CH_API_GATEWAY:-notset}
+      CH_API_GATEWAY: ${CH_API_GATEWAY}
       EVENT_HOST: kafka
       EVENT_USERNAME: kafka
       EVENT_PASSWORD: kafka
       AGREEMENT_EVENT_TOPIC: ffc-sfi-agreements
+      AZURE_STORAGE_ACCOUNT_NAME: ${AZURE_STORAGE_ACCOUNT_NAME:-devstoreaccount1}
+      AZURE_STORAGE_USE_CONNECTION_STRING: "true"
+
   
   ffc-sfi-agreement-calculator-postgres:
     image: postgres:11.4-alpine
@@ -77,3 +90,7 @@ services:
       KAFKA_CFG_ZOOKEEPER_CONNECT: zookeeper:2181
     depends_on:
       - zookeeper
+
+  ffc-sfi-agreement-calculator-azurite:
+    image: mcr.microsoft.com/azure-storage/azurite
+    command: "azurite-blob --loose --blobHost 0.0.0.0"

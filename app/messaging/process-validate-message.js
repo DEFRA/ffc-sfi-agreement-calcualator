@@ -13,7 +13,7 @@ const processValidateMessage = async (message, receiver) => {
 
     if (!validationResult) {
       const standards = await getStandards(organisationId, sbi, callerId)
-      validationResult = { validationResult: getStandardWarnings(standards) }
+      validationResult = { validationResult: getStandardWarnings(standards.standards) }
       await setCachedResponse(config.cacheConfig.validateCache, correlationId, body, validationResult)
     }
 

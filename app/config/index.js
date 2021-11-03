@@ -3,18 +3,21 @@ const mqConfig = require('./mq-config')
 const eventConfig = require('./event-config')
 const dbConfig = require('./db-config')
 const cacheConfig = require('./cache')
+const storageConfig = require('./storage-config')
 const { development, production, test } = require('./constants').environments
 
 // Define config schema
 const schema = Joi.object({
   env: Joi.string().valid(development, test, production).default(development),
-  chApiGateway: process.env.NODE_ENV === 'test' ? Joi.string().default('').allow('') : Joi.string().uri().required()
+  chApiGateway: process.env.NODE_ENV === 'test' ? Joi.string().default('').allow('') : Joi.string().uri().required(),
+  publicApi: Joi.string().default('https://environment.data.gov.uk')
 })
 
 // Build config
 const config = {
   env: process.env.NODE_ENV,
-  chApiGateway: process.env.CH_API_GATEWAY
+  chApiGateway: process.env.CH_API_GATEWAY,
+  publicApi: process.env.PUBLIC_LAND_API
 }
 
 // Validate config
@@ -45,9 +48,16 @@ value.eligibilityCheckResponseQueue = mqConfig.eligibilityCheckResponseQueue
 value.submitSubscription = mqConfig.submitSubscription
 value.withdrawSubscription = mqConfig.withdrawSubscription
 value.validateResponseTopic = mqConfig.validateResponseTopic
+value.parcelSubscription = mqConfig.parcelSubscription
+value.parcelResponseQueue = mqConfig.parcelResponseQueue
+value.parcelSpatialSubscription = mqConfig.parcelSpatialSubscription
+value.parcelSpatialResponseQueue = mqConfig.parcelSpatialResponseQueue
+value.parcelStandardSubscription = mqConfig.parcelStandardSubscription
+value.parcelStandardResponseQueue = mqConfig.parcelStandardResponseQueue
 
 value.eventConfig = eventConfig
 value.cacheConfig = cacheConfig
 value.dbConfig = dbConfig
+value.storageConfig = storageConfig
 
 module.exports = value

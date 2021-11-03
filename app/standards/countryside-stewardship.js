@@ -1,7 +1,7 @@
 const csData = require('./data/cs.json')
 
-function getCountrysideStewardshipClaim (parcelId, landCoverCode) {
-  return csData[parcelId] && (csData[parcelId][`_${landCoverCode}`] || 0)
+function getCountrysideStewardshipClaim (parcelId, standardCode) {
+  return csData[parcelId] && (csData[parcelId][`${standardCode}`] || 0)
 }
 
 module.exports = {

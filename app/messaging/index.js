@@ -5,6 +5,9 @@ const processValidateMessage = require('./process-validate-message')
 const processCalculateMessage = require('./process-calculate-message')
 const processSubmitMessage = require('./process-submit-message')
 const processWithdrawMessage = require('./process-withdraw-message')
+const processParcelMessage = require('./process-parcel-message')
+const processParcelSpatialMessage = require('./process-parcel-spatial-message')
+const processParcelStandardMessage = require('./process-parcel-standard-message')
 const { MessageReceiver } = require('ffc-messaging')
 let standardsReceiver
 let eligibilityReceiver
@@ -12,6 +15,9 @@ let validateReceiver
 let calculateReceiver
 let submitReceiver
 let withdrawReceiver
+let parcelReceiver
+let parcelSpatialReceiver
+let parcelStandardReceiver
 
 const start = async () => {
   const standardsAction = message => processStandardsMessage(message, standardsReceiver)
@@ -38,6 +44,18 @@ const start = async () => {
   withdrawReceiver = new MessageReceiver(config.withdrawSubscription, withdrawAction)
   await withdrawReceiver.subscribe()
 
+  const parcelAction = message => processParcelMessage(message, parcelReceiver)
+  parcelReceiver = new MessageReceiver(config.parcelSubscription, parcelAction)
+  await parcelReceiver.subscribe()
+
+  const parcelSpatialAction = message => processParcelSpatialMessage(message, parcelSpatialReceiver)
+  parcelSpatialReceiver = new MessageReceiver(config.parcelSpatialSubscription, parcelSpatialAction)
+  await parcelSpatialReceiver.subscribe()
+
+  const parcelStandardAction = message => processParcelStandardMessage(message, parcelStandardReceiver)
+  parcelStandardReceiver = new MessageReceiver(config.parcelStandardSubscription, parcelStandardAction)
+  await parcelStandardReceiver.subscribe()
+
   console.info('Ready to receive messages')
 }
 
@@ -48,6 +66,9 @@ const stop = async () => {
   await calculateReceiver.closeConnection()
   await submitReceiver.closeConnection()
   await withdrawReceiver.closeConnection()
+  await parcelReceiver.closeConnection()
+  await parcelSpatialReceiver.closeConnection()
+  await parcelStandardReceiver.closeConnection()
 }
 
 module.exports = { start, stop }

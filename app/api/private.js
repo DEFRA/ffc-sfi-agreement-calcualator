@@ -1,5 +1,5 @@
 const wreck = require('@hapi/wreck')
-const config = require('./config')
+const config = require('../config')
 const { chApiGateway } = config
 
 const get = async (url, callerId) => {
