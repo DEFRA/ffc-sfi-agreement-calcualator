@@ -9,7 +9,7 @@ const processParcelSpatialMessage = async (message, receiver) => {
 
     const parcelResponse = await getParcelsSpatial(organisationId, sbi, callerId)
     // get standards and spatial data for organisation ready for next steps in journey
-    getParcelStandard(organisationId, sbi, callerId)
+    getParcelsStandard(organisationId, sbi, callerId)
 
     await sendMessage(parcelResponse, 'uk.gov.sfi.agreement.parcel.spatial.request.response', config.parcelSpatialResponseQueue, { sessionId: messageId })
     await receiver.completeMessage(message)
