@@ -1,4 +1,4 @@
-const { getParcelsSpatial, getParcelStandard } = require('../land')
+const { getParcelsSpatial, getParcelsStandard } = require('../land')
 const config = require('../config')
 const sendMessage = require('./send-message')
 
