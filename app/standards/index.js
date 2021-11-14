@@ -1,5 +1,5 @@
 const calculateStandards = require('./calculate-standards')
-const getParcels = require('../land/get-parcels')
+const getParcels = require('../legacy/land/get-parcels')
 const config = require('../config')
 const { get: getCache, update } = require('../cache')
 const { getBlobClient } = require('../storage')

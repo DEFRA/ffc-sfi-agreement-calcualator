@@ -1,0 +1,19 @@
+[{
+  "sbi": 123456780,
+  "crns": [1234567890],
+  "roles": ["View", "Amend"],
+  "bpsEntitlements": 5,
+  "bpsEligibleHectares": 5
+}, {
+  "sbi": 123456781,
+  "crns": [1234567890],
+  "roles": ["View", "Amend"],
+  "bpsEntitlements": 3,
+  "bpsEligibleHectares": 5
+}, {
+  "sbi": 123456782,
+  "crns": [1234567891],
+  "roles": ["View"],
+  "bpsEntitlements": 5,
+  "bpsEligibleHectares": 5
+}]

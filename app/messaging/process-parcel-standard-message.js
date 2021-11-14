@@ -1,7 +1,7 @@
 const { getCachedResponse, setCachedResponse } = require('../cache')
 const config = require('../config')
 const sendMessage = require('./send-message')
-const { getParcelsStandard } = require('../land')
+const { getParcelsStandard } = require('../legacy/land')
 
 const processParcelStandardMessage = async (message, receiver) => {
   try {

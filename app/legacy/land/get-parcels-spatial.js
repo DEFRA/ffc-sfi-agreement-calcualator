@@ -1,7 +1,7 @@
-const { get } = require('../api/public')
-const config = require('../config')
-const { get: getCache, update } = require('../cache')
-const { getBlobClient } = require('../storage')
+const { get } = require('../../api/public')
+const config = require('../../config')
+const { get: getCache, update } = require('../../cache')
+const { getBlobClient } = require('../../storage')
 
 const getParcelsSpatial = async (organisationId, sbi, callerId) => {
   const cachedResponse = await getCache(config.cacheConfig.parcelSpatialCache, organisationId)

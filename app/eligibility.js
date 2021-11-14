@@ -1,5 +1,5 @@
-const { getOrganisations, enrichOrganisations } = require('./organisation')
-const { getParcels } = require('./land')
+const { getOrganisations, enrichOrganisations } = require('./legacy/organisation')
+const { getParcels } = require('./legacy/land')
 const sendEvent = require('./events')
 const eligibleArea = 500
 const bpsIneligibleFeatureCode = '000'

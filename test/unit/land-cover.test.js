@@ -1,6 +1,6 @@
 const cache = require('../../app/cache')
 const nock = require('nock')
-const { getParcels } = require('../../app/land')
+const { getParcels } = require('../../app/legacy/land')
 const { chApiGateway } = require('../../app/config')
 
 const callerId = 123456

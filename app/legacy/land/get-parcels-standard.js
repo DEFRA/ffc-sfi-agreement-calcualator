@@ -1,7 +1,7 @@
-const getStandards = require('../standards')
-const { getBlobClient, downloadFile } = require('../storage')
+const getStandards = require('../../standards')
+const { getBlobClient, downloadFile } = require('../../storage')
 const getParcelsSpatial = require('./get-parcels-spatial')
-const config = require('../config').storageConfig
+const config = require('../../config').storageConfig
 
 const getParcelsStandard = async (organisationId, sbi, callerId, standardCode) => {
   const parcelsResponse = await getParcelsSpatial(organisationId, sbi, callerId)

@@ -1,7 +1,7 @@
-const { get } = require('../api/private')
-const { convertMetresToHectares } = require('../conversion')
-const config = require('../config')
-const { get: getCache, update } = require('../cache')
+const { get } = require('../../api/private')
+const { convertMetresToHectares } = require('../../conversion')
+const config = require('../../config')
+const { get: getCache, update } = require('../../cache')
 
 const getParcels = async (organisationId, callerId) => {
   const cachedParcels = await getCache(config.cacheConfig.parcelCache, organisationId)
