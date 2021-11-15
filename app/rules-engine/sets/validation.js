@@ -1,9 +1,9 @@
 const { Engine } = require('json-rules-engine')
-const { getBpsEntitlements, getBpsEligibleLandInHectares } = require('../../legacy/bps')
+const { getBpsEntitlements, getBpsEligibleLandInHectares } = require('../data/bps')
 const render = require('../render')
-const { bpsEntitlements, bpsLand } = require('../rules/sfi')
+const { bpsEntitlements, bpsLand } = require('../rules')
 
-async function runSFIEligibilityRules (organisation) {
+async function runValidationRules (organisation) {
   const engine = new Engine()
 
   engine.addFact('bpsEntitlements', (params, almanac) => {
@@ -18,13 +18,13 @@ async function runSFIEligibilityRules (organisation) {
   engine.addRule(bpsLand)
 
   engine.on('success', async (event, almanac, ruleResult) => {
-    almanac.addRuntimeFact('sfiEligible', true)
+    almanac.addRuntimeFact('sfiValidated', true)
     const sbi = await almanac.factValue('sbi')
     render(`SBI ${sbi} passed SFI rule: ${event.params.message}`, ruleResult)
   })
 
   engine.on('failure', async (event, almanac, ruleResult) => {
-    almanac.addRuntimeFact('sfiEligible', false)
+    almanac.addRuntimeFact('sfiValidated', false)
     const sbi = await almanac.factValue('sbi')
     render(`SBI ${sbi} failed SFI rule: ${ruleResult.name} - `, ruleResult)
   })
@@ -32,4 +32,4 @@ async function runSFIEligibilityRules (organisation) {
   return engine.run(organisation)
 }
 
-module.exports = runSFIEligibilityRules
+module.exports = runValidationRules
