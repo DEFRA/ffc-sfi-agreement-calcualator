@@ -1,17 +1,18 @@
 const { Engine } = require('json-rules-engine')
-const { getBpsEntitlements, getBpsEligibleLandInHectares } = require('../../legacy/bps')
-const render = require('../render')
+const { getBpsEntitlements, getBpsEligibleLand } = require('../../legacy/bps')
+const report = require('../report')
 const { bpsEntitlements, bpsLand } = require('../rules')
+const ELIGIBLE_LAND_CAP = 500
 
 async function runEligibilityRules (organisation) {
   const engine = new Engine()
 
-  engine.addFact('bpsEntitlements', (params, almanac) => {
+  engine.addFact('bpsEntitlements', async (params, almanac) => {
     return getBpsEntitlements(organisation.sbi)
   })
 
-  engine.addFact('bpsEligibleHectares', (params, almanac) => {
-    return getBpsEligibleLandInHectares(organisation.sbi)
+  engine.addFact('bpsEligibleLand', async (params, almanac) => {
+    return getBpsEligibleLand(organisation.organisationId, organisation.callerId, ELIGIBLE_LAND_CAP)
   })
 
   engine.addRule(bpsEntitlements)
@@ -19,14 +20,12 @@ async function runEligibilityRules (organisation) {
 
   engine.on('success', async (event, almanac, ruleResult) => {
     almanac.addRuntimeFact('sfiEligible', true)
-    const sbi = await almanac.factValue('sbi')
-    render(`SBI ${sbi} passed SFI rule: ${event.params.message}`, ruleResult)
+    report(event, almanac, ruleResult)
   })
 
   engine.on('failure', async (event, almanac, ruleResult) => {
     almanac.addRuntimeFact('sfiEligible', false)
-    const sbi = await almanac.factValue('sbi')
-    render(`SBI ${sbi} failed SFI rule: ${ruleResult.name} - `, ruleResult)
+    report(event, almanac, ruleResult)
   })
 
   return engine.run(organisation)

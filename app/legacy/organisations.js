@@ -1,7 +1,13 @@
-const TEST_DATA = require('./test-data.json')
+const { get } = require('../api/private')
 
-function getOrganisations (crn, roles) {
-  return TEST_DATA.filter(x => x.crns.includes(crn) && x.roles.some(y => roles.includes(y)))
+async function getOrganisations (crn, callerId) {
+  const url = `/organisation/person/${callerId}/summary?search=`
+  const data = await get(url, callerId)
+  return data?._data?.map(organisation => ({
+    sbi: organisation.sbi,
+    name: organisation.name,
+    organisationId: organisation.id
+  }))
 }
 
 module.exports = {

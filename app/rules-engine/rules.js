@@ -20,8 +20,8 @@ module.exports = {
     name: 'BPS eligible land',
     conditions: {
       all: [{
-        name: 'BPS eligible hectares',
-        fact: 'bpsEligibleHectares',
+        name: 'BPS eligible land',
+        fact: 'bpsEligibleLand',
         operator: 'greaterThanInclusive',
         value: 5
       }]

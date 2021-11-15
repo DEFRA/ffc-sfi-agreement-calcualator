@@ -1,14 +1,31 @@
-const TEST_DATA = require('./test-data.json')
+const { getParcels } = require('./legacy/land')
+const BPS_INELIGIBLE_FEATURE_CODE = '000'
 
-function getBpsEntitlements (sbi) {
-  return TEST_DATA.find(x => x.sbi === sbi)?.bpsEntitlements ?? 0
+async function getEntitlements (sbi) {
+  return 5
 }
 
-function getBpsEligibleLandInHectares (sbi) {
-  return TEST_DATA.find(x => x.sbi === sbi)?.bpsEligibleHectares ?? 0
+async function getEligibleLand (organisationId, callerId, cap) {
+  const parcels = await getParcels(organisationId, callerId)
+  return getEligibleLandFromParcels(parcels)
+}
+
+function getEligibleLandFromParcels (parcels, cap) {
+  let totalArea = 0
+  for (const parcel of parcels) {
+    for (const landCover of parcel.info) {
+      if (landCover.code !== BPS_INELIGIBLE_FEATURE_CODE) {
+        totalArea += landCover.area
+      }
+    }
+    if (cap && totalArea >= cap) {
+      return cap
+    }
+  }
+  return totalArea
 }
 
 module.exports = {
-  getBpsEntitlements,
-  getBpsEligibleLandInHectares
+  getEntitlements,
+  getEligibleLand
 }

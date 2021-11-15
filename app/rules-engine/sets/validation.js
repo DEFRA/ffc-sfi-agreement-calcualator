@@ -1,6 +1,6 @@
 const { Engine } = require('json-rules-engine')
 const { getBpsEntitlements, getBpsEligibleLandInHectares } = require('../data/bps')
-const render = require('../render')
+const render = require('../report')
 const { bpsEntitlements, bpsLand } = require('../rules')
 
 async function runValidationRules (organisation) {

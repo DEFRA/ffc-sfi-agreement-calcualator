@@ -16,4 +16,6 @@ const sendEvent = async (body, type) => {
   }
 }
 
-module.exports = sendEvent
+module.exports = {
+  sendEvent
+}
