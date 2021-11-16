@@ -1,11 +1,11 @@
-const { getOrganisations, enrichOrganisations } = require('./legacy/organisations')
+const { getOrganisations, enrichOrganisations } = require('./legacy/organisation')
 const runEligibilityRules = require('./rules-engine/sets/eligibility')
 
 const getEligibleOrganisations = async (crn, callerId) => {
   const eligibleOrganisations = []
   const organisations = await getOrganisations(crn, callerId)
   for (const organisation of organisations) {
-    const result = await runEligibilityRules(organisation)
+    const result = await runEligibilityRules({ ...organisation, callerId })
     if (!result.failureEvents.length) {
       eligibleOrganisations.push(organisation)
     }

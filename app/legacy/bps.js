@@ -1,4 +1,4 @@
-const { getParcels } = require('./legacy/land')
+const { getParcels } = require('./land')
 const BPS_INELIGIBLE_FEATURE_CODE = '000'
 
 async function getEntitlements (sbi) {

@@ -29,7 +29,7 @@ module.exports = {
     event: {
       type: 'bps-land',
       params: {
-        message: 'Has sufficient eligible land'
+        message: 'Has sufficient BPS eligible land'
       }
     }
   }
