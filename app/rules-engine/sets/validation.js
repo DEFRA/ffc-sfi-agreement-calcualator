@@ -1,35 +1,22 @@
-const { Engine } = require('json-rules-engine')
 const { getBpsEntitlements, getBpsEligibleLandInHectares } = require('../data/bps')
-const render = require('../report')
+const getRulesEngine = require('../engine')
 const { bpsEntitlements, bpsLand } = require('../rules')
 
-async function runValidationRules (organisation) {
-  const engine = new Engine()
+const runValidationRules = async (facts) => {
+  const engine = getRulesEngine()
 
-  engine.addFact('bpsEntitlements', (params, almanac) => {
-    return getBpsEntitlements(organisation.sbi)
+  engine.addFact('bpsEntitlements', async (params, almanac) => {
+    return getBpsEntitlements(facts.sbi)
   })
 
-  engine.addFact('bpsEligibleHectares', (params, almanac) => {
-    return getBpsEligibleLandInHectares(organisation.sbi)
+  engine.addFact('bpsEligibleHectares', async (params, almanac) => {
+    return getBpsEligibleLandInHectares(facts.sbi)
   })
 
   engine.addRule(bpsEntitlements)
   engine.addRule(bpsLand)
 
-  engine.on('success', async (event, almanac, ruleResult) => {
-    almanac.addRuntimeFact('sfiValidated', true)
-    const sbi = await almanac.factValue('sbi')
-    render(`SBI ${sbi} passed SFI rule: ${event.params.message}`, ruleResult)
-  })
-
-  engine.on('failure', async (event, almanac, ruleResult) => {
-    almanac.addRuntimeFact('sfiValidated', false)
-    const sbi = await almanac.factValue('sbi')
-    render(`SBI ${sbi} failed SFI rule: ${ruleResult.name} - `, ruleResult)
-  })
-
-  return engine.run(organisation)
+  return engine.run(facts)
 }
 
 module.exports = runValidationRules

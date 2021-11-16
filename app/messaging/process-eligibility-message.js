@@ -1,5 +1,5 @@
 const { getCachedResponse, setCachedResponse } = require('../cache')
-const { getEligibleOrganisations } = require('../rules-engine/eligibility')
+const { getEligibleOrganisations } = require('../eligibility')
 const config = require('../config')
 const sendMessage = require('./send-message')
 

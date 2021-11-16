@@ -1,6 +1,6 @@
-const runValidationRules = require('../rule-sets/validation')
+const runValidationRules = require('./rules-engine/sets/validation')
 
-async function runValidation (facts) {
+const runValidation = async (facts) => {
   const warnings = []
   const result = await runValidationRules(facts)
   result.failureEvents.forEach((failure) => warnings.push(failure))

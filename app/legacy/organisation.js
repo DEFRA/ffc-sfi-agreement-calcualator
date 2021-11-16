@@ -16,24 +16,24 @@ const getOrganisations = async (crn, callerId) => {
   }))
 }
 
-const organisationAddress = (organisationAdress) => {
-  return organisationAdress
-    ? [
-        organisationAdress.address1 ?? null,
-        organisationAdress.address2 ?? null,
-        organisationAdress.address3 ?? null,
-        organisationAdress.postalCode ?? null].filter(Boolean).join(', ')
-    : ''
-}
-
 const enrichOrganisations = async (organisations, callerId) => {
   for (const organisation of organisations) {
     const organisationDetails = await getOrganisation(organisation.organisationId, callerId)
-    const address = organisationAddress(organisationDetails?.address)
+    const address = mapAddress(organisationDetails?.address)
     organisation.address = address
   }
 
   return organisations
+}
+
+const mapAddress = (address) => {
+  return address
+    ? [
+        address.address1 ?? null,
+        address.address2 ?? null,
+        address.address3 ?? null,
+        address.postalCode ?? null].filter(Boolean).join(', ')
+    : ''
 }
 
 module.exports = {
