@@ -1,6 +1,6 @@
 const getRulesEngine = require('../engine')
 const { getEntitlements, getEligibleLand } = require('../../legacy/bps')
-const { bpsEntitlements, bpsLand } = require('../rules')
+const { bpsEntitlements, bpsLand } = require('../rules/eligibility')
 const ELIGIBLE_LAND_CAP = 500
 
 const runEligibilityRules = async (facts) => {

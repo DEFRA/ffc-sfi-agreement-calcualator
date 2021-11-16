@@ -1,6 +1,6 @@
 const { getEntitlements, getEligibleLand } = require('../data/bps')
 const getRulesEngine = require('../engine')
-const { bpsEntitlements, bpsLand } = require('../rules')
+const { bpsEntitlements, bpsLand } = require('../rules/eligibility')
 
 const runValidationRules = async (facts) => {
   const engine = getRulesEngine()

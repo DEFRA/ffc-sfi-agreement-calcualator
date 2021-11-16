@@ -10,7 +10,7 @@ const getStandards = async (organisationId, sbi, callerId) => {
     return cachedStandards
   }
   const parcels = await getParcels(organisationId, callerId)
-  const standards = await calculateStandards(parcels)
+  const standards = await calculateStandards(sbi, parcels)
   const filename = `${organisationId}.json`
   const blobClient = await getBlobClient(config.storageConfig.standardContainer, filename)
   const standardsString = JSON.stringify(standards)
