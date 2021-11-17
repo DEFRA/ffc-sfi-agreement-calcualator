@@ -8,7 +8,8 @@ const calculateStandards = async (sbi, parcels) => {
       standard.parcels = []
       const parcelResult = await runParcelRules({ code: standard.code, sbi, ...parcel })
       if (!parcelResult.failureEvents.length) {
-        for (const landCover of parcel.info) {
+        const landCovers = getGroupedLandCovers(parcel.info)
+        for (const landCover of landCovers) {
           const landCoverResult = await runLandCoverRules({ code: standard.code, sbi, ...parcel })
           if (!landCoverResult.failureEvents.length) {
             standard.parcels.push({
@@ -22,6 +23,18 @@ const calculateStandards = async (sbi, parcels) => {
   }
 
   return standards
+}
+
+const getGroupedLandCovers = (infos) => {
+  return [...infos.reduce((x, y) => {
+    const key = y.code
+
+    // if key doesn't exist then first instance so create new group
+    const item = x.get(key) || Object.assign({}, { code: y.code, area: 0 })
+    item.area += Number(y.area)
+
+    return x.set(key, item)
+  }, new Map()).values()]
 }
 
 module.exports = calculateStandards
