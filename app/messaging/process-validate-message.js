@@ -1,25 +1,24 @@
 const sendMessage = require('./send-message')
 const config = require('../config')
-const getStandards = require('../standards')
-const getStandardWarnings = require('../standards/get-standard-warnings')
 const { setCachedResponse, getCachedResponse } = require('../cache')
+const util = require('util')
+const runValidation = require('../validation')
 
 const processValidateMessage = async (message, receiver) => {
   try {
     const { body, correlationId } = message
-    const { organisationId, sbi, callerId } = body
 
-    let validationResult = await getCachedResponse(config.cacheConfig.validateCache, body, correlationId)
+    console.log('Validation check request received:', util.inspect(message.body, false, null, true))
+    const cachedResponse = await getCachedResponse(config.cacheConfig.validateCache, body, correlationId)
+    const validationResult = cachedResponse ?? { validationResult: await runValidation(message.body) }
 
-    if (!validationResult) {
-      const standards = await getStandards(organisationId, sbi, callerId)
-      validationResult = { validationResult: getStandardWarnings(standards.standards) }
+    if (!cachedResponse) {
       await setCachedResponse(config.cacheConfig.validateCache, correlationId, body, validationResult)
     }
 
     await sendMessage(validationResult, 'uk.gov.sfi.validate.result', config.validateResponseTopic, { correlationId })
-
     await receiver.completeMessage(message)
+    console.log('Validation check completed:', util.inspect(validationResult, false, null, true))
   } catch (err) {
     console.error('Unable to process validate message:', err)
   }

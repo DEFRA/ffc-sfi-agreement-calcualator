@@ -5,7 +5,7 @@ const standards = require('./funding-options')
 const calculateStandards = async (sbi, parcels) => {
   for (const parcel of parcels) {
     for (const standard of standards) {
-      standard.parcels = []
+      standard.landCovers = []
       const parcelResult = await runParcelRules({ code: standard.code, sbi, ...parcel })
       if (!parcelResult.failureEvents.length) {
         const landCovers = getGroupedLandCovers(parcel.info)
@@ -13,7 +13,8 @@ const calculateStandards = async (sbi, parcels) => {
           const landCoverResult = await runLandCoverRules({ code: standard.code, sbi, ...parcel })
           if (!landCoverResult.failureEvents.length) {
             standard.parcels.push({
-              id: parcel.id,
+              parcelId: parcel.id,
+              code: landCover.code,
               area: convertToDecimal(landCover.area)
             })
           }
