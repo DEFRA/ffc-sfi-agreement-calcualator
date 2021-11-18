@@ -23,7 +23,7 @@ module.exports = {
         name: 'BPS eligible land',
         fact: 'bpsEligibleLand',
         operator: 'greaterThanInclusive',
-        value: 5
+        value: 500
       }]
     },
     event: {
