@@ -1,6 +1,6 @@
 module.exports = {
   bpsEntitlements: {
-    name: 'BPS entitlements',
+    name: 'Has sufficient BPS entitlements',
     conditions: {
       all: [{
         name: 'BPS entitlements',
@@ -17,7 +17,7 @@ module.exports = {
     }
   },
   bpsLand: {
-    name: 'BPS eligible land',
+    name: 'Has sufficient BPS eligible land',
     conditions: {
       all: [{
         name: 'BPS eligible land',

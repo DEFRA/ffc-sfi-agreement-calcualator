@@ -6,11 +6,11 @@ const calculateStandards = async (sbi, parcels) => {
   for (const parcel of parcels) {
     for (const standard of standards) {
       standard.landCovers = []
-      const parcelResult = await runParcelRules({ code: standard.code, sbi, ...parcel })
+      const parcelResult = await runParcelRules({ identifier: parcel.id, standardCode: standard.code, ...parcel })
       if (!parcelResult.failureEvents.length) {
         const landCovers = getGroupedLandCovers(parcel.info)
         for (const landCover of landCovers) {
-          const landCoverResult = await runLandCoverRules({ code: standard.code, sbi, ...parcel })
+          const landCoverResult = await runLandCoverRules({ identifier: parcel.id, standardCode: standard.code, ...landCover })
           if (!landCoverResult.failureEvents.length) {
             standard.parcels.push({
               parcelId: parcel.id,

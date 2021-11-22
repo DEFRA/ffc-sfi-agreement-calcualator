@@ -1,6 +1,6 @@
 module.exports = {
   pendingChange: {
-    name: 'No pending land changes',
+    name: 'Has no pending land changes',
     conditions: {
       all: [{
         name: 'Pending change',
@@ -17,7 +17,7 @@ module.exports = {
     }
   },
   arableSoilLandCover: {
-    name: 'Arable soil land cover',
+    name: 'Has arable soil compatible land cover',
     conditions: {
       any: [{
         name: 'Arable land cover',
@@ -39,17 +39,17 @@ module.exports = {
     event: {
       type: 'arable-soil-land-cover',
       params: {
-        message: 'Has arable soil land cover'
+        message: 'Has arable soil compatible land cover'
       }
     }
   },
   improvedGrasslandLandCover: {
-    name: 'Improved grassland land cover',
+    name: 'Has improved grassland land compatible cover',
     conditions: {
       any: [{
         name: 'Permanent grassland land cover',
-        fact: 'info',
-        operator: 'hasLandCover',
+        fact: 'code',
+        operator: 'equal',
         value: 130
       }, {
         name: 'Permanent grassland land cover',
@@ -71,7 +71,7 @@ module.exports = {
     event: {
       type: 'arable-soil-land-cover',
       params: {
-        message: 'Has arable soil land cover'
+        message: 'Has improved grassland compatible land cover'
       }
     }
   }

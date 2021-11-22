@@ -5,7 +5,7 @@ const getEligibleOrganisations = async (crn, callerId) => {
   const eligibleOrganisations = []
   const organisations = await getOrganisations(crn, callerId)
   for (const organisation of organisations) {
-    const result = await runEligibilityRules({ ...organisation, callerId })
+    const result = await runEligibilityRules({ identifier: organisation.sbi, ...organisation, callerId })
     if (!result.failureEvents.length) {
       eligibleOrganisations.push(organisation)
     }
