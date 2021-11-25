@@ -35,7 +35,7 @@ const getGroupedLandCovers = (infos) => {
     item.area += Number(y.area)
 
     return x.set(key, item)
-  }, new Map()).values()]
+  }, new Map()).values()].filter(x => x.area > 0)
 }
 
 module.exports = calculateStandards
