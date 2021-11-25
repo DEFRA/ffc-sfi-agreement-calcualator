@@ -23,17 +23,17 @@ module.exports = {
         name: 'Arable land cover',
         fact: 'code',
         operator: 'equal',
-        value: 110
+        value: '110'
       }, {
         name: 'Permanent crops land cover',
         fact: 'code',
         operator: 'equal',
-        value: 140
+        value: '140'
       }, {
         name: 'Notional scrub land cover',
         fact: 'code',
         operator: 'equal',
-        value: 283
+        value: '283'
       }]
     },
     event: {
@@ -50,22 +50,22 @@ module.exports = {
         name: 'Permanent grassland land cover',
         fact: 'code',
         operator: 'equal',
-        value: 130
+        value: '130'
       }, {
         name: 'Permanent grassland land cover',
         fact: 'code',
         operator: 'equal',
-        value: 131
+        value: '131'
       }, {
         name: 'Gallop land cover',
         fact: 'code',
         operator: 'equal',
-        value: 131
+        value: '641'
       }, {
         name: 'Notional scrub land cover',
         fact: 'code',
         operator: 'equal',
-        value: 283
+        value: '283'
       }]
     },
     event: {
