@@ -1,5 +1,5 @@
 const getRulesEngine = require('../../engine')
-const { arableSoilLandCover, pendingChange } = require('../../rules/compatibility')
+const { noPendingChanges, isArableSoilLandCover } = require('../../rules/compatibility')
 
 const runArableSoilParcelRules = async (facts) => {
   const engine = getRulesEngine()
@@ -8,13 +8,13 @@ const runArableSoilParcelRules = async (facts) => {
     return false
   })
 
-  engine.addRule(pendingChange)
+  engine.addRule(noPendingChanges)
   return engine.run(facts)
 }
 
 const runArableSoilLandCoverRules = async (facts) => {
   const engine = getRulesEngine()
-  engine.addRule(arableSoilLandCover)
+  engine.addRule(isArableSoilLandCover)
   return engine.run(facts)
 }
 

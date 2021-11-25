@@ -1,18 +1,18 @@
 const { convertToDecimal } = require('../conversion')
-const { runLandCoverRules, runParcelRules } = require('../rules-engine/sets/parcel')
+const { runLandCoverRules, runParcelRules } = require('../rules-engine/sets/standards')
 const standards = require('./funding-options')
 
 const calculateStandards = async (sbi, parcels) => {
   for (const parcel of parcels) {
     for (const standard of standards) {
       standard.landCovers = []
-      const parcelResult = await runParcelRules({ identifier: parcel.id, standardCode: standard.code, ...parcel })
+      const parcelResult = await runParcelRules({ sbi, identifier: parcel.id, standardCode: standard.code, ...parcel })
       if (!parcelResult.failureEvents.length) {
         const landCovers = getGroupedLandCovers(parcel.info)
         for (const landCover of landCovers) {
-          const landCoverResult = await runLandCoverRules({ identifier: parcel.id, standardCode: standard.code, ...landCover })
+          const landCoverResult = await runLandCoverRules({ sbi, identifier: `${parcel.id} ${landCover.code}`, standardCode: standard.code, ...landCover })
           if (!landCoverResult.failureEvents.length) {
-            standard.parcels.push({
+            standard.landCovers.push({
               parcelId: parcel.id,
               code: landCover.code,
               area: convertToDecimal(landCover.area)

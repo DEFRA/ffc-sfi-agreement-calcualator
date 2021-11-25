@@ -1,5 +1,5 @@
 const getRulesEngine = require('../../engine')
-const { improvedGrasslandLandCover, pendingChange } = require('../../rules/compatibility')
+const { isImprovedGrasslandLandCover, noPendingChanges } = require('../../rules/compatibility')
 
 const runImprovedGrasslandParcelRules = async (facts) => {
   const engine = getRulesEngine()
@@ -8,13 +8,13 @@ const runImprovedGrasslandParcelRules = async (facts) => {
     return false
   })
 
-  engine.addRule(pendingChange)
+  engine.addRule(noPendingChanges)
   return engine.run(facts)
 }
 
 const runImprovedGrasslandLandCoverRules = async (facts) => {
   const engine = getRulesEngine()
-  engine.addRule(improvedGrasslandLandCover)
+  engine.addRule(isImprovedGrasslandLandCover)
   return engine.run(facts)
 }
 
