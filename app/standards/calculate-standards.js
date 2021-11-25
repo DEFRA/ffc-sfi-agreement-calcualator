@@ -3,9 +3,9 @@ const { runLandCoverRules, runParcelRules } = require('../rules-engine/sets/stan
 const standards = require('./funding-options')
 
 const calculateStandards = async (sbi, parcels) => {
-  for (const parcel of parcels) {
-    for (const standard of standards) {
-      standard.landCovers = []
+  for (const standard of standards) {
+    standard.landCovers = []
+    for (const parcel of parcels) {
       const parcelResult = await runParcelRules({ sbi, identifier: parcel.id, standardCode: standard.code, ...parcel })
       if (!parcelResult.failureEvents.length) {
         const landCovers = getGroupedLandCovers(parcel.info)
