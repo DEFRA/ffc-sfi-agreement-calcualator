@@ -17,7 +17,7 @@ const runValidation = async (facts) => {
       agreementLandCover.area = convertToInteger(agreementLandCover.area)
       const standardLandCover = standard.landCovers.find(x => x.code === agreementLandCover.code)
       const result = await runAgreementLandCoverRules({ sbi: facts.sbi, identifier: agreementLandCover.code, agreementLandCover, standardLandCover })
-      result.failureEvents.forEach((failure) => warnings.push({ type: 'Validation', detail: failure }))
+      result.failureEvents.forEach((failure) => warnings.push({ type: failure.detail.type, detail: 'Failed' }))
     }
   }
 
