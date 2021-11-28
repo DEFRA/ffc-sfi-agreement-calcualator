@@ -7,10 +7,11 @@ const runValidation = require('../validation')
 const processValidateMessage = async (message, receiver) => {
   try {
     const { body, correlationId } = message
+    const facts = JSON.parse(JSON.stringify(body))
 
     console.log('Validation check request received:', util.inspect(message.body, false, null, true))
     const cachedResponse = await getCachedResponse(config.cacheConfig.validateCache, body, correlationId)
-    const validationResult = cachedResponse ?? { validationResult: await runValidation(message.body) }
+    const validationResult = cachedResponse ?? { validationResult: await runValidation(facts) }
 
     if (!cachedResponse) {
       await setCachedResponse(config.cacheConfig.validateCache, correlationId, body, validationResult)

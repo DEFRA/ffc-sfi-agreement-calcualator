@@ -19,7 +19,7 @@ jest.mock('../../../app/api/private', () => {
         info: [{
           code: '110',
           name: 'Arable Land',
-          area: 0
+          area: 100
         },
         {
           code: '130',
@@ -35,9 +35,6 @@ jest.mock('../../../app/api/private', () => {
     })
   }
 })
-const db = require('../../../app/data')
-let scheme
-let standard
 let receiver
 let message
 
@@ -48,22 +45,6 @@ describe('process validate message', () => {
 
   beforeEach(async () => {
     await cache.flushAll()
-    await db.sequelize.truncate({ cascade: true })
-
-    scheme = {
-      schemeId: 1,
-      name: 'SFI'
-    }
-
-    standard = {
-      standardId: 1,
-      schemeId: 1,
-      name: 'Arable and horticultural soils',
-      code: 110
-    }
-
-    await db.scheme.create(scheme)
-    await db.standard.create(standard)
 
     receiver = {
       completeMessage: jest.fn(),
@@ -75,7 +56,16 @@ describe('process validate message', () => {
       body: {
         organisationId: 1,
         sbi: 123456789,
-        callerId: 1234567
+        callerId: 1234567,
+        agreement: {
+          standards: [{
+            code: 'sfi-arable-soil',
+            landCovers: [{
+              parcelId: 'SP89858277',
+              area: 50
+            }]
+          }]
+        }
       }
     }
   })
@@ -85,8 +75,6 @@ describe('process validate message', () => {
   })
 
   afterAll(async () => {
-    await db.sequelize.truncate({ cascade: true })
-    await db.sequelize.close()
     await cache.flushAll()
     await cache.stop()
   })
