@@ -2,7 +2,7 @@ const cache = require('../../app/cache')
 const nock = require('nock')
 const { chApiGateway } = require('../../app/config')
 const { MessageProviderPact } = require('@pact-foundation/pact')
-const getEligibleOrganisations = require('../../app/eligibility')
+const { getEligibleOrganisations } = require('../../app/eligibility')
 const createMessage = require('../../app/messaging/create-message')
 
 describe('publishing an eligibility check response', () => {
