@@ -13,7 +13,7 @@ const getOrganisations = async (crn, callerId) => {
     sbi: organisation.sbi,
     name: organisation.name,
     organisationId: organisation.id
-  }))
+  })) ?? []
 }
 
 const enrichOrganisations = async (organisations, callerId) => {
