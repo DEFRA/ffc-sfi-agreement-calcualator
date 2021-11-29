@@ -15,8 +15,7 @@ const getParcelsSpatial = async (organisationId, sbi, callerId) => {
   await blobClient.upload(parcelString, parcelString.length)
   const response = {
     organisationId,
-    filename,
-    storageUrl: blobClient.url
+    filename
   }
   await update(config.cacheConfig.parcelSpatialCache, organisationId, response)
   return response

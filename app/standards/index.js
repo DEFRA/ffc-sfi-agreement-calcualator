@@ -18,7 +18,6 @@ const getStandards = async (organisationId, sbi, callerId) => {
   const response = {
     organisationId,
     filename,
-    storageUrl: blobClient.url,
     standards
   }
   await update(config.cacheConfig.standardsCache, organisationId, response)

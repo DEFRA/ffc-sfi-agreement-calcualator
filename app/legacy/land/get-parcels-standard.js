@@ -18,8 +18,7 @@ const getParcelsStandard = async (organisationId, sbi, callerId, standardCode) =
 
   return {
     organisationId,
-    filename,
-    storageUrl: blobClient.url
+    filename
   }
 }
 
