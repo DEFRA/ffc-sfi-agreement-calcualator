@@ -45,13 +45,6 @@ const mqSchema = Joi.object({
     address: Joi.string(),
     topic: Joi.string()
   },
-  parcelSubscription: {
-    address: Joi.string(),
-    topic: Joi.string()
-  },
-  parcelResponseQueue: {
-    address: Joi.string()
-  },
   parcelSpatialSubscription: {
     address: Joi.string(),
     topic: Joi.string()
@@ -112,13 +105,6 @@ const mqConfig = {
     address: process.env.WITHDRAW_SUBSCRIPTION_ADDRESS,
     topic: process.env.WITHDRAW_TOPIC_ADDRESS
   },
-  parcelSubscription: {
-    address: process.env.PARCEL_SUBSCRIPTION_ADDRESS,
-    topic: process.env.PARCEL_TOPIC_ADDRESS
-  },
-  parcelResponseQueue: {
-    address: process.env.PARCELRESPONSE_QUEUE_ADDRESS
-  },
   parcelSpatialSubscription: {
     address: process.env.PARCELSPATIAL_SUBSCRIPTION_ADDRESS,
     topic: process.env.PARCELSPATIAL_TOPIC_ADDRESS
@@ -154,8 +140,6 @@ const eligibilityCheckResponseQueue = { ...mqResult.value.messageQueue, ...mqRes
 const submitSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.submitSubscription }
 const withdrawSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.withdrawSubscription }
 const validateResponseTopic = { ...mqResult.value.messageQueue, ...mqResult.value.validateResponseTopic }
-const parcelSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSubscription }
-const parcelResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.parcelResponseQueue }
 const parcelSpatialSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSpatialSubscription }
 const parcelSpatialResponseQueue = { ...mqResult.value.messageQueue, ...mqResult.value.parcelSpatialResponseQueue }
 const parcelStandardSubscription = { ...mqResult.value.messageQueue, ...mqResult.value.parcelStandardSubscription }
@@ -172,8 +156,6 @@ module.exports = {
   submitSubscription,
   withdrawSubscription,
   validateResponseTopic,
-  parcelSubscription,
-  parcelResponseQueue,
   parcelSpatialSubscription,
   parcelSpatialResponseQueue,
   parcelStandardSubscription,
