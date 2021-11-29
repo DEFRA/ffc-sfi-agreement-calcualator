@@ -29,6 +29,15 @@ const getBlob = async (container, filename) => {
   return container.getBlockBlobClient(filename)
 }
 
+const fileExists = async (containerName, filename) => {
+  const container = getContainer(containerName)
+  const fileList = []
+  for await (const item of container.listBlobsFlat()) {
+    fileList.push(item.name)
+  }
+  return fileList.includes(filename)
+}
+
 const downloadFile = async (containerName, filename) => {
   const container = getContainer(containerName)
   const blob = await getBlob(container, filename)
@@ -60,5 +69,6 @@ const getBlobClient = async (containerName, filename) => {
 module.exports = {
   downloadFile,
   blobServiceClient,
-  getBlobClient
+  getBlobClient,
+  fileExists
 }

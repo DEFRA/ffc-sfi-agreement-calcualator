@@ -2,16 +2,17 @@ const calculateStandards = require('./calculate-standards')
 const getParcels = require('../legacy/land/get-parcels')
 const config = require('../config')
 const { get: getCache, update } = require('../cache')
-const { getBlobClient } = require('../storage')
+const { getBlobClient, fileExists } = require('../storage')
 
 const getStandards = async (organisationId, sbi, callerId) => {
+  const filename = `${organisationId}.json`
+
   const cachedStandards = await getCache(config.cacheConfig.standardsCache, organisationId)
-  if (cachedStandards.standards) {
+  if (cachedStandards.standards && fileExists(config.storageConfig.parcelSpatialContainer, filename)) {
     return cachedStandards
   }
   const parcels = await getParcels(organisationId, callerId)
   const standards = await calculateStandards(sbi, parcels)
-  const filename = `${organisationId}.json`
   const blobClient = await getBlobClient(config.storageConfig.standardContainer, filename)
   const standardsString = JSON.stringify(standards)
   await blobClient.upload(standardsString, standardsString.length)
