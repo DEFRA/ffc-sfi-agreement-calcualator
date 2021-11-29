@@ -9,7 +9,7 @@ const schema = Joi.object({
   }),
   password: Joi.string().allow(''),
   partition: Joi.string().default('ffc-sfi-agreement-calculator'),
-  ttl: Joi.number().default(3600 * 1000), // 1 hour,
+  ttl: Joi.number().default(3600 * 1000 * 2), // 2 hours,
   standardsCache: Joi.string().default('standards'),
   calculateCache: Joi.string().default('calculate'),
   validateCache: Joi.string().default('validate'),
