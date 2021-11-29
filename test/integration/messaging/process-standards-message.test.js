@@ -35,11 +35,6 @@ jest.mock('../../../app/api/private', () => {
     })
   }
 })
-const db = require('../../../app/data')
-let scheme
-let standard
-let landCover
-let standardLandCover
 let receiver
 let message
 
@@ -50,34 +45,6 @@ describe('process standards message', () => {
 
   beforeEach(async () => {
     await cache.flushAll()
-    await db.sequelize.truncate({ cascade: true })
-
-    scheme = {
-      schemeId: 1,
-      name: 'SFI'
-    }
-
-    standard = {
-      standardId: 1,
-      schemeId: 1,
-      name: 'Arable and horticultural soils',
-      code: '110'
-    }
-
-    landCover = {
-      landCoverId: 1,
-      code: '110'
-    }
-
-    standardLandCover = {
-      landCoverId: 1,
-      standardId: 1
-    }
-
-    await db.scheme.create(scheme)
-    await db.standard.create(standard)
-    await db.landCover.create(landCover)
-    await db.standardLandCover.create(standardLandCover)
 
     receiver = {
       completeMessage: jest.fn(),
@@ -100,8 +67,6 @@ describe('process standards message', () => {
   })
 
   afterAll(async () => {
-    await db.sequelize.truncate({ cascade: true })
-    await db.sequelize.close()
     await cache.flushAll()
     await cache.stop()
   })

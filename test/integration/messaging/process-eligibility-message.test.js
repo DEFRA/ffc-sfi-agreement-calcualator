@@ -131,9 +131,4 @@ describe('process eligibility message', () => {
     const result = await cache.get('eligibility', 'correlationId')
     expect(result.requests.length).toBe(2)
   })
-
-  test('sends eligible event for eligible organisation', async () => {
-    await processEligibilityMessage(message, receiver)
-    expect(mockSendEvents.mock.calls[0][0][0].body.eligible).toBeTruthy()
-  })
 })

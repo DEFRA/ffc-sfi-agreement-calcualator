@@ -1,12 +1,12 @@
 const cache = require('../../app/cache')
 const nock = require('nock')
-const checkEligibility = require('../../app/eligibility')
+const { getEligibleOrganisations } = require('../../app/eligibility')
 const { chApiGateway } = require('../../app/config')
 
 const callerId = 123456
 const crn = 1234567890
 const organisationId = 1234567
-const name = 'Title Forename Lastname'
+const name = 'Title Forename LastName'
 const sbi = 123456789
 
 let responseMock
@@ -51,7 +51,7 @@ describe('eligibility', () => {
       .get(`/organisation/person/${callerId}/summary?search=`)
       .reply(200, responseOrganisationsMock)
 
-    const eligibleOrganisations = await checkEligibility(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
@@ -66,7 +66,7 @@ describe('eligibility', () => {
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
-    const eligibleOrganisations = await checkEligibility(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
@@ -85,7 +85,7 @@ describe('eligibility', () => {
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
 
-    const eligibleOrganisations = await checkEligibility(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
@@ -102,7 +102,7 @@ describe('eligibility', () => {
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
 
-    const eligibleOrganisations = await checkEligibility(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 })

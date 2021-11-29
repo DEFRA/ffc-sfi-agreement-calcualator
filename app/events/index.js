@@ -6,14 +6,23 @@ let sender
 const sendEvent = async (body, type) => {
   try {
     const event = createEvent(body, type)
-    sender = new EventSender(config)
-    await sender.connect()
     await sender.sendEvents([event])
   } catch (err) {
     console.error('Unable to send event', err)
-  } finally {
-    await sender.closeConnection()
   }
 }
 
-module.exports = sendEvent
+const start = async () => {
+  sender = new EventSender(config)
+  await sender.connect()
+}
+
+const stop = async () => {
+  await sender.closeConnection()
+}
+
+module.exports = {
+  start,
+  stop,
+  sendEvent
+}

@@ -37,7 +37,7 @@ describe('process calculate message', () => {
       standardId: 1,
       schemeId: 1,
       name: 'Arable and horticultural soils',
-      code: 110
+      code: 'sfi-arable-soil'
     }
 
     levels = [{
@@ -82,8 +82,8 @@ describe('process calculate message', () => {
       correlationId: 'correlationId',
       messageId: 'messageId',
       body: {
-        code: 110,
-        parcels: [{
+        code: 'sfi-arable-soil',
+        landCovers: [{
           area: 100
         }]
       }
@@ -151,7 +151,7 @@ describe('process calculate message', () => {
 
   test('updates cache if new message', async () => {
     await processCalculateMessage(message, receiver)
-    message.body.parcels[0].area = 50
+    message.body.landCovers[0].area = 50
     await processCalculateMessage(message, receiver)
     const result = await cache.get('calculate', 'correlationId')
     expect(result.requests.length).toBe(2)

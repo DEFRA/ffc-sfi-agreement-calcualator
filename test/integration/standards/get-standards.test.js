@@ -1,3 +1,4 @@
+jest.mock('ffc-events')
 const cache = require('../../../app/cache')
 const getStandards = require('../../../app/standards')
 jest.mock('../../../app/api/private', () => {
@@ -58,44 +59,11 @@ jest.mock('../../../app/api/private', () => {
     })
   }
 })
-const db = require('../../../app/data')
-let scheme
-let standard
-let landCover
-let standardLandCover
 
 describe('get standards', () => {
   beforeEach(async () => {
-    await db.sequelize.truncate({ cascade: true })
     await cache.start()
     await cache.flushAll()
-
-    scheme = {
-      schemeId: 1,
-      name: 'SFI'
-    }
-
-    standard = {
-      standardId: 1,
-      schemeId: 1,
-      name: 'Arable and horticultural soils',
-      code: '110'
-    }
-
-    landCover = {
-      landCoverId: 1,
-      code: '110'
-    }
-
-    standardLandCover = {
-      landCoverId: 1,
-      standardId: 1
-    }
-
-    await db.scheme.create(scheme)
-    await db.standard.create(standard)
-    await db.landCover.create(landCover)
-    await db.standardLandCover.create(standardLandCover)
   })
 
   afterEach(async () => {
@@ -103,37 +71,21 @@ describe('get standards', () => {
     await cache.stop()
   })
 
-  afterAll(async () => {
-    await db.sequelize.truncate({ cascade: true })
-    await db.sequelize.close()
-  })
-
   test('returns code', async () => {
     const standards = await getStandards(1, 123456789, 1234567)
-    expect(standards.standards[0].code).toBe('110')
+    expect(standards.standards[0].code).toBe('sfi-arable-soil')
   })
 
-  test('returns valid land cover codes', async () => {
+  test('returns only valid land covers', async () => {
     const standards = await getStandards(1, 123456789, 1234567)
-    expect(standards.standards[0].landCoverCodes.length).toBe(1)
-    expect(standards.standards[0].landCoverCodes[0]).toBe('110')
-  })
-
-  test('returns standard codes', async () => {
-    const standards = await getStandards(1, 123456789, 1234567)
-    expect(standards.standards[0].code).toBe('110')
-  })
-
-  test('returns only valid parcels', async () => {
-    const standards = await getStandards(1, 123456789, 1234567)
-    expect(standards.standards[0].parcels.length).toBe(2)
-    expect(standards.standards[0].parcels.filter(x => x.id === 'SP89858278').length).toBe(1)
-    expect(standards.standards[0].parcels.filter(x => x.id === 'SP89858279').length).toBe(1)
+    expect(standards.standards[0].landCovers.length).toBe(2)
+    expect(standards.standards[0].landCovers.filter(x => x.parcelId === 'SP89858278').length).toBe(1)
+    expect(standards.standards[0].landCovers.filter(x => x.parcelId === 'SP89858279').length).toBe(1)
   })
 
   test('returns valid parcel areas', async () => {
     const standards = await getStandards(1, 123456789, 1234567)
-    expect(standards.standards[0].parcels.find(x => x.id === 'SP89858278').area).toBe('0.02')
-    expect(standards.standards[0].parcels.find(x => x.id === 'SP89858279').area).toBe('0.01')
+    expect(standards.standards[0].landCovers.find(x => x.parcelId === 'SP89858278').area).toBe('0.02')
+    expect(standards.standards[0].landCovers.find(x => x.parcelId === 'SP89858279').area).toBe('0.01')
   })
 })

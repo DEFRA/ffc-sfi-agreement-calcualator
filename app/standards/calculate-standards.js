@@ -1,63 +1,41 @@
-const { checkSFI } = require('./sfi')
-const { checkSSSI } = require('./sssi')
-const { checkHEFER } = require('./hefer')
-const { getCountrysideStewardshipClaim } = require('./countryside-stewardship')
-const { getEnvironmentalStewardshipClaim } = require('./environmental-stewardship')
-const getAllStandards = require('./get-all-standards')
 const { convertToDecimal } = require('../conversion')
+const { runLandCoverRules, runParcelRules } = require('../rules-engine/sets/standards')
+const standards = require('./funding-options')
 
-const calculateStandards = async (parcels) => {
-  const standards = await getAllStandards()
-
-  for (const parcel of parcels) {
-    const infos = parcel.info
-
-    for (const standard of standards) {
-      let area = 0
-
-      // Sum the parcel area eligible for this standard
-      for (const info of infos) {
-        if (info.area > 0 && standard.landCoverCodes.includes(info.code)) {
-          area += info.area
-        }
-      }
-
-      // If there is area within the parcel, apply the -ve adjustments (CS/ES)
-      // and then, if there is still parcel area remaining, apply the various
-      // status flags (HEFER/SSSI/SFI) and add the parcel to the current standard.
-      if (area > 0) {
-        // Apply adjustments
-        const csClaimArea = getCountrysideStewardshipClaim(parcel.id, standard.code)
-        if (csClaimArea > 0) area -= csClaimArea
-
-        const esClaimArea = getEnvironmentalStewardshipClaim(parcel.id, standard.code)
-        if (esClaimArea > 0) area -= esClaimArea
-
-        if (area > 0) {
-          const warnings = []
-
-          // Apply status flags
-          const sssiStatus = checkSSSI(parcel.id)
-          if (sssiStatus) warnings.push({ SSSI: true })
-
-          const heferStatus = checkHEFER(parcel.id)
-          if (heferStatus) warnings.push({ HEFER: true })
-
-          const sfiStatus = checkSFI(parcel.id)
-          if (sfiStatus) warnings.push({ SFI: true })
-
-          // Add the parcel with the adjusted area to the standard
-          standard.parcels.push({
-            id: parcel.id,
-            area: convertToDecimal(area),
-            warnings
-          })
+const calculateStandards = async (sbi, parcels) => {
+  for (const standard of standards) {
+    standard.landCovers = []
+    for (const parcel of parcels) {
+      const parcelResult = await runParcelRules({ sbi, identifier: parcel.id, standardCode: standard.code, ...parcel })
+      if (!parcelResult.failureEvents.length) {
+        const landCovers = getGroupedLandCovers(parcel.info)
+        for (const landCover of landCovers) {
+          const landCoverResult = await runLandCoverRules({ sbi, identifier: `${parcel.id} ${landCover.code}`, standardCode: standard.code, ...landCover })
+          if (!landCoverResult.failureEvents.length) {
+            standard.landCovers.push({
+              parcelId: parcel.id,
+              code: landCover.code,
+              area: convertToDecimal(landCover.area)
+            })
+          }
         }
       }
     }
   }
 
   return standards
+}
+
+const getGroupedLandCovers = (infos) => {
+  return [...infos.reduce((x, y) => {
+    const key = y.code
+
+    // if key doesn't exist then first instance so create new group
+    const item = x.get(key) || Object.assign({}, { code: y.code, area: 0 })
+    item.area += Number(y.area)
+
+    return x.set(key, item)
+  }, new Map()).values()].filter(x => x.area > 0)
 }
 
 module.exports = calculateStandards

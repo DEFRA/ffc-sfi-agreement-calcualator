@@ -13,11 +13,6 @@ jest.mock('ffc-messaging', () => {
   }
 })
 const processParcelStandardMessage = require('../../../app/messaging/process-parcel-standard-message')
-const db = require('../../../app/data')
-let scheme
-let standard
-let landCover
-let standardLandCover
 let receiver
 let message
 let responseLandCover
@@ -30,34 +25,6 @@ const standardCode = '110'
 describe('process eligibility message', () => {
   beforeAll(async () => {
     await cache.start()
-    await db.sequelize.truncate({ cascade: true })
-
-    scheme = {
-      schemeId: 1,
-      name: 'SFI'
-    }
-
-    standard = {
-      standardId: 1,
-      schemeId: 1,
-      name: 'Arable and horticultural soils',
-      code: '110'
-    }
-
-    landCover = {
-      landCoverId: 1,
-      code: '110'
-    }
-
-    standardLandCover = {
-      landCoverId: 1,
-      standardId: 1
-    }
-
-    await db.scheme.create(scheme)
-    await db.standard.create(standard)
-    await db.landCover.create(landCover)
-    await db.standardLandCover.create(standardLandCover)
   })
 
   beforeEach(async () => {
@@ -98,8 +65,6 @@ describe('process eligibility message', () => {
   })
 
   afterAll(async () => {
-    await db.sequelize.truncate({ cascade: true })
-    await db.sequelize.close()
     await cache.stop()
   })
 

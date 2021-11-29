@@ -19,7 +19,9 @@ const getCachedResponse = async (cache, request, key) => {
   // find cache entry for request
   const requestIndex = getRequestIndex(cacheData, request)
 
-  return cacheData.requests[requestIndex].response
+  const response = cacheData.requests[requestIndex].response
+  console.log(response ? 'Using cached value' : 'No cached value available')
+  return response
 }
 
 module.exports = getCachedResponse

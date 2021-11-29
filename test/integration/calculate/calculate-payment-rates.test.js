@@ -18,7 +18,7 @@ describe('calculate payment rates', () => {
       standardId: 1,
       schemeId: 1,
       name: 'Arable and horticultural soils',
-      code: 110
+      code: 'sfi-arable-soil'
     }
 
     levels = [{
@@ -64,59 +64,59 @@ describe('calculate payment rates', () => {
   })
 
   test('calculates introductory payment', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }])
     expect(result.Introductory.paymentAmount).toBe('2600.00')
   })
 
   test('calculates intermediate payment', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }])
     expect(result.Intermediate.paymentAmount).toBe('4100.00')
   })
 
   test('calculates advanced payment', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }])
     expect(result.Advanced.paymentAmount).toBe('6000.00')
   })
 
   test('calculates introductory rate', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }])
     expect(result.Introductory.rate).toBe('26.00')
   })
 
   test('calculates intermediate rate', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }])
     expect(result.Intermediate.rate).toBe('41.00')
   })
 
   test('calculates advanced rate', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }])
     expect(result.Advanced.rate).toBe('60.00')
   })
 
   test('calculates multiple parcels', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100 }, { area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }, { area: 100 }])
     expect(result.Introductory.paymentAmount).toBe('5200.00')
   })
 
   test('calculates decimal parcel', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100.1 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100.1 }])
     expect(result.Introductory.paymentAmount).toBe('2602.60')
   })
 
   test('calculates multiple decimal parcels', async () => {
-    const result = await calculatePaymentRates(110, [{ area: 100.1 }, { area: 100.2 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100.1 }, { area: 100.2 }])
     expect(result.Introductory.paymentAmount).toBe('5207.80')
   })
 
   test('calculates ignoring rates later than calculation date', async () => {
     await db.rate.create({ rateId: 4, levelId: 3, rate: 8600, startDate: new Date(2022, 4, 1) })
-    const result = await calculatePaymentRates(110, [{ area: 100 }], new Date(2021, 4, 1))
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }], new Date(2021, 4, 1))
     expect(result.Advanced.rate).toBe('60.00')
   })
 
   test('calculates selects latest rate for level', async () => {
     await db.rate.create({ rateId: 4, levelId: 3, rate: 8600, startDate: new Date(2021, 4, 1) })
-    const result = await calculatePaymentRates(110, [{ area: 100 }])
+    const result = await calculatePaymentRates('sfi-arable-soil', [{ area: 100 }])
     expect(result.Advanced.rate).toBe('86.00')
   })
 })
