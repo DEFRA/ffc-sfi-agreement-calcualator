@@ -3,6 +3,7 @@ const config = require('../config')
 const sendMessage = require('./send-message')
 const { getParcelsStandard } = require('../legacy/land')
 const util = require('util')
+const { fileExists } = require('../storage')
 
 const processParcelStandardMessage = async (message, receiver) => {
   try {
@@ -10,16 +11,16 @@ const processParcelStandardMessage = async (message, receiver) => {
     const { organisationId, sbi, callerId, standardCode } = message.body
 
     console.log('Parcel standard request received:', util.inspect(message.body, false, null, true))
-    const cachedResponse = await getCachedResponse(config.cacheConfig.parcelStandardCache, body, organisationId)
-    const parcels = cachedResponse ?? await getParcelsStandard(organisationId, sbi, callerId, standardCode)
+    let response = await getCachedResponse(config.cacheConfig.parcelStandardCache, body, organisationId)
 
-    if (!cachedResponse) {
-      await setCachedResponse(config.cacheConfig.parcelStandardCache, organisationId, body, parcels)
+    if (!response || !fileExists(config.storageConfig.parcelStandardContainer, response.filename)) {
+      response = await getParcelsStandard(organisationId, sbi, callerId, standardCode)
+      await setCachedResponse(config.cacheConfig.parcelStandardCache, organisationId, body, response)
     }
 
-    await sendMessage(parcels, 'uk.gov.sfi.agreement.parcel.standard.request.response', config.parcelStandardResponseQueue, { sessionId: messageId })
+    await sendMessage(response, 'uk.gov.sfi.agreement.parcel.standard.request.response', config.parcelStandardResponseQueue, { sessionId: messageId })
     await receiver.completeMessage(message)
-    console.log('Parcel standards request received:', util.inspect(parcels, false, null, true))
+    console.log('Parcel standards request received:', util.inspect(response, false, null, true))
   } catch (err) {
     console.error('Unable to process parcel standard request message:', err)
     await receiver.abandonMessage(message)
