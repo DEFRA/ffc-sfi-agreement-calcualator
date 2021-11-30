@@ -8,7 +8,7 @@ const getStandards = async (organisationId, sbi, callerId) => {
   const filename = `${organisationId}.json`
 
   const cachedStandards = await getCache(config.cacheConfig.standardsCache, organisationId)
-  if (cachedStandards.standards && fileExists(config.storageConfig.parcelSpatialContainer, filename)) {
+  if (cachedStandards.standards && await fileExists(config.storageConfig.parcelSpatialContainer, filename)) {
     return cachedStandards
   }
   const parcels = await getParcels(organisationId, callerId)

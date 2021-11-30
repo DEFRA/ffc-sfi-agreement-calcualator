@@ -13,7 +13,7 @@ const processParcelStandardMessage = async (message, receiver) => {
     console.log('Parcel standard request received:', util.inspect(message.body, false, null, true))
     let response = await getCachedResponse(config.cacheConfig.parcelStandardCache, body, organisationId)
 
-    if (!response || !fileExists(config.storageConfig.parcelStandardContainer, response.filename)) {
+    if (!response || !(await fileExists(config.storageConfig.parcelStandardContainer, response.filename))) {
       response = await getParcelsStandard(organisationId, sbi, callerId, standardCode)
       await setCachedResponse(config.cacheConfig.parcelStandardCache, organisationId, body, response)
     }

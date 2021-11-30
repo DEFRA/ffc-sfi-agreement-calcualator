@@ -7,7 +7,7 @@ const getParcelsSpatial = async (organisationId, sbi, callerId) => {
   const filename = `${organisationId}.json`
 
   const cachedResponse = await getCache(config.cacheConfig.parcelSpatialCache, organisationId)
-  if (cachedResponse.filename && fileExists(config.storageConfig.parcelSpatialContainer, filename)) {
+  if (cachedResponse.filename && await fileExists(config.storageConfig.parcelSpatialContainer, filename)) {
     console.log('Cached file exists in storage')
     return cachedResponse
   }
