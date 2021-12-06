@@ -11,7 +11,7 @@ jest.mock('ffc-messaging', () => {
   }
 })
 const processValidateMessage = require('../../../app/messaging/process-validate-message')
-jest.mock('../../../app/api/private', () => {
+jest.mock('../../../app/api', () => {
   return {
     get: jest.fn().mockImplementation(() => {
       return [{

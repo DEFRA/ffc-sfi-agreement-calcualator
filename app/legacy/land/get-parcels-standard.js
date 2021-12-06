@@ -9,7 +9,7 @@ const getParcelsStandard = async (organisationId, sbi, callerId, standardCode) =
   const parcelSpatial = await downloadFile(config.parcelSpatialContainer, parcelsResponse.filename)
   const standard = standardsResponse.standards?.find(x => x.code === standardCode) ?? { code: standardCode, landCovers: [] }
   standard.spatial = JSON.parse(parcelSpatial)
-  standard.spatial.features = standard.spatial.features.filter(x => standard.landCovers.some(y => y.parcelId === `${x.properties.sheet_id}${x.properties.parcel_id}`))
+  standard.spatial.features = standard.spatial.features.filter(x => standard.landCovers.some(y => y.parcelId === `${x.properties.sheetId}${x.properties.parcelId}`))
 
   const filename = `${organisationId}-${standardCode}.json`
   const blobClient = await getBlobClient(config.parcelStandardContainer, filename)
