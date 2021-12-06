@@ -1,4 +1,4 @@
-const { get } = require('../../api/private')
+const { get } = require('../../api')
 const { convertMetresToHectares } = require('../../conversion')
 const config = require('../../config')
 const { get: getCache, update } = require('../../cache')

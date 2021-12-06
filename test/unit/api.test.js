@@ -5,7 +5,7 @@ jest.mock('@hapi/wreck', () => {
   }
 })
 
-const api = require('../../app/api/private')
+const api = require('../../app/api')
 const config = require('../../app/config')
 
 describe('api', () => {

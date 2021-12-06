@@ -1,4 +1,4 @@
-const { get } = require('../../api/public')
+const { get } = require('../../api')
 const config = require('../../config')
 const { get: getCache, update } = require('../../cache')
 const { getBlobClient, fileExists } = require('../../storage')
@@ -12,7 +12,7 @@ const getParcelsSpatial = async (organisationId, sbi, callerId) => {
     return cachedResponse
   }
 
-  const parcels = await get(`/arcgis/rest/services/RPA/LandParcels/MapServer/0/query?where=SBI=${sbi}&outFields=*&outSR=27700&f=geojson`)
+  const parcels = await get(`/lms/organisation/${organisationId}/geometries?bbox=0,0,0,0&historicDate=031221`, callerId)
   const parcelString = JSON.stringify(parcels)
   const blobClient = await getBlobClient(config.storageConfig.parcelSpatialContainer, filename)
   await blobClient.upload(parcelString, parcelString.length)

@@ -1,7 +1,7 @@
 jest.mock('ffc-events')
 const cache = require('../../../app/cache')
 const getStandards = require('../../../app/standards')
-jest.mock('../../../app/api/private', () => {
+jest.mock('../../../app/api', () => {
   return {
     get: jest.fn().mockImplementation(() => {
       return [{
