@@ -1,6 +1,6 @@
 const cache = require('../../../app/cache')
 const nock = require('nock')
-const { chApiGateway, publicApi } = require('../../../app/config')
+const { chApiGateway } = require('../../../app/config')
 const mockSendMessage = jest.fn()
 jest.mock('ffc-messaging', () => {
   return {
