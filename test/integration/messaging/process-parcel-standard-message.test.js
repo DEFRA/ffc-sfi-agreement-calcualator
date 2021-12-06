@@ -44,13 +44,13 @@ describe('process eligibility message', () => {
     }
 
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
-    responseSpatial = { features: [{ sheet_id: 'SJ1234', parcel_id: '5678' }] }
+    responseSpatial = { features: [{ properties: { sheetId: 'SJ1234', parcelId: '5678' } }] }
 
     nock(chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
-    nock(publicApi)
+    nock(chApiGateway)
       .filteringPath(function (path) {
         return '/'
       })
