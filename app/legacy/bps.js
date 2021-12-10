@@ -1,10 +1,6 @@
 const { getParcels } = require('./land')
 const BPS_INELIGIBLE_FEATURE_CODE = '000'
 
-async function getEntitlements (sbi) {
-  return 5
-}
-
 async function getEligibleLand (organisationId, callerId, cap) {
   const parcels = await getParcels(organisationId, callerId)
   return getEligibleLandFromParcels(parcels)
@@ -26,6 +22,5 @@ function getEligibleLandFromParcels (parcels, cap) {
 }
 
 module.exports = {
-  getEntitlements,
   getEligibleLand
 }

@@ -1,5 +1,6 @@
 const getRulesEngine = require('../engine')
-const { getEntitlements, getEligibleLand } = require('../../legacy/bps')
+const { getEligibleLand } = require('../../legacy/bps')
+const { getEntitlements } = require('../../legacy/entitlements')
 const { hasSufficientBpsEntitlements, hasSufficientBpsLand } = require('../rules/eligibility')
 const ELIGIBLE_LAND_CAP = 500
 
@@ -7,7 +8,7 @@ const runEligibilityRules = async (facts) => {
   const engine = getRulesEngine()
 
   engine.addFact('bpsEntitlements', async (params, almanac) => {
-    return getEntitlements(facts.sbi)
+    return getEntitlements(facts.organisationId, facts.callerId)
   })
 
   engine.addFact('bpsEligibleLand', async (params, almanac) => {
