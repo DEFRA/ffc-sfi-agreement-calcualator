@@ -1,7 +1,6 @@
 const db = require('./data')
 
-const saveAgreement = async (agreementMessage) => {
-  const { agreement } = agreementMessage
+const saveAgreement = async (agreement) => {
   const { agreementNumber, organisation } = agreement
   const { sbi } = organisation
 
