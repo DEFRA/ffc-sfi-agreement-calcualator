@@ -11,7 +11,7 @@ const runValidation = async (facts) => {
 
   const standards = await getStandards(facts.organisation.organisationId, facts.organisation.sbi, facts.callerId)
 
-  for (const agreementStandard of facts.action) {
+  for (const agreementStandard in facts.action) {
     const standard = standards.standards.find(x => x.code === facts.action[agreementStandard].code)
     for (const agreementLandCover of facts.action[agreementStandard].landCovers) {
       agreementLandCover.area = convertToInteger(agreementLandCover.area)
