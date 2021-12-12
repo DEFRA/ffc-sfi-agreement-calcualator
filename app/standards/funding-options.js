@@ -1,7 +1,7 @@
 module.exports = [{
   code: 'sfi-arable-soil',
-  name: 'Arable and horticultural soil'
+  name: 'arable and horticultural soil'
 }, {
   code: 'sfi-improved-grassland',
-  name: 'Improved grassland soils'
+  name: 'improved grassland soil'
 }]
