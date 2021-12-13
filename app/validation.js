@@ -6,7 +6,7 @@ const getStandards = require('./standards')
 const runValidation = async (facts) => {
   const warnings = []
 
-  const eligibilityResult = await runEligibilityRules({ identifier: facts.organisation.sbi, ...facts.organisation })
+  const eligibilityResult = await runEligibilityRules({ identifier: facts.organisation.sbi, ...facts.organisation, callerId: facts.callerId })
   eligibilityResult.failureEvents.forEach((failure) => warnings.push({ type: 'Eligibility', detail: failure }))
 
   const standards = await getStandards(facts.organisation.organisationId, facts.organisation.sbi, facts.callerId)
