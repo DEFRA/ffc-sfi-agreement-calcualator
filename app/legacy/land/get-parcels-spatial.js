@@ -12,7 +12,7 @@ const getParcelsSpatial = async (organisationId, sbi, callerId) => {
     return cachedResponse
   }
 
-  const parcels = await get(`/lms/organisation/${organisationId}/geometries?bbox=0,0,0,0&historicDate=031221`, callerId)
+  const parcels = await get(`/lms/organisation/${organisationId}/geometries?bbox=0,0,0,0`, callerId)
   const parcelString = JSON.stringify(parcels)
   const blobClient = await getBlobClient(config.storageConfig.parcelSpatialContainer, filename)
   await blobClient.upload(parcelString, parcelString.length)
