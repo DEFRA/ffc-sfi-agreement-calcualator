@@ -13,7 +13,7 @@ const runValidation = async (facts) => {
 
   for (const agreementStandard in facts.action) {
     if (agreementStandard !== 'paymentAmount') {
-      const standard = standards.standards.find(x => x.code === facts.action[agreementStandard].code)
+      const standard = standards.standards.find(x => x.code === facts.action[agreementStandard])
       for (const agreementLandCover of facts.action[agreementStandard].landCovers) {
         agreementLandCover.area = convertToInteger(agreementLandCover.area)
         const standardLandCover = standard.landCovers.find(x => x.code === agreementLandCover.code)
