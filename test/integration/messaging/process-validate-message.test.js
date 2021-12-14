@@ -13,7 +13,7 @@ jest.mock('ffc-messaging', () => {
 const processValidateMessage = require('../../../app/messaging/process-validate-message')
 jest.mock('../../../app/api', () => {
   return {
-    get: jest.fn().mockImplementation(() => {
+    get: jest.fn().mockImplementationOnce(() => {
       return [{
         id: 'SP89858277',
         info: [{
@@ -35,6 +35,11 @@ jest.mock('../../../app/api', () => {
     })
   }
 })
+
+jest.mock('../../../app/legacy/entitlements')
+const getEntitlements = require('../../../app/legacy/entitlements')
+getEntitlements.mockResolvedValue(10)
+
 let receiver
 let message
 
