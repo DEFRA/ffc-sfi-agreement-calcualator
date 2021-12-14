@@ -13,6 +13,7 @@ let responseMock
 let responseOrganisationsMock
 let responseLandCover
 let responseOrganisationMock
+let responseEligibilityMock
 
 describe('eligibility', () => {
   beforeEach(async () => {
@@ -29,6 +30,7 @@ describe('eligibility', () => {
       }
     ]
 
+    responseEligibilityMock = { data: [{ quantityOwned: 5 }] }
     responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
@@ -58,6 +60,11 @@ describe('eligibility', () => {
   test('check eligibility returns empty array - Land < 5 ha', async () => {
     responseMock = []
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 0 }] }]
+
+    nock(chApiGateway)
+      .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
+      .reply(200, responseEligibilityMock)
+
     nock(chApiGateway)
       .get(`/organisation/person/${callerId}/summary?search=`)
       .reply(200, responseOrganisationsMock)
@@ -71,6 +78,10 @@ describe('eligibility', () => {
   })
 
   test('check eligibility returns array - Land calculated over 5 ha', async () => {
+    nock(chApiGateway)
+      .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
+      .reply(200, responseEligibilityMock)
+
     nock(chApiGateway)
       .get(`/organisation/person/${callerId}/summary?search=`)
       .reply(200, responseOrganisationsMock)
@@ -93,6 +104,10 @@ describe('eligibility', () => {
     nock(chApiGateway)
       .get(`/organisation/person/${callerId}/summary?search=`)
       .reply(200, responseOrganisationsMock)
+
+    nock(chApiGateway)
+      .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
+      .reply(200, responseEligibilityMock)
 
     nock(chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)

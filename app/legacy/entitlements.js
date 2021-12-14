@@ -6,6 +6,4 @@ const getEntitlements = async (organisationId, callerId) => {
   return data?.data.reduce((acc, { quantityOwned }) => acc + quantityOwned, 0) ?? 0
 }
 
-module.exports = {
-  getEntitlements
-}
+module.exports = getEntitlements

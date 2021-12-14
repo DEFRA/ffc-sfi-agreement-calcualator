@@ -1,6 +1,6 @@
 const getRulesEngine = require('../engine')
 const { getEligibleLand } = require('../../legacy/bps')
-const { getEntitlements } = require('../../legacy/entitlements')
+const getEntitlements = require('../../legacy/entitlements')
 const { hasSufficientBpsEntitlements, hasSufficientBpsLand } = require('../rules/eligibility')
 const ELIGIBLE_LAND_CAP = 500
 

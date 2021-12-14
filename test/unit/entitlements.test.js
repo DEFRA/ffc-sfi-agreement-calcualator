@@ -1,6 +1,6 @@
 const cache = require('../../app/cache')
 const nock = require('nock')
-const { getEntitlements } = require('../../app/legacy/entitlements')
+const getEntitlements = require('../../app/legacy/entitlements')
 const { chApiGateway } = require('../../app/config')
 
 const callerId = 123456
