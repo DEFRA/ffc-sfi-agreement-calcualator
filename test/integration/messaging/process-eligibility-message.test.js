@@ -30,6 +30,7 @@ let message
 let responseOrganisationsMock
 let responseLandCover
 let responseOrganisationMock
+let responseEligibilityMock
 const organisationId = 1234567
 const name = 'Title Forename LastName'
 const sbi = 123456789
@@ -56,9 +57,14 @@ describe('process eligibility message', () => {
       }
     }
 
+    responseEligibilityMock = { data: [{ quantityOwned: 5 }] }
     responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
+
+    nock(chApiGateway)
+      .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
+      .reply(200, responseEligibilityMock)
 
     nock(chApiGateway)
       .get(`/organisation/person/${callerId}/summary?search=`)
