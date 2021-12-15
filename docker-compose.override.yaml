@@ -33,7 +33,6 @@ services:
   ffc-sfi-agreement-calculator-redis:
     volumes:
       - redis_data:/data
-    entrypoint: redis-server --appendonly yes
     ports:
       - "6381:6379"
 
