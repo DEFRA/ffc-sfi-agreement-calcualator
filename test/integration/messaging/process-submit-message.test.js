@@ -13,9 +13,11 @@ describe('process submit message', () => {
 
     message = {
       body: {
-        sbi: 123456789,
         agreementNumber: 'AG12345678',
-        agreement: {
+        organisation: {
+          sbi: 123456789
+        },
+        action: {
           paymentAmount: 100
         }
       }

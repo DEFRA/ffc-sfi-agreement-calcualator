@@ -1,7 +1,8 @@
 const db = require('./data')
 
-const saveAgreement = async (agreementMessage) => {
-  const { sbi, agreementNumber, agreement } = agreementMessage
+const saveAgreement = async (agreement) => {
+  const { agreementNumber, organisation } = agreement
+  const { sbi } = organisation
 
   const transaction = await db.sequelize.transaction()
   try {

@@ -59,17 +59,18 @@ describe('process validate message', () => {
     message = {
       correlationId: 'correlationId',
       body: {
-        organisationId: 1,
-        sbi: 123456789,
+        organisation: {
+          organisationId: 1,
+          sbi: 123456789
+        },
         callerId: 1234567,
-        agreement: {
-          standards: [{
-            code: 'sfi-arable-soil',
+        action: {
+          'sfi-arable-soil': {
             landCovers: [{
               parcelId: 'SP89858277',
               area: 50
             }]
-          }]
+          }
         }
       }
     }

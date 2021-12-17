@@ -30,7 +30,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  redis:
+  ffc-sfi-agreement-calculator-redis:
     volumes:
       - redis_data:/data
     ports:

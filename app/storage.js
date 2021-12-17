@@ -30,6 +30,7 @@ const getBlob = async (container, filename) => {
 }
 
 const fileExists = async (containerName, filename) => {
+  containersInitialised ?? await initialiseContainers()
   const container = getContainer(containerName)
   const fileList = []
   for await (const item of container.listBlobsFlat()) {
@@ -39,6 +40,7 @@ const fileExists = async (containerName, filename) => {
 }
 
 const downloadFile = async (containerName, filename) => {
+  containersInitialised ?? await initialiseContainers()
   const container = getContainer(containerName)
   const blob = await getBlob(container, filename)
   const downloaded = await blob.downloadToBuffer()

@@ -6,22 +6,28 @@ const getStandards = require('./standards')
 const runValidation = async (facts) => {
   const warnings = []
 
-  const eligibilityResult = await runEligibilityRules({ identifier: facts.sbi, ...facts })
+  const eligibilityResult = await runEligibilityRules({ identifier: facts.organisation.sbi, ...facts.organisation, callerId: facts.callerId })
   eligibilityResult.failureEvents.forEach((failure) => warnings.push({ type: 'Eligibility', detail: failure }))
 
-  const standards = await getStandards(facts.organisationId, facts.sbi, facts.callerId)
+  const standards = await getStandards(facts.organisation.organisationId, facts.organisation.sbi, facts.callerId)
 
-  for (const agreementStandard of facts.agreement.standards) {
-    const standard = standards.standards.find(x => x.code === agreementStandard.code)
-    for (const agreementLandCover of agreementStandard.landCovers) {
-      agreementLandCover.area = convertToInteger(agreementLandCover.area)
-      const standardLandCover = standard.landCovers.find(x => x.code === agreementLandCover.code)
-      const result = await runAgreementLandCoverRules({ sbi: facts.sbi, identifier: agreementLandCover.code, agreementLandCover, standardLandCover })
-      result.failureEvents.forEach((failure) => warnings.push({ type: failure.type, detail: 'Failed' }))
+  for (const agreementStandard in facts.action) {
+    if (agreementStandard !== 'paymentAmount') {
+      const standard = standards.standards.find(x => x.code === agreementStandard)
+      for (const agreementLandCover of facts.action[agreementStandard].landCovers) {
+        const result = await runLandCoverValidation(agreementLandCover, standard, facts)
+        result.failureEvents.forEach((failure) => warnings.push({ type: failure.type, detail: 'Failed' }))
+      }
     }
   }
 
   return warnings
+}
+
+async function runLandCoverValidation (agreementLandCover, standard, facts) {
+  agreementLandCover.area = convertToInteger(agreementLandCover.area)
+  const standardLandCover = standard.landCovers.find(x => x.code === agreementLandCover.code)
+  return runAgreementLandCoverRules({ sbi: facts.organisation.sbi, identifier: agreementLandCover.code, agreementLandCover, standardLandCover })
 }
 
 module.exports = runValidation
