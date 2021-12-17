@@ -15,15 +15,19 @@ const runValidation = async (facts) => {
     if (agreementStandard !== 'paymentAmount') {
       const standard = standards.standards.find(x => x.code === agreementStandard)
       for (const agreementLandCover of facts.action[agreementStandard].landCovers) {
-        agreementLandCover.area = convertToInteger(agreementLandCover.area)
-        const standardLandCover = standard.landCovers.find(x => x.code === agreementLandCover.code)
-        const result = await runAgreementLandCoverRules({ sbi: facts.organisation.sbi, identifier: agreementLandCover.code, agreementLandCover, standardLandCover })
+        const result = await runLandCoverValidation(agreementLandCover, standard, facts)
         result.failureEvents.forEach((failure) => warnings.push({ type: failure.type, detail: 'Failed' }))
       }
     }
   }
 
   return warnings
+}
+
+async function runLandCoverValidation (agreementLandCover, standard, facts) {
+  agreementLandCover.area = convertToInteger(agreementLandCover.area)
+  const standardLandCover = standard.landCovers.find(x => x.code === agreementLandCover.code)
+  return runAgreementLandCoverRules({ sbi: facts.organisation.sbi, identifier: agreementLandCover.code, agreementLandCover, standardLandCover })
 }
 
 module.exports = runValidation
