@@ -1,3 +1,9 @@
+const path = require('path')
+const { MessageConsumerPact } = require('@pact-foundation/pact')
+const Matchers = require('@pact-foundation/pact/src/dsl/matchers')
+const processEligibilityMessage = require('../../app/messaging/process-eligibility-message')
+const cache = require('../../app/cache')
+const pactServiceBusAdapter = require('../pact-service-bus-adapter')
 const mockSendMessage = jest.fn()
 jest.mock('ffc-messaging', () => {
   return {
@@ -10,12 +16,6 @@ jest.mock('ffc-messaging', () => {
   }
 })
 jest.mock('../../app/eligibility')
-const path = require('path')
-const { MessageConsumerPact } = require('@pact-foundation/pact')
-const Matchers = require('@pact-foundation/pact/src/dsl/matchers')
-const processEligibilityMessage = require('../../app/messaging/process-eligibility-message')
-const cache = require('../../app/cache')
-const pactServiceBusAdapter = require('../pact-service-bus-adapter')
 
 describe('receiving an eligibility check from SFI application', () => {
   let consumer

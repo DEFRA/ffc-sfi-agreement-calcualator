@@ -9,6 +9,7 @@ describe('publishing an eligibility check response', () => {
   let responseOrganisationsMock
   let responseLandCover
   let responseOrganisationMock
+  let responseEntitlementMock
   const organisationId = 1234567
   const name = 'Title Forename LastName'
   const sbi = 123456789
@@ -21,6 +22,7 @@ describe('publishing an eligibility check response', () => {
     responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
+    responseEntitlementMock = { data: [{ quantityOwned: 5 }] }
 
     nock(chApiGateway)
       .get(`/organisation/person/${callerId}/summary?search=`)
@@ -33,6 +35,10 @@ describe('publishing an eligibility check response', () => {
     nock(chApiGateway)
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
+
+    nock(chApiGateway)
+      .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
+      .reply(200, responseEntitlementMock)
   })
 
   afterEach(async () => {
