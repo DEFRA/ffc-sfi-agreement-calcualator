@@ -1,5 +1,5 @@
 const { getParcels } = require('./land')
-const BPS_INELIGIBLE_FEATURE_CODE = '000'
+const bpsEligibleLandCover = require('./bps-eligible-land-cover')
 
 async function getEligibleLand (organisationId, callerId, cap) {
   const parcels = await getParcels(organisationId, callerId)
@@ -10,7 +10,7 @@ function getEligibleLandFromParcels (parcels, cap) {
   let totalArea = 0
   for (const parcel of parcels) {
     for (const landCover of parcel.info) {
-      if (landCover.code !== BPS_INELIGIBLE_FEATURE_CODE) {
+      if (bpsEligibleLandCover.some(x => x.code === landCover.code)) {
         totalArea += landCover.area
       }
     }
