@@ -1,4 +1,4 @@
-module.exports = [{
+const BPS_ELIGIBLE_LAND_COVERS = [{
   code: '110',
   description: 'Arable land'
 }, {
@@ -74,3 +74,5 @@ module.exports = [{
   code: '588',
   description: 'Drain/Ditch/Dyke on a boundary'
 }]
+
+module.exports = BPS_ELIGIBLE_LAND_COVERS
