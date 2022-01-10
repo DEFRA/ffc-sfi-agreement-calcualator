@@ -23,7 +23,6 @@ const calculateStandards = async (sbi, parcels) => {
     }
   }
 
-  // is this just returning require('./funding-options')?
   return standards
 }
 

@@ -12,5 +12,5 @@ module.exports = [{
   code: 'sfi-moorland',
   name: 'moorland or rough grazing',
   text: 'Funding for moorland or rough grazing',
-  hint: '£6.45 per hectare per year, plus a single payment of £148 per year.',
+  hint: '£6.45 per hectare per year, plus a single payment of £148 per year.'
 }]

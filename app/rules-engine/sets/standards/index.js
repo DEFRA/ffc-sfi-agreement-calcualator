@@ -8,8 +8,8 @@ const runParcelRules = async (facts) => {
       return runArableSoilParcelRules(facts)
     case 'sfi-improved-grassland':
       return runImprovedGrasslandParcelRules(facts)
-      case 'sfi-moorland':
-        return runMoorlandParcelRules(facts)
+    case 'sfi-moorland':
+      return runMoorlandParcelRules(facts)
     default:
       break
   }
