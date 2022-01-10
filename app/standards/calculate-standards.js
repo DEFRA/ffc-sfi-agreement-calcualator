@@ -7,11 +7,11 @@ const calculateStandards = async (sbi, parcels) => {
     standard.landCovers = []
     for (const parcel of parcels) {
       const parcelResult = await runParcelRules({ sbi, identifier: parcel.id, standardCode: standard.code, ...parcel })
-      if (!parcelResult.failureEvents.length) {
+      if (!parcelResult?.failureEvents?.length) {
         const landCovers = getGroupedLandCovers(parcel.info)
         for (const landCover of landCovers) {
           const landCoverResult = await runLandCoverRules({ sbi, identifier: `${parcel.id} ${landCover.code}`, standardCode: standard.code, ...landCover })
-          if (!landCoverResult.failureEvents.length) {
+          if (!landCoverResult?.failureEvents?.length) {
             standard.landCovers.push({
               parcelId: parcel.id,
               code: landCover.code,
@@ -23,6 +23,7 @@ const calculateStandards = async (sbi, parcels) => {
     }
   }
 
+  // is this just returning require('./funding-options')?
   return standards
 }
 

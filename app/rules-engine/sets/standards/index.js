@@ -1,5 +1,6 @@
 const { runArableSoilParcelRules, runArableSoilLandCoverRules } = require('./arable-soil')
 const { runImprovedGrasslandParcelRules, runImprovedGrasslandLandCoverRules } = require('./improved-grassland')
+const { runMoorlandParcelRules } = require('./moorland')
 
 const runParcelRules = async (facts) => {
   switch (facts.standardCode) {
@@ -7,6 +8,8 @@ const runParcelRules = async (facts) => {
       return runArableSoilParcelRules(facts)
     case 'sfi-improved-grassland':
       return runImprovedGrasslandParcelRules(facts)
+      case 'sfi-moorland':
+        return runMoorlandParcelRules(facts)
     default:
       break
   }
