@@ -1,5 +1,5 @@
 const getRulesEngine = require('../../engine')
-const { noPendingChanges } = require('../../rules/compatibility')
+const { noPendingChanges, isMoorlandLandCover } = require('../../rules/compatibility')
 
 const runMoorlandParcelRules = async (facts) => {
   const engine = getRulesEngine()
@@ -12,6 +12,13 @@ const runMoorlandParcelRules = async (facts) => {
   return engine.run(facts)
 }
 
+const runMoorlandLandCoverRules = async (facts) => {
+  const engine = getRulesEngine()
+  engine.addRule(isMoorlandLandCover)
+  return engine.run(facts)
+}
+
 module.exports = {
-  runMoorlandParcelRules
+  runMoorlandParcelRules,
+  runMoorlandLandCoverRules
 }
