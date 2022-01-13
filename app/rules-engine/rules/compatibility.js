@@ -74,5 +74,22 @@ module.exports = {
         message: 'Is improved grassland compatible land cover'
       }
     }
+  },
+  isMoorlandLandCover: {
+    name: 'Is moorland land compatible cover',
+    conditions: {
+      any: [{
+        name: 'Always true',
+        fact: 'code',
+        operator: 'greaterThan',
+        value: '-1'
+      }]
+    },
+    event: {
+      type: 'moorland-land-cover',
+      params: {
+        message: 'Is moorland compatible land cover'
+      }
+    }
   }
 }

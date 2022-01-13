@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.0
+version: v1.22.1
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-VALIDATOR-1090599:
@@ -9,7 +9,7 @@ ignore:
   SNYK-JS-VALIDATOR-1090600:
     - sequelize > validator:
         reason: no fix
-        expires: '2021-09-03T13:05:59.428Z'
+        expires: '2022-02-11T16:57:38.183Z'
   SNYK-JS-VALIDATOR-1090601:
     - sequelize > validator:
         reason: no fix
@@ -72,4 +72,26 @@ ignore:
     - jest > @jest/core > @jest/reporters > @jest/transform > jest-haste-map > sane > anymatch > micromatch > braces > snapdragon > base > cache-base > union-value > set-value:
         reason: No fix
         expires: '2021-10-13T14:56:25.293Z'
+  SNYK-JS-FOLLOWREDIRECTS-2332181:
+    - '@azure/identity > @azure/msal-node > axios > follow-redirects':
+        reason: None given
+        expires: '2022-02-11T16:57:38.182Z'
+    - '@azure/identity > axios > follow-redirects':
+        reason: None given
+        expires: '2022-02-11T16:57:38.182Z'
+    - '@pact-foundation/pact > http-proxy > follow-redirects':
+        reason: None given
+        expires: '2022-02-11T16:57:38.183Z'
+    - ffc-events > @azure/identity > axios > follow-redirects:
+        reason: None given
+        expires: '2022-02-11T16:57:38.183Z'
+    - ffc-messaging > @azure/identity > @azure/msal-node > axios > follow-redirects:
+        reason: None given
+        expires: '2022-02-11T16:57:38.183Z'
+    - ffc-messaging > @azure/identity > axios > follow-redirects:
+        reason: None given
+        expires: '2022-02-11T16:57:38.183Z'
+    - ffc-events > @azure/identity > @azure/msal-node > axios > follow-redirects:
+        reason: None given
+        expires: '2022-02-11T16:57:38.183Z'
 patch: {}
