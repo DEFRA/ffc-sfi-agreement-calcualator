@@ -42,6 +42,13 @@ channels:
     publish:
       message:
         $ref: '#/components/messages/CalculateResponse'
+  agreement/validate:
+    subscribe:
+      message:
+        $ref: '#/components/messages/ValidateRequest'
+    publish:
+      message:
+        $ref: '#/components/messages/ValidateResponse'
 
 components:
   messages:
@@ -302,3 +309,116 @@ components:
               paymentAmount:
                 type: number
                 description: Calculated payment about for ambition level
+    ValidateRequest:
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            description: GUID unique to user session
+      payload:
+        type: object
+        properties:
+          callerId:
+            type: number
+            description: Unique user reference token
+          agreementNumber:
+            type: string
+            description: Unique agreement reference number
+          organisation:
+            type: object
+            description: Organisation details
+            properties:
+              sbi:
+                type: number
+                description: Single Business Identifier
+              callerId:
+                type: number
+                description: Unique user reference token
+              organisationId:
+                type: number
+                description: Unique organisation name
+          action:
+            type: object
+            description: Funding options
+            properties:
+              sfi-arable-soil:
+                type: object
+                description: Arable soil funding option
+                properties:
+                  landCovers:
+                    type: array
+                    description: List of eligible land covers for standard
+                    items:
+                      parcelId:
+                        type: string
+                        description: Parcel Id made up of Sheet Id and Parcel Reference land cover is info
+                      code:
+                        type: string
+                        description: Land cover code
+                      area:
+                        type: number
+                        description: Decimal value for land cover area in hectares
+                  paymentAmount:
+                    type: number
+                    description: Payment value for funding option
+              sfi-improved-grassland:
+                type: object
+                description: Improved grassland funding option
+                properties:
+                  landCovers:
+                    type: array
+                    description: List of eligible land covers for standard
+                    items:
+                      parcelId:
+                        type: string
+                        description: Parcel Id made up of Sheet Id and Parcel Reference land cover is info
+                      code:
+                        type: string
+                        description: Land cover code
+                      area:
+                        type: number
+                        description: Decimal value for land cover area in hectares
+                  paymentAmount:
+                    type: number
+                    description: Payment value for funding option
+              sfi-moorland:
+                type: object
+                description: Moorland funding option
+                properties:
+                  landCovers:
+                    type: array
+                    description: List of eligible land covers for standard
+                    items:
+                      parcelId:
+                        type: string
+                        description: Parcel Id made up of Sheet Id and Parcel Reference land cover is info
+                      code:
+                        type: string
+                        description: Land cover code
+                      area:
+                        type: number
+                        description: Decimal value for land cover area in hectares
+                  paymentAmount:
+                    type: number
+                    description: Payment value for funding option
+    ValidateResponse:
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          ValidateResult:
+            type: object
+            description: Validation result
+            properties:
+              warnings:
+                type: array
+                description: List of validation warnings
+                items:
+                  type:
+                    type: string
+                    description: Type of validation warnings
+                  detail:
+                    type: string
+                    description: Warning detail
