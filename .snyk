@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.22.1
+version: v1.22.0
 # ignores vulnerabilities until expiry date; change duration by modifying expiry date
 ignore:
   SNYK-JS-VALIDATOR-1090599:
@@ -94,4 +94,11 @@ ignore:
     - ffc-events > @azure/identity > @azure/msal-node > axios > follow-redirects:
         reason: None given
         expires: '2022-02-11T16:57:38.183Z'
+  SNYK-JS-NODEFETCH-2342118:
+    - '@azure/storage-blob > @azure/core-http > node-fetch':
+        reason: None given
+        expires: '2022-02-17T13:16:57.150Z'
+    - ffc-messaging > @azure/service-bus > @azure/core-http > node-fetch:
+        reason: None given
+        expires: '2022-02-17T13:16:57.151Z'
 patch: {}
