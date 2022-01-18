@@ -35,6 +35,13 @@ channels:
     publish:
       message:
         $ref: '#/components/messages/StandardResponse'
+  agreement/calculate:
+    subscribe:
+      message:
+        $ref: '#/components/messages/CalculateRequest'
+    publish:
+      message:
+        $ref: '#/components/messages/CalculateResponse'
 
 components:
   messages:
@@ -228,5 +235,70 @@ components:
                         area:
                           type: number
                           description: Decimal value for land cover area in hectares
-
-
+    CalculateRequest:
+      contentType: application/json
+      headers:
+        type: object
+        properties:
+          correlationId:
+            type: string
+            description: GUID unique to user session
+          messageId:
+            type: string
+            description: GUID unique to message
+      payload:
+        type: object
+        properties:
+          organisationId:
+            type: number
+            description: Unique organisation reference
+          code:
+            type: string
+            description: Unique SFI funding code
+          calculateDate:
+            type: date
+            description: Optional date for calculation, if not supplied current date is used.
+          landCovers:
+            type: array
+            description: List of land cover layer areas for calculation
+            items:
+              type: object
+              properties:
+                area:
+                  type: number
+                  description: Decimal number of eligible land cover in Hectares
+    CalculateResponse:
+      contentType: application/json
+      payload:
+        type: object
+        properties:
+          Introductory:
+            type: object
+            description: Introductory ambition level value
+            properties:
+              rate:
+                type: number
+                description: Payment rate per hectare in GBP
+              paymentAmount:
+                type: number
+                description: Calculated payment about for ambition level
+          Intermediate:
+            type: object
+            description: Intermediate ambition level value
+            properties:
+              rate:
+                type: number
+                description: Payment rate per hectare in GBP
+              paymentAmount:
+                type: number
+                description: Calculated payment about for ambition level
+          Advanced:
+            type: object
+            description: Advanced ambition level value
+            properties:
+              rate:
+                type: number
+                description: Payment rate per hectare in GBP
+              paymentAmount:
+                type: number
+                description: Calculated payment about for ambition level
