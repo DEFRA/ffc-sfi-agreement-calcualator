@@ -254,7 +254,7 @@ components:
             description: Unique organisation reference
           code:
             type: string
-            description: Unique SFI funding code
+            description: Unique SFI funding code, accepting sfi-arable-soil, sfi-improved-grassland, sfi-moorland
           calculateDate:
             type: date
             description: Optional date for calculation, if not supplied current date is used.
