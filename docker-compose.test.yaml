@@ -25,3 +25,10 @@ services:
       - ./package.json:/home/node/package.json
     depends_on:
       - kafka
+
+  ffc-sfi-agreement-calculator-postgres:
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
