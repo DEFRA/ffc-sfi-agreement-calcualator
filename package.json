@@ -1,6 +1,6 @@
 {
   "name": "ffc-sfi-agreement-calculator",
-  "version": "2.13.4",
+  "version": "2.14.0",
   "description": "FFC SFI agreement calculator",
   "homepage": "https://github.com/DEFRA/ffc-sfi-agreement-calculator",
   "main": "app/index.js",
