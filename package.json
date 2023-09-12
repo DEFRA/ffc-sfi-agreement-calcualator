@@ -36,7 +36,7 @@
     "joi": "^17.4.0",
     "json-rules-engine": "^6.1.2",
     "kafkajs": "^1.15.0",
-    "pg": "^8.6.0",
+    "pg": "^8.11.3",
     "pg-hstore": "^2.3.3",
     "redis": "^4.0.0-rc.1",
     "sequelize": "^6.6.5"
