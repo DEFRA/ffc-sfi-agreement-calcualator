@@ -33,7 +33,7 @@
     "ffc-events": "^1.0.1",
     "ffc-messaging": "^2.3.1",
     "hapi-pino": "^8.3.0",
-    "joi": "^17.4.0",
+    "joi": "^17.9.2",
     "json-rules-engine": "^6.1.2",
     "kafkajs": "^1.15.0",
     "pg": "^8.6.0",
