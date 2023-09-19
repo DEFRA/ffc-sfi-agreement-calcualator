@@ -48,7 +48,7 @@ services:
       POSTGRES_USERNAME: ${POSTGRES_SCHEMA_USERNAME:-postgres}
       REDIS_HOSTNAME: ffc-sfi-agreement-calculator-redis
       REDIS_TTL: 30000
-      CH_API_GATEWAY: ${CH_API_GATEWAY}
+      CH_API_GATEWAY: ${CH_API_GATEWAY:-ffc-sfi-api-gateway:3005}
       EVENT_HOST: kafka
       EVENT_USERNAME: kafka
       EVENT_PASSWORD: kafka
