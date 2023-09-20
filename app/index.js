@@ -1,4 +1,5 @@
 require('./insights').setup()
+require('log-timestamp')
 const messageService = require('./messaging')
 const eventService = require('./events')
 const cache = require('./cache')
