@@ -8,7 +8,7 @@ const runEligibilityRules = async (facts) => {
   const engine = getRulesEngine()
 
   engine.addFact('bpsEntitlements', async (params, almanac) => {
-    return getEntitlements(facts.organisationId, facts.callerId)
+    return getEntitlements(facts.organisationId, facts.crn, facts.token)
   })
 
   engine.addFact('bpsEligibleLand', async (params, almanac) => {
