@@ -6,10 +6,10 @@ const util = require('util')
 const processParcelSpatialMessage = async (message, receiver) => {
   try {
     const { body, messageId } = message
-    const { organisationId, sbi, callerId } = body
+    const { organisationId, sbi, crn, token } = body
 
     console.log('Parcel spatial request received:', util.inspect(message.body, false, null, true))
-    const parcelResponse = await getParcelsSpatial(organisationId, sbi, callerId)
+    const parcelResponse = await getParcelsSpatial(organisationId, sbi, crn, token)
 
     await sendMessage(parcelResponse, 'uk.gov.sfi.agreement.parcel.spatial.request.response', config.parcelSpatialResponseQueue, { sessionId: messageId })
     await receiver.completeMessage(message)

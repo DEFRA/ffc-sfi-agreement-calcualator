@@ -12,7 +12,7 @@ const runEligibilityRules = async (facts) => {
   })
 
   engine.addFact('bpsEligibleLand', async (params, almanac) => {
-    return getEligibleLand(facts.organisationId, facts.callerId, ELIGIBLE_LAND_CAP)
+    return getEligibleLand(facts.organisationId, facts.crn, facts.token, ELIGIBLE_LAND_CAP)
   })
 
   engine.addRule(hasSufficientBpsEntitlements)

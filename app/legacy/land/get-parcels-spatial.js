@@ -3,7 +3,7 @@ const config = require('../../config')
 const { get: getCache, update } = require('../../cache')
 const { getBlobClient, fileExists } = require('../../storage')
 
-const getParcelsSpatial = async (organisationId, sbi, callerId) => {
+const getParcelsSpatial = async (organisationId, sbi, crn, token) => {
   const filename = `${organisationId}.json`
 
   const cachedResponse = await getCache(config.cacheConfig.parcelSpatialCache, organisationId)
@@ -12,7 +12,7 @@ const getParcelsSpatial = async (organisationId, sbi, callerId) => {
     return cachedResponse
   }
 
-  const parcels = await get(`/lms/organisation/${organisationId}/geometries?bbox=0,0,0,0`, callerId)
+  const parcels = await get(`/lms/organisation/${organisationId}/geometries?bbox=0,0,0,0`, crn, token)
   const parcelString = JSON.stringify(parcels)
   const blobClient = await getBlobClient(config.storageConfig.parcelSpatialContainer, filename)
   await blobClient.upload(parcelString, parcelString.length)

@@ -69,9 +69,9 @@ components:
           crn:
             type: number
             description: Customer Reference Number
-          callerId:
-            type: number
-            description: Unique reference for CRN
+          token:
+            type: string
+            description: Defra Id token
     EligibilityResponse:
       contentType: application/json
       payload:
@@ -131,9 +131,9 @@ components:
           sbi:
             type: number
             description: Single Business Identifier
-          callerId:
-            type: number
-            description: Unique agreement reference for CRN
+          token:
+            type: string
+            description: Defra Id token
     ParcelSpatialResponse:
       contentType: application/json
       payload:
@@ -168,9 +168,9 @@ components:
           sbi:
             type: number
             description: Single Business Identifier
-          callerId:
-            type: number
-            description: Unique agreement reference for CRN
+          token:
+            type: string
+            description: Defra Id token
     ParcelStandardResponse:
       contentType: application/json
       payload:
@@ -202,9 +202,9 @@ components:
           organisationId:
             type: number
             description: Unique organisation reference
-          callerId:
-            type: number
-            description: Unique agreement reference for CRN
+          token:
+            type: string
+            description: Defra Id token
           sbi:
             type: number
             description: Single Business Identifier
@@ -320,9 +320,9 @@ components:
       payload:
         type: object
         properties:
-          callerId:
-            type: number
-            description: Unique user reference token
+          token:
+            type: string
+            description: Defra Id token
           agreementNumber:
             type: string
             description: Unique agreement reference number
@@ -333,9 +333,9 @@ components:
               sbi:
                 type: number
                 description: Single Business Identifier
-              callerId:
-                type: number
-                description: Unique user reference token
+              token:
+                type: string
+                description: Defra Id token
               organisationId:
                 type: number
                 description: Unique organisation name

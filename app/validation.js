@@ -6,10 +6,10 @@ const getStandards = require('./standards')
 const runValidation = async (facts) => {
   const warnings = []
 
-  const eligibilityResult = await runEligibilityRules({ identifier: facts.organisation.sbi, ...facts.organisation, callerId: facts.callerId })
+  const eligibilityResult = await runEligibilityRules({ identifier: facts.organisation.sbi, ...facts.organisation, crn: facts.crn, token: facts.token })
   eligibilityResult.failureEvents.forEach((failure) => warnings.push({ type: 'Eligibility', detail: failure }))
 
-  const standards = await getStandards(facts.organisation.organisationId, facts.organisation.sbi, facts.callerId)
+  const standards = await getStandards(facts.organisation.organisationId, facts.organisation.sbi, facts.crn, facts.token)
 
   for (const agreementStandard in facts.action) {
     if (agreementStandard !== 'paymentAmount') {

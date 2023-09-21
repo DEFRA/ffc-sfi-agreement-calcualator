@@ -5,9 +5,9 @@ const sendMessage = require('./send-message')
 const processStandardsMessage = async (message, receiver) => {
   try {
     const { body, messageId } = message
-    const { organisationId, sbi, callerId } = body
+    const { organisationId, sbi, crn, token } = body
 
-    const standardsResponse = await getStandards(organisationId, sbi, callerId)
+    const standardsResponse = await getStandards(organisationId, sbi, crn, token)
 
     // once funding changes have been updated to use storage in apply for SFI, then this should return the full response object
     await sendMessage({ standards: standardsResponse.standards }, 'uk.gov.sfi.agreement.standards.request.response', config.standardsResponseQueue, { sessionId: messageId })
