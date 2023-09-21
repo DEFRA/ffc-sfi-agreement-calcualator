@@ -3,7 +3,8 @@ const nock = require('nock')
 const { getParcels } = require('../../app/legacy/land')
 const { chApiGateway } = require('../../app/config')
 
-const callerId = 123456
+const token = 'token'
+const crn = 1234567890
 const organisationId = 1234567
 
 let responseMock
@@ -52,7 +53,7 @@ describe('eligibility', () => {
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseMock)
 
-    const landParcels = await getParcels(organisationId, callerId)
+    const landParcels = await getParcels(organisationId, crn, token)
     const parcels = landParcels[0].info
     expect(parcels[0].area).toEqual(500)
     expect(parcels[1].area).toEqual(500)

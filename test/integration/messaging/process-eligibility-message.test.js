@@ -35,7 +35,7 @@ const organisationId = 1234567
 const name = 'Title Forename LastName'
 const sbi = 123456789
 const crn = 1234567890
-const callerId = 123456
+const token = 'token'
 
 describe('process eligibility message', () => {
   beforeAll(async () => {
@@ -53,7 +53,7 @@ describe('process eligibility message', () => {
       messageId: 'messageId',
       body: {
         crn,
-        callerId
+        token
       }
     }
 
@@ -67,7 +67,7 @@ describe('process eligibility message', () => {
       .reply(200, responseEligibilityMock)
 
     nock(chApiGateway)
-      .get(`/organisation/person/${callerId}/summary?search=`)
+      .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
     nock(chApiGateway)
@@ -132,7 +132,7 @@ describe('process eligibility message', () => {
 
   test('updates cache if new message', async () => {
     await processEligibilityMessage(message, receiver)
-    message.body.callerId = 510016
+    message.body.token = 'token2'
     await processEligibilityMessage(message, receiver)
     const result = await cache.get('eligibility', 'correlationId')
     expect(result.requests.length).toBe(2)
