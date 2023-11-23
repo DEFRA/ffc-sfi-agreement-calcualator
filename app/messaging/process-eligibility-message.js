@@ -7,11 +7,11 @@ const util = require('util')
 const processEligibilityMessage = async (message, receiver) => {
   try {
     const { body, correlationId, messageId } = message
-    const { crn, callerId } = message.body
+    const { crn, token } = message.body
 
     console.log('Eligibility check request received:', util.inspect(message.body, false, null, true))
     const cachedResponse = await getCachedResponse(config.cacheConfig.eligibilityCache, body, correlationId)
-    const eligibility = cachedResponse ?? { eligibility: await getEligibleOrganisations(crn, callerId) }
+    const eligibility = cachedResponse ?? { eligibility: await getEligibleOrganisations(crn, token) }
 
     if (!cachedResponse) {
       await setCachedResponse(config.cacheConfig.eligibilityCache, correlationId, body, eligibility)

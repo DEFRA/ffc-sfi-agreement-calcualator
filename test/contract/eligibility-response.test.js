@@ -13,7 +13,8 @@ describe('publishing an eligibility check response', () => {
   const organisationId = 1234567
   const name = 'Title Forename LastName'
   const sbi = 123456789
-  const callerId = 123456
+  const crn = 123456789
+  const token = 'token'
 
   beforeAll(async () => {
     await cache.start()
@@ -25,7 +26,7 @@ describe('publishing an eligibility check response', () => {
     responseEntitlementMock = { data: [{ quantityOwned: 5 }] }
 
     nock(chApiGateway)
-      .get(`/organisation/person/${callerId}/summary?search=`)
+      .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
     nock(chApiGateway)
@@ -48,7 +49,7 @@ describe('publishing an eligibility check response', () => {
   })
 
   test('eligibility response satisfies all contracts', async () => {
-    const eligibilityResult = getEligibleOrganisations(1234657890, callerId)
+    const eligibilityResult = getEligibleOrganisations(1234657890, crn, token)
     const provider = new MessageProviderPact({
       messageProviders: {
         'eligibility check response': () => createMessage(eligibilityResult).body

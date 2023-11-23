@@ -2,15 +2,16 @@ const wreck = require('@hapi/wreck')
 const config = require('./config')
 const { chApiGateway } = config
 
-const get = async (url, callerId) => {
-  const { payload } = await wreck.get(`${chApiGateway}${url}`, getConfiguration(callerId))
+const get = async (url, crn, token) => {
+  const { payload } = await wreck.get(`${chApiGateway}${url}`, getConfiguration(crn, token))
   return payload
 }
 
-const getConfiguration = (callerId) => {
+const getConfiguration = (crn, token) => {
   return {
     headers: {
-      callerId
+      crn,
+      Authorization: `Bearer ${token}`
     },
     json: true,
     rejectUnauthorized: false

@@ -43,7 +43,7 @@ describe('receiving an eligibility check from SFI application', () => {
       .expectsToReceive('a new eligibility check')
       .withContent({
         crn: Matchers.integer(1234567890),
-        callerId: Matchers.like(5089433)
+        token: Matchers.string()
       })
       .withMetadata({
         'content-type': 'application/json',

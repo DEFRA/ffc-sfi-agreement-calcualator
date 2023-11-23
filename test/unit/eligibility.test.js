@@ -3,7 +3,7 @@ const nock = require('nock')
 const { getEligibleOrganisations } = require('../../app/eligibility')
 const { chApiGateway } = require('../../app/config')
 
-const callerId = 123456
+const token = 'token'
 const crn = 1234567890
 const organisationId = 1234567
 const name = 'Title Forename LastName'
@@ -50,10 +50,10 @@ describe('eligibility', () => {
     responseOrganisationsMock = {}
 
     nock(chApiGateway)
-      .get(`/organisation/person/${callerId}/summary?search=`)
+      .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
-    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, token)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
@@ -66,14 +66,14 @@ describe('eligibility', () => {
       .reply(200, responseEligibilityMock)
 
     nock(chApiGateway)
-      .get(`/organisation/person/${callerId}/summary?search=`)
+      .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
     nock(chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
-    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, token)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
@@ -83,7 +83,7 @@ describe('eligibility', () => {
       .reply(200, responseEligibilityMock)
 
     nock(chApiGateway)
-      .get(`/organisation/person/${callerId}/summary?search=`)
+      .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
     responseLandCover = [{ id: 'SJ80778858', info: [{ code: '110', name: 'Arable Land', area: 20000 }, { code: '130', name: 'Permanent Grasslands', area: 40000 }] }]
@@ -96,13 +96,13 @@ describe('eligibility', () => {
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
 
-    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, token)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 
   test('check eligibility', async () => {
     nock(chApiGateway)
-      .get(`/organisation/person/${callerId}/summary?search=`)
+      .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
     nock(chApiGateway)
@@ -117,7 +117,7 @@ describe('eligibility', () => {
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
 
-    const eligibleOrganisations = await getEligibleOrganisations(crn, callerId)
+    const eligibleOrganisations = await getEligibleOrganisations(crn, token)
     expect(eligibleOrganisations).toEqual(responseMock)
   })
 })

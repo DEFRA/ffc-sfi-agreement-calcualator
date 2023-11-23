@@ -1,8 +1,8 @@
 const { getParcels } = require('./land')
 const bpsEligibleLandCover = require('./bps-eligible-land-cover')
 
-async function getEligibleLand (organisationId, callerId, cap) {
-  const parcels = await getParcels(organisationId, callerId)
+async function getEligibleLand (organisationId, crn, token, cap) {
+  const parcels = await getParcels(organisationId, crn, token)
   return getEligibleLandFromParcels(parcels)
 }
 

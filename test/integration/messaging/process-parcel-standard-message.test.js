@@ -19,7 +19,8 @@ let responseLandCover
 let responseSpatial
 const organisationId = 1234567
 const sbi = 123456789
-const callerId = 123456
+const crn = 123456789
+const token = 'token'
 const standardCode = '110'
 
 describe('process eligibility message', () => {
@@ -38,7 +39,8 @@ describe('process eligibility message', () => {
       body: {
         sbi,
         organisationId,
-        callerId,
+        crn,
+        token,
         standardCode
       }
     }
@@ -111,7 +113,7 @@ describe('process eligibility message', () => {
 
   test('updates cache if new message', async () => {
     await processParcelStandardMessage(message, receiver)
-    message.body.callerId = 510016
+    message.body.token = 'token2'
     await processParcelStandardMessage(message, receiver)
     const result = await cache.get('parcel-standard', organisationId)
     expect(result.requests.length).toBe(2)

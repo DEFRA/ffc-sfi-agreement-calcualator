@@ -8,13 +8,13 @@ const { fileExists } = require('../storage')
 const processParcelStandardMessage = async (message, receiver) => {
   try {
     const { body, messageId } = message
-    const { organisationId, sbi, callerId, standardCode } = message.body
+    const { organisationId, sbi, crn, token, standardCode } = message.body
 
     console.log('Parcel standard request received:', util.inspect(message.body, false, null, true))
     let response = await getCachedResponse(config.cacheConfig.parcelStandardCache, body, organisationId)
 
     if (!response || !(await fileExists(config.storageConfig.parcelStandardContainer, response.filename))) {
-      response = await getParcelsStandard(organisationId, sbi, callerId, standardCode)
+      response = await getParcelsStandard(organisationId, sbi, crn, token, standardCode)
       await setCachedResponse(config.cacheConfig.parcelStandardCache, organisationId, body, response)
     }
 

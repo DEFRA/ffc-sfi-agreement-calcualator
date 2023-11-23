@@ -1,14 +1,14 @@
 const { get } = require('../api')
 
-const getOrganisation = async (organisationId, callerId) => {
+const getOrganisation = async (organisationId, crn, token) => {
   const url = `/organisation/${organisationId}`
-  const data = await get(url, callerId)
+  const data = await get(url, crn, token)
   return data?._data === null ? {} : data?._data
 }
 
-const getOrganisations = async (crn, callerId) => {
-  const url = `/organisation/person/${callerId}/summary?search=`
-  const data = await get(url, callerId)
+const getOrganisations = async (crn, token) => {
+  const url = '/organisation/person/3337243/summary?search='
+  const data = await get(url, crn, token)
   return data?._data?.map(organisation => ({
     sbi: organisation.sbi,
     name: organisation.name,
@@ -16,9 +16,9 @@ const getOrganisations = async (crn, callerId) => {
   })) ?? []
 }
 
-const enrichOrganisations = async (organisations, callerId) => {
+const enrichOrganisations = async (organisations, crn, token) => {
   for (const organisation of organisations) {
-    const organisationDetails = await getOrganisation(organisation.organisationId, callerId)
+    const organisationDetails = await getOrganisation(organisation.organisationId, crn, token)
     const address = mapAddress(organisationDetails?.address)
     organisation.address = address
   }

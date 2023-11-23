@@ -3,7 +3,8 @@ const nock = require('nock')
 const getEntitlements = require('../../app/legacy/entitlements')
 const { chApiGateway } = require('../../app/config')
 
-const callerId = 123456
+const crn = 123456789
+const token = 'token'
 const organisationId = 1234567
 let responseEntitlementsMock
 
@@ -30,7 +31,7 @@ describe('entitlements', () => {
       .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
       .reply(200, responseEntitlementsMock)
 
-    const eligibleOrganisations = await getEntitlements(organisationId, callerId)
+    const eligibleOrganisations = await getEntitlements(organisationId, crn, token)
     expect(eligibleOrganisations).toEqual(10)
   })
 
@@ -41,7 +42,7 @@ describe('entitlements', () => {
       .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
       .reply(200, responseEntitlementsMock)
 
-    const eligibleOrganisations = await getEntitlements(organisationId, callerId)
+    const eligibleOrganisations = await getEntitlements(organisationId, crn, token)
     expect(eligibleOrganisations).toEqual(11)
   })
 
@@ -52,7 +53,7 @@ describe('entitlements', () => {
       .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
       .reply(200, responseEntitlementsMock)
 
-    const eligibleOrganisations = await getEntitlements(organisationId, callerId)
+    const eligibleOrganisations = await getEntitlements(organisationId, crn, token)
     expect(eligibleOrganisations).toEqual(3)
   })
 })

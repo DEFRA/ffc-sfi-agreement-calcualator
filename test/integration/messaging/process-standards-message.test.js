@@ -57,7 +57,8 @@ describe('process standards message', () => {
       body: {
         organisationId: 1,
         sbi: 123456789,
-        callerId: 1234567
+        crn: 123456789,
+        token: 'token'
       }
     }
   })

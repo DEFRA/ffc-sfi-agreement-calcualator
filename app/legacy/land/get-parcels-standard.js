@@ -3,9 +3,9 @@ const { getBlobClient, downloadFile } = require('../../storage')
 const getParcelsSpatial = require('./get-parcels-spatial')
 const config = require('../../config').storageConfig
 
-const getParcelsStandard = async (organisationId, sbi, callerId, standardCode) => {
-  const parcelsResponse = await getParcelsSpatial(organisationId, sbi, callerId)
-  const standardsResponse = await getStandards(organisationId, sbi, callerId)
+const getParcelsStandard = async (organisationId, sbi, crn, token, standardCode) => {
+  const parcelsResponse = await getParcelsSpatial(organisationId, sbi, crn, token)
+  const standardsResponse = await getStandards(organisationId, sbi, crn, token)
   const parcelSpatial = await downloadFile(config.parcelSpatialContainer, parcelsResponse.filename)
   const standard = standardsResponse.standards?.find(x => x.code === standardCode) ?? { code: standardCode, landCovers: [] }
   standard.spatial = JSON.parse(parcelSpatial)
