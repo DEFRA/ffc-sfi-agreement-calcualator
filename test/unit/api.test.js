@@ -1,7 +1,9 @@
 const mockGet = jest.fn(() => { return { payload: {} } })
+const mockPost = jest.fn(() => { return { payload: {} } })
 jest.mock('@hapi/wreck', () => {
   return {
-    get: mockGet
+    get: mockGet,
+    post: mockPost
   }
 })
 
@@ -35,7 +37,7 @@ describe('api', () => {
 
   test('get adds bearer token to headers', async () => {
     await api.get('/test', 1, 'token')
-    expect(mockGet.mock.calls[0][1].headers.Authorization).toBe('Bearer token')
+    expect(mockGet.mock.calls[0][1].headers['X-Forwarded-Authorization']).toBe('token')
   })
 
   test('get uses json', async () => {

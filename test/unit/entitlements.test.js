@@ -2,6 +2,7 @@ const cache = require('../../app/cache')
 const nock = require('nock')
 const getEntitlements = require('../../app/legacy/entitlements')
 const { chApiGateway } = require('../../app/config')
+const { apimAuthorizationUrl } = require('../../app/config/api')
 
 const crn = 123456789
 const token = 'token'
@@ -15,6 +16,11 @@ describe('entitlements', () => {
     jest.clearAllMocks()
 
     responseEntitlementsMock = { data: [{ quantityOwned: 5 }, { quantityOwned: 5 }] }
+    responseApimMock = { token_type: 'Bearer', access_token: 'token'}
+
+    nock(apimAuthorizationUrl)
+      .post('/')
+      .reply(200, responseApimMock)
   })
 
   afterEach(async () => {
