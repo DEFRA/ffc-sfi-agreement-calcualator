@@ -1,6 +1,6 @@
 const cache = require('../../../app/cache')
 const nock = require('nock')
-const { chApiGateway } = require('../../../app/config')
+const config = require('../../../app/config')
 const mockSendMessage = jest.fn()
 jest.mock('ffc-messaging', () => {
   return {
@@ -27,6 +27,7 @@ jest.mock('ffc-events', () => {
 const processEligibilityMessage = require('../../../app/messaging/process-eligibility-message')
 let receiver
 let message
+let responseApimMock
 let responseOrganisationsMock
 let responseLandCover
 let responseOrganisationMock
@@ -57,24 +58,30 @@ describe('process eligibility message', () => {
       }
     }
 
+    responseApimMock = { token_type: 'Bearer', access_token: 'token' }
     responseEligibilityMock = { data: [{ quantityOwned: 5 }] }
     responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
 
-    nock(chApiGateway)
+    nock(config.apiConfig.apimAuthorizationUrl)
+      .persist()
+      .post('/')
+      .reply(200, responseApimMock)
+
+    nock(config.chApiGateway)
       .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
       .reply(200, responseEligibilityMock)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
   })
