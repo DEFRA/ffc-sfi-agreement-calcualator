@@ -19,7 +19,7 @@ services:
       AZURE_STORAGE_CONNECTION_STRING: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://ffc-sfi-agreement-calculator-azurite:10000/devstoreaccount1;
       APIM_CLIENT_ID: test
       APIM_CLIENT_SECRET: test
-      APIM_OCP_SUBSCRIPTION_KEY: test      
+      APIM_OCP_SUBSCRIPTION_KEY: test
       APIM_SCOPE: test
       APIM_AUTHORIZATION_URL: https://test.com
     volumes:
