@@ -72,6 +72,11 @@ container:
   parcelSpatialContainer: parcels-spatial
   parcelStandardContainer: parcels-standard
   standardContainer: standards
+  apimClientId:
+  apimClientSecret:
+  apimScope:
+  apimOcpSubscriptionKey:
+  apimAuthorizationUrl:
 
 postgresService:
   postgresDb: ffc_sfi_agreement_calculator

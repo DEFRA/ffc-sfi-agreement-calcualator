@@ -4,6 +4,7 @@ const eventConfig = require('./event-config')
 const dbConfig = require('./db-config')
 const cacheConfig = require('./cache')
 const storageConfig = require('./storage-config')
+const apiConfig = require('./api')
 const { development, production, test } = require('./constants').environments
 
 // Define config schema
@@ -55,5 +56,6 @@ value.eventConfig = eventConfig
 value.cacheConfig = cacheConfig
 value.dbConfig = dbConfig
 value.storageConfig = storageConfig
+value.apiConfig = apiConfig
 
 module.exports = value
