@@ -52,4 +52,9 @@ data:
   AZURE_STORAGE_PARCEL_SPATIAL: {{ quote .Values.container.parcelSpatialContainer }}
   AZURE_STORAGE_PARCEL_STANDARD: {{ quote .Values.container.parcelStandardContainer }}
   AZURE_STORAGE_PARCEL: {{ quote .Values.container.standardContainer }}
+  APIM_CLIENT_ID: {{ .Values.container.apimClientId }}
+  APIM_CLIENT_SECRET: {{ .Values.container.apimClientSecret }}
+  APIM_SCOPE: {{ .Values.container.apimScope }}
+  APIM_OCP_SUBSCRIPTION_KEY: {{ .Values.container.apimOcpSubscriptionKey }}
+  APIM_AUTHORIZATION_URL: {{ .Values.container.apimAuthorizationUrl }}
 {{- end -}}

@@ -1,7 +1,7 @@
 const cache = require('../../app/cache')
 const nock = require('nock')
 const { getEligibleOrganisations } = require('../../app/eligibility')
-const { chApiGateway } = require('../../app/config')
+const config = require('../../app/config')
 
 const token = 'token'
 const crn = 1234567890
@@ -10,6 +10,7 @@ const name = 'Title Forename LastName'
 const sbi = 123456789
 
 let responseMock
+let responseApimMock
 let responseOrganisationsMock
 let responseLandCover
 let responseOrganisationMock
@@ -30,10 +31,16 @@ describe('eligibility', () => {
       }
     ]
 
+    responseApimMock = { token_type: 'Bearer', access_token: 'token' }
     responseEligibilityMock = { data: [{ quantityOwned: 5 }] }
     responseOrganisationsMock = { _data: [{ id: organisationId, name, sbi }] }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseOrganisationMock = { _data: { id: organisationId, name, sbi, address: { address1: 'address1', address2: 'address2', address3: 'address3', postalCode: 'postalCode' } } }
+
+    nock(config.apiConfig.apimAuthorizationUrl)
+      .persist()
+      .post('/')
+      .reply(200, responseApimMock)
   })
 
   afterEach(async () => {
@@ -49,7 +56,7 @@ describe('eligibility', () => {
     responseMock = []
     responseOrganisationsMock = {}
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
@@ -61,15 +68,15 @@ describe('eligibility', () => {
     responseMock = []
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 0 }] }]
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
       .reply(200, responseEligibilityMock)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
@@ -78,21 +85,21 @@ describe('eligibility', () => {
   })
 
   test('check eligibility returns array - Land calculated over 5 ha', async () => {
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
       .reply(200, responseEligibilityMock)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
     responseLandCover = [{ id: 'SJ80778858', info: [{ code: '110', name: 'Arable Land', area: 20000 }, { code: '130', name: 'Permanent Grasslands', area: 40000 }] }]
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
 
@@ -101,19 +108,19 @@ describe('eligibility', () => {
   })
 
   test('check eligibility', async () => {
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get('/organisation/person/3337243/summary?search=')
       .reply(200, responseOrganisationsMock)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/SitiAgriApi/entitlements/grouped/${organisationId}`)
       .reply(200, responseEligibilityMock)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/organisation/${organisationId}`)
       .reply(200, responseOrganisationMock)
 

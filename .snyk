@@ -61,8 +61,8 @@ ignore:
         expires: '2021-10-13T15:06:11.276Z'
     - '*':
         reason: None Given
-        expires: 2023-10-19T12:08:43.252Z
-        created: 2023-09-19T12:08:43.259Z
+        expires: 2023-12-24T13:10:03.304Z
+        created: 2023-11-24T13:10:03.309Z
   SNYK-JS-SETVALUE-1540541:
     - '@jest/core > @jest/reporters > @jest/transform > jest-haste-map > sane > anymatch > micromatch > braces > snapdragon > base > cache-base > set-value':
         reason: No fix
@@ -105,4 +105,9 @@ ignore:
     - ffc-messaging > @azure/service-bus > @azure/core-http > node-fetch:
         reason: None given
         expires: '2022-02-17T13:16:57.151Z'
+  SNYK-JS-AXIOS-6032459:
+    - '*':
+        reason: None Given
+        expires: 2023-12-24T13:10:13.552Z
+        created: 2023-11-24T13:10:13.557Z
 patch: {}

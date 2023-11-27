@@ -1,12 +1,13 @@
 const cache = require('../../app/cache')
 const nock = require('nock')
 const { getParcels } = require('../../app/legacy/land')
-const { chApiGateway } = require('../../app/config')
+const config = require('../../app/config')
 
 const token = 'token'
 const crn = 1234567890
 const organisationId = 1234567
 
+let responseApimMock
 let responseMock
 
 describe('eligibility', () => {
@@ -14,6 +15,8 @@ describe('eligibility', () => {
     await cache.start()
     await cache.flushAll()
     jest.clearAllMocks()
+
+    responseApimMock = { token_type: 'Bearer', access_token: 'token' }
 
     responseMock = [
       {
@@ -37,6 +40,11 @@ describe('eligibility', () => {
         ]
       }
     ]
+
+    nock(config.apiConfig.apimAuthorizationUrl)
+      .persist()
+      .post('/')
+      .reply(200, responseApimMock)
   })
 
   afterEach(async () => {
@@ -49,7 +57,7 @@ describe('eligibility', () => {
   })
 
   test('check land cover - area conversion from meters to ha ', async () => {
-    nock(chApiGateway)
+    nock(config.chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseMock)
 

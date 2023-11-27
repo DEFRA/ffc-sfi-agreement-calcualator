@@ -1,6 +1,6 @@
 const cache = require('../../../app/cache')
 const nock = require('nock')
-const { chApiGateway } = require('../../../app/config')
+const config = require('../../../app/config')
 const mockSendMessage = jest.fn()
 jest.mock('ffc-messaging', () => {
   return {
@@ -15,6 +15,7 @@ jest.mock('ffc-messaging', () => {
 const processParcelStandardMessage = require('../../../app/messaging/process-parcel-standard-message')
 let receiver
 let message
+let responseApimMock
 let responseLandCover
 let responseSpatial
 const organisationId = 1234567
@@ -45,18 +46,21 @@ describe('process eligibility message', () => {
       }
     }
 
+    responseApimMock = { token_type: 'Bearer', access_token: 'token' }
     responseLandCover = [{ id: 'SJ12345678', info: [{ code: '110', name: 'Arable Land', area: 60000 }] }]
     responseSpatial = { features: [{ properties: { sheetId: 'SJ1234', parcelId: '5678' } }] }
 
-    nock(chApiGateway)
+    nock(config.apiConfig.apimAuthorizationUrl)
+      .persist()
+      .post('/')
+      .reply(200, responseApimMock)
+
+    nock(config.chApiGateway)
       .get(`/lms/organisation/${organisationId}/land-covers`)
       .reply(200, responseLandCover)
 
-    nock(chApiGateway)
-      .filteringPath(function (path) {
-        return '/'
-      })
-      .get('/')
+    nock(config.chApiGateway)
+      .get(uri => uri.includes('lms'))
       .reply(200, responseSpatial)
   })
 
