@@ -39,7 +39,7 @@
     "log-timestamp": "0.3.0",
     "pg": "8.6.0",
     "pg-hstore": "2.3.3",
-    "redis": "4.0.0-rc.1",
+    "redis": "4.7.0",
     "sequelize": "6.33.0"
   },
   "devDependencies": {
