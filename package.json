@@ -34,7 +34,7 @@
     "ffc-messaging": "2.7.0",
     "hapi-pino": "8.3.0",
     "joi": "17.4.0",
-    "json-rules-engine": "6.1.2",
+    "json-rules-engine": "6.6.0",
     "kafkajs": "1.15.0",
     "log-timestamp": "0.3.0",
     "pg": "8.6.0",
